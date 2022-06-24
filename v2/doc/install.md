@@ -4,19 +4,37 @@
 
 ## edge device type : Raspberry PI 4
 
+- 설치 버전 : 2022-04-04-raspios-bullseye-armhf-full.img.xz
+
 ### Install "sshd"
+
+터미널에서 아래의 명령어를 실행합니다.
 
 $ sudo systemctl enable ssh
 $ sudo systemctl start ssh
 
-### 한글 설정 (수정예정)
+### IP 정보 확인
 
-$ sudo apt-get -y install ibus-hangul
-sudo apt-get install fonts-unfonts-core
-sudo reboot
+IP 정보를 확인하여 내부/외부에서 접속합니다.
 
-sudo apt-get fonts-unfonts-core
-sudo apt-get fonts-unfonts-extra
-sudo apt-get install ibus
-sudo apt-get install ibus-hangul
-sudo reboot
+$ ifconfig | grep 192
+
+
+
+### 한글 설정
+
+폰트가 없어서 깨지는 경우
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get install fcitx -y
+$ sudo apt-get install fcitx-hangul -y
+$ sudo apt-get install fonts-nanum
+
+$ sudo vi /etc/default/im-config
+IM_CONFIG_DEFAULT_MODE=fcitx
+
+### ssh terminal에서 한글이 깨지는 경우
+
+Category / Window / Translation : Received data 
+
+UTF-8로 설정할 것 
