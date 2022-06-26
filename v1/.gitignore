@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 
+.DS_Store
+
 # tests and coverage
 *.pytest_cache
 .coverage

@@ -1,10 +1,27 @@
-# 설치 방법
+# 프레임워크 구축 방법
 
-본 문서에서는 cloud-edge framework의 설치 방법을 기술합니다.
+- 본 문서에서는 cloud-edge framework 구축을 위한 기술적 극복 사항을 정리합니다.
+- 클라우드(cloud)와 에지(edge)가 연계하여 분산연합 학습을 
 
-## edge device type : Raspberry PI 4
+## 에지 디바이스
+
+edge device type : Raspberry PI 4
 
 - 설치 버전 : 2022-04-04-raspios-bullseye-armhf-full.img.xz
+- 설치후 버전 확인 
+
+```bash
+    $ lsb_release -a
+```
+No LSB modules are available.
+Distributor ID:	Raspbian
+Description:	Raspbian GNU/Linux 11 (bullseye)
+Release:	11
+Codename:	bullseye
+
+
+
+
 
 ### Install "sshd"
 
