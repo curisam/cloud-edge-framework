@@ -1,6 +1,7 @@
 # 실행방법  
 
-- 참고주소 : https://flower.dev/
+- 참고 : https://flower.dev/
+- 참고 : https://github.com/adap/flower/tree/main/examples/quickstart_pytorch
 
 ## 사전 준비 : 가상환경 관리자 poetry 설치
 

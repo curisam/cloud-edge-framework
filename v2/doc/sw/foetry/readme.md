@@ -1,7 +1,7 @@
 # poetry 설치
 
 - 참고 : https://python-poetry.org/docs/
- 
+
 ## poetry를 설치합니다.
   
 ```bash
@@ -16,8 +16,6 @@ $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-po
 $ python3 get-poetry.py
 
 ```
-
-
 
 ## poetry 환경변수를 설정합니다.
 
