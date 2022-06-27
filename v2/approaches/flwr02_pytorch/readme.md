@@ -25,6 +25,7 @@ $ pip uninstall virtualenv
 
 
 1. 터미널 열고 poetry shell 실행 및 의존성 패키지 설치
+
 ```bash
 $ poetry shell
 $ pip install flwr
@@ -33,6 +34,7 @@ $ pip install tqdm
 ```
 
 2. 터미널 열고, poetry shell 실행 후 서버 실행 
+
 ```bash
 $ poetry shell
 $ python server.py
@@ -41,6 +43,7 @@ $ python server.py
 ![연합학습 서버 실행 모습](img4doc/server.png)
 
 3. 새로운 터미널 열고, poetry shell 실행 후, 클라이언트 1번 실행 
+
 ```bash
 $ poetry shell
 $ python client.py
@@ -49,6 +52,7 @@ $ python client.py
 ![연합학습 클라이언트 1 실행 모습](img4doc/client1.png)
 
 4. 새로운 터미널 열고, poetry shell 실행 후, 클라이언트 2번 실행 
+
 ```bash
 $ poetry shell
 $ python client.py
