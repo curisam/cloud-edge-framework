@@ -1,5 +1,6 @@
 # poetry 설치
 
+- poetry는 virtualenv와 같은 가상환경 관리자 프로그램입니다.
 - 참고 : https://python-poetry.org/docs/
 
 ## poetry를 설치합니다.
@@ -37,7 +38,7 @@ python get-poetry.py --uninstall
 POETRY_UNINSTALL=1 python get-poetry.py
 
 
-## 프로그램 제거도 할 수 있습니다.
+## poetry 제거는 아래와 같이 합니다.
 
 ```bash
 $ python get-poetry.py --uninstall
