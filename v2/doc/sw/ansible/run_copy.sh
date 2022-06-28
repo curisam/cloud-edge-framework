@@ -1,0 +1,1 @@
+ansible-playbook copy.yaml -i server.ini
