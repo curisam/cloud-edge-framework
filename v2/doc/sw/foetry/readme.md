@@ -1,7 +1,10 @@
 # poetry 설치
 
-- poetry는 virtualenv와 같은 가상환경 관리자 프로그램입니다.
-- 참고 : https://python-poetry.org/docs/
+- poetry는 virtualenv와 유사한 가상환경 관리자 프로그램입니다.
+- 상세한 내용은 아래 주소에서 더 배울 수 있습니다.
+```bash
+ https://python-poetry.org/docs/
+```
 
 ## poetry를 설치합니다.
   
