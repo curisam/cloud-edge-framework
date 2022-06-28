@@ -1,0 +1,28 @@
+# This playbook runs a basic DF command.
+- hosts: 192.168.1.3
+  remote_user: jpark
+
+  tasks:
+  - name: find disk space available.
+    command: df -hPT
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: ls -al
+    command: 'ls -al'
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: ls
+    shell: 'ls'
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: uptime
+    shell: 'uptime'
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines

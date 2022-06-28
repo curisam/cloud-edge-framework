@@ -14,6 +14,11 @@
 - PoE-capable (requires PoE Hat, sold separately)
 - 5V/3A USB-C power supply required (sold separately)
 
+### 주의사항
+
+- 5V USB Type-c 케이블 연결로 전력을 공급받습니다. 
+- 이때 3A 전류 제공이 가능한 Power Adaptor 를 써야 합니다.
+
 ## 가능한 운영체제
 
 - 기본적으로 리눅스 계열의 운영체제를 설치할 수 있습니다.
