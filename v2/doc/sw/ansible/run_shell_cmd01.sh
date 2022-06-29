@@ -1,1 +1,0 @@
-ansible-playbook shell_cmd01.yaml -i server.ini

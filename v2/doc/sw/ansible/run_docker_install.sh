@@ -1,0 +1,1 @@
+ansible-playbook docker_install.yaml -i server.ini

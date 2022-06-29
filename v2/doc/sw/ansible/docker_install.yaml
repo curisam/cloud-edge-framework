@@ -1,0 +1,40 @@
+# This playbook runs a basic DF command.
+- hosts: all
+  tasks:
+  - name: update apt list 
+    shell: |
+      sudo apt-get -y update 
+      sudo apt-get -y upgrade
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: docker setting 01
+    shell: curl -fsSL https://get.docker.com -o get-docker.sh
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: docker setting 02
+    shell: sh get-docker.sh
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: docker setting 03
+    shell: sudo usermod -aG docker $USER
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: docker setting 04
+    shell: docker images
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: docker setting 05
+    shell: docker container ls
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
