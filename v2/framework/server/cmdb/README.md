@@ -44,6 +44,10 @@ $ ansible-cmdb -t html_fancy tmp.0/ > tmp.1/overview.html
 $ open tmp.1/overview.html
 ```
 
+![HTML출력 예시](img4doc/overview01.png)
+![HTML출력 예시](img4doc/overview02.png)
+
+
 ### (단계 2 - 2) CSV 파일 생성
 
 ```bash
@@ -68,6 +72,16 @@ $ ansible-cmdb -t markdown tmp.0/ > tmp.1/overview.md
 
 $ open tmp.1/overview.md
 ```
+
+
+### (단계 2 - 5) SQL 파일 생성
+
+```bash
+$ ansible-cmdb -t sql tmp.0/ > tmp.1/overview.sql    
+
+$ open tmp.1/overview.sql
+```
+
 
 ### 사용 가능한 출력 템플릿
 
