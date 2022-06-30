@@ -41,24 +41,28 @@ $ brew install ansible
 
 ### 예시
 
-- 동일 네트워크에 2대의 컴퓨터 {A, B}가 있다고 가정합니다.
+- 네트워크에 2대의 컴퓨터 {A, B}가 있다고 가정합니다.
 - A 는 "192.168.1.5" IP를 갖는다고 하고,
 - B 는 "192.168.1.3" IP를 갖는다고 가정합니다.
 - B 의 사용자 id는 "jpark"이라고 가정합니다.
 
-- A에서 ssh-keygen으로 먼저 키를 생성합니다.
+- A에서 ssh-keygen으로 먼저 키를 만듭니다.
 ```bash
 $ ssh-keygen -t rsa
 ```
 
-- A에서 생성한 공개키를 B로 전송합니다.
+- private key(비밀키)와 public key(공개키)가 짝으로 만들어집니다.
+
+- A에서 만든 공개키를 B로 전송합니다.
+- A의 공개키 ~/.ssh/id_rsa.pub 의 내용이 B에 전달되어 B의 ~/.ssh/authorized_keys 파일에 추가됩니다.
+
 ```bash
 $ ssh-copy-id jpark@192.168.1.3
 ```
 ![ssh-copy-id](img4doc/ssh-copy-id.png)
 
-- A에서 B로 접속합니다.
-- A의 공개키를 B에 전달했기 때문에 A에서 B로 접속시, 암호 입력 없이 접속 가능합니다.
+
+- A에서 B로 암호 입력 없이 접속 가능합니다.
 
 ```bash
 $ ssh jpark@192.168.1.3

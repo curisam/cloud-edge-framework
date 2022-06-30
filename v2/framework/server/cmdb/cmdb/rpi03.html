@@ -1,0 +1,6131 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>rpi03</title>
+    <style type="text/css">
+      /* reset.css */
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed,
+      figure, figcaption, footer, header, hgroup,
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;
+      }
+      /* HTML5 display-role reset for older browsers */
+      article, aside, details, figcaption, figure,
+      footer, header, hgroup, menu, nav, section { display: block; }
+      body { line-height: 1; }
+      ol, ul { list-style: none; }
+      blockquote, q { quotes: none; }
+      blockquote:before, blockquote:after,
+      q:before, q:after { content: ''; content: none; }
+      table { border-collapse: collapse; border-spacing: 0; }
+
+      /* ansible-cmdb */
+      *, body { font-family: sans-serif; font-weight: lighter; }
+      a { text-decoration: none; }
+      b { font-weight: bold; }
+      p { margin-bottom: 1em; }
+
+      header { position: fixed; top: 0px; left: 0px; right: 0px; background-color: #0071b8; overflow: auto; color: #E0E0E0; padding: 15px; z-index: 1000; }
+      header h1 { font-size: x-large; float: left; line-height: 32px; font-weight: bold; }
+      header #clear_settings { float: right; line-height: 32px; font-size: small; margin-left: 12px; }
+      header #clear_settings a { color: #FFFFFF; font-weight: bold; padding: 6px; background-color: #0090F0; box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.15); }
+      header #generated { float: right; line-height: 32px; font-size: small; }
+      header #top { display: none; }
+      header #top a { line-height: 32px; margin-left: 64px; color: #FFFFFF; border-bottom: 1px solid #909090; }
+      header #generated .detail { font-weight: bold; }
+
+      footer { display: block; position: fixed; bottom: 0px; right: 0px; left: 0px; background-color: #d5d5d5; overflow: auto; color: #505050; padding: 4px; font-size: x-small; text-align: right; padding-right: 8px; }
+      footer a { font-weight: bold; text-decoration: none; color: #202020; }
+
+      #col_toggles { margin: 32px; margin-top: 100px; }
+      #col_toggles h2 { display: block; font-size: 1.4em; margin-bottom: 32px; color: #606060; }
+      #col_toggle_buttons { margin-left: 32px; font-weight: normal; line-height: 40px; }
+      #col_toggles a { line-height: 40px; }
+      #col_toggles a { display: inline-block; background-color: #009688; line-height: 32px; padding: 0px 15px 0px 15px; margin-right: 6px; box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.35); color: #FFFFFF; }
+      #col_toggles a.col-invisible { background-color: #B0B0B0; box-shadow: 0 0px 0px 0; }
+
+      #host_overview { margin: 32px; }
+      #host_overview h2 { display: block; font-size: 1.4em; color: #606060; }
+      #host_overview_tbl_wrapper{ margin-left: 16px; }
+      #host_overview table { width: 100%; clear: both; }
+      #host_overview tr { border-bottom: 1px solid #F0F0F0; }
+      #host_overview tr:hover { background-color: #F0F0F0; }
+      #host_overview thead th { text-align: left; color: #707070; padding: 16px 0px 8px 16px; border-bottom: 1px solid #C0C0C0; font-weight: bold; cursor: pointer; background-repeat: no-repeat; background-position: center right; background-image: url("https://cdn.datatables.net/1.10.2//images/sort_both.png"); }
+      #host_overview thead th.sorting_desc { background-image: url("https://cdn.datatables.net/1.10.2//images/sort_desc.png"); }
+      #host_overview thead th.sorting_asc { background-image: url("https://cdn.datatables.net/1.10.2//images/sort_asc.png"); }
+      #host_overview tbody td { color: #000000; padding: 8px 12px 8px 12px; }
+      #host_overview tbody a { text-decoration: none; color: #005c9d; }
+      #host_overview_tbl_filter { float: right; color: #808080; padding-bottom: 32px; }
+      #host_overview_tbl_filter label input { margin-left: 12px; }
+      #host_overview_tbl_filter #filter_link a { color: #000000; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAoUlEQVR4Xu2TIQ6EMBBF/+4dOUBFBYoboBHoBsuRUCgcnpDg3/Y7ICQVK3ebvPxJ30xH9QXom/PO/PoDAjSOY8pwIwFFr2EYUobjONj33bjGd3Ylr77v2bYNp7Hwhifs3HOeUdu2LMuCE1DXdedtl612cJ1R0zRM04TT1HVNjPERO/ecZxRCSBnmeWZdV+Ma39mVvABVVZUy3EhA0f//gvQB4y08WIiD/goAAAAASUVORK5CYII=) no-repeat left center; padding: 5px 0 5px 25px; }
+      #host_overview_tbl_info { margin-top: 16px; color: #C0C0C0; }
+      #host_overview .bar { clear: both; margin-bottom: 1px; }
+      #host_overview .prog_bar_full { float: left; display: block; height: 12px; border: 1px solid #000000; padding: 1px; margin-right: 4px; color: white; text-align: center; }
+      #host_overview .prog_bar_used { display: block; height: 12px; background-color: #8F4040; }
+      #host_overview tbody td.error a { color: #FF0000; }
+      #host_overview span.usage_detail { color: #606060; }
+      #host_overview .error { color: #FF0000; }
+
+      #hosts { margin-left: 32px; margin-bottom: 120px; }
+      #hosts .toggle-collapse { cursor: pointer; }
+      #hosts a.toggle-all { margin-top: 20px; display: inline-block; color: #0080FF; }
+      #hosts a { color: #005c9d; }
+      #hosts p.desc { color: #303030; margin-bottom: 32px; max-width: 800px; }
+      #hosts h3.collapsed::before { color: #505050; margin-right: 16px; content: "⊞";  font-weight: 200; font-size: large; }
+      #hosts h3.uncollapsed::before { color: #505050; margin-right: 16px; content: "⊟";  font-weight: 200; font-size: large;}
+      #hosts h4.collapsed::before { color: #505050; margin-right: 16px; content: "⊞";  font-weight: 200; font-size: large;}
+      #hosts h4.uncollapsed::before { color: #505050; margin-right: 16px; content: "⊟"; font-weight: 200; font-size: large;}
+      #hosts h5.collapsed::before { color: #505050; margin-right: 16px; content: "⊞";  font-weight: 200; font-size: large;}
+      #hosts h5.uncollapsed::before { color: #505050; margin-right: 16px; content: "⊟"; font-weight: 200; font-size: large;}
+      #hosts div.collapsable { margin-left: 16px; }
+      #hosts div.collapsed { display: none; }
+      #hosts h3.uncollapsed { line-height: 1.5em; font-size: xx-large; border-bottom: 1px solid #D0D0D0; }
+      #hosts h3.collapsed {  line-height: 1.5em; font-size: xx-large; }
+      #hosts h4 { font-size: large; font-weight: bold; color: #404040; margin-top: 32px; margin-bottom: 32px; }
+      #hosts h5 { font-weight: bold; color: #404040; margin-top: 32px; margin-bottom: 32px; }
+      #hosts th { text-align: left; color: #808080; padding-bottom: 10px; }
+      #hosts td { padding-left: 16px; color: #303030; padding-bottom: 10px; }
+      #hosts ul { list-style: square; margin-left: 48px; }
+      #hosts table.net_overview td, #hosts table.net_overview th { text-align: left; padding: 0px 0px 8px 16px; margin: 0px; }
+      #hosts table.net_overview { margin: 16px 0px 16px 0px; }
+      #hosts .error { color: #FF0000; }
+    </style>
+    <!-- DataTables assets -->
+      <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.2//js/jquery.dataTables.js"></script>
+  </head>
+  <body>
+
+
+  <header>
+    <h1>rpi03</h1>
+    <span id="top"><a href="#">Back to top</a></span>
+    <span id="clear_settings"><a href="javascript:window.localStorage.clear('columnVisibility'); location.reload();" title="If things are acting weird, press this button">Clear settings</a></span> 
+    <span id="generated">Generated on <span class="detail">Thu Jun 30 15:32:14 2022</span> by <span class="detail">jpark</span> @ <span class="detail">jparkui-MacBookPro.local</span></span>
+  </header>
+
+<div id="hosts">
+  
+  
+    <a name="rpi03"></a>
+    <h3 class="toggle-collapse uncollapsed" id="rpi03" data-host-name="rpi03">rpi03</h3>
+    <div class="collapsable uncollapsed">
+      <a class="toggle-all" href="">Close all</a>
+        
+  <h4 class="toggle-collapse uncollapsed">General</h4>
+  <div class="collapsable uncollapsed">
+  <table>
+    <tr><th>Node name</th><td>rpi03</td></tr>
+    <tr><th>Form factor</th><td></td></tr>
+    <tr><th>Virtualization role</th><td>NA</td></tr>
+    <tr><th>Virtualization type</th><td>NA</td></tr>
+  </table>
+  </div>
+
+        
+
+        
+
+        
+
+        
+  
+
+        
+
+        
+  <h4 class="toggle-collapse uncollapsed">Hardware</h4>
+  <div class="collapsable uncollapsed">
+  <table>
+    <tr><th>Vendor</th><td></td></tr>
+    <tr><th>Product name</th><td></td></tr>
+    <tr><th>Product serial</th><td></td></tr>
+    <tr><th>Architecture</th><td>armv7l</td></tr>
+    <tr><th>Form factor</th><td></td></tr>
+    <tr><th>Virtualization role</th><td>NA</td></tr>
+    <tr><th>Virtualization type</th><td>NA</td></tr>
+    <tr><th>Machine</th><td>armv7l</td></tr>
+    <tr><th>Processor type</th><td><a href="http://www.cpubenchmark.net/cpu.php?cpu=ARMv7 Processor rev 3 (v7l)">ARMv7 Processor rev 3 (v7l)</a></td></tr>
+    <tr><th>Processor count</th><td>4</td></tr>
+    <tr><th>Processor cores</th><td>1</td></tr>
+    <tr><th>Processor threads per core</th><td>1</td></tr>
+    <tr><th>Processor virtual CPUs</th><td>4</td></tr>
+    <tr><th>Mem total mb</th><td>7898</td></tr>
+    <tr><th>Mem free mb</th><td>7234</td></tr>
+    <tr><th>Swap total mb</th><td>99</td></tr>
+    <tr><th>Swap free mb</th><td>99</td></tr>
+  </table>
+  </div>
+
+        
+  <h4 class="toggle-collapse uncollapsed">Operating System</h4>
+  <div class="collapsable uncollapsed">
+  <table>
+    <tr><th>System</th><td>Linux</td></tr>
+    <tr><th>OS Family</th><td>Debian</td></tr>
+    <tr><th>Distribution</th><td>Debian</td></tr>
+    <tr><th>Distribution version</th><td>11</td></tr>
+    <tr><th>Distribution release</th><td>bullseye</td></tr>
+    <tr><th>Kernel</th><td>5.15.32-v7l+</td></tr>
+    <tr><th>Userspace bits</th><td>32</td></tr>
+    <tr><th>Userspace_architecture</th><td></td></tr>
+    <tr><th>Date time</th><td>2022-06-30T06:01:04Z</td></tr>
+    <tr><th>Locale / Encoding</th><td>ko_KR.UTF-8</td></tr>
+        <tr><th>SELinux</th><td>
+  
+  <table>
+      
+      <tr>
+        <th>
+                status
+        </th>
+        <td>
+              disabled
+        </td>
+      </tr>
+  </table>
+</td></tr>
+    <tr><th>Package manager</th><td>apt</td></tr>
+  </table>
+  </div>
+
+        
+  <h4 class="toggle-collapse uncollapsed">Network</h4>
+  <div class="collapsable uncollapsed">
+  <table class="net_info">
+    <tr><th>Hostname</th><td>rpi03</td></tr>
+    <tr><th>Domain</th><td></td></tr>
+    <tr><th>FQDN</th><td>rpi03</td></tr>
+    <tr><th>All IPv4</th><td>192.168.0.243</td></tr>
+    <tr><th>All IPv6</th><td>fe80::cd54:9f70:dbae:c9a</td></tr>
+  </table>
+    <table class="net_overview">
+      <tr>
+        <th>IPv4 Networks</th>
+        <td>
+          <table class="net_overview">
+            <tr>
+              <th>dev</th>
+              <th>address</th>
+              <th>network</th>
+              <th>netmask</th>
+            </tr>
+              
+              
+                  <tr>
+                    <td>lo</td>
+                    <td>127.0.0.1</td>
+                    <td>127.0.0.0</td>
+                      <td>255.0.0.0</td>
+                  </tr>
+              
+                  <tr>
+                    <td>wlan0</td>
+                    <td>192.168.0.243</td>
+                    <td>192.168.0.0</td>
+                      <td>255.255.255.0</td>
+                  </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+  
+    <h5 class="toggle-collapse uncollapsed">Interface details</h5>
+    <div class="collapsable uncollapsed">
+    <table class="net_iface_details">
+      <tr>
+        <th>Interface details</th>
+        <td>
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+        
+  <h4 class="toggle-collapse uncollapsed">Storage</h4>
+  <div class="collapsable uncollapsed">
+  <table>
+    <tr>
+      <th>Devices</th>
+      <td>
+          
+  
+  <table>
+      
+      <tr>
+        <th>
+                ram14
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram15
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram12
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram13
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram10
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram11
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                mmcblk0
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              mq-deadline
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              124735488
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+      mmc-SR64G_0x8fb449e7
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              4194304
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                mmcblk0p2
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+      rootfs
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+      mmc-SR64G_0x8fb449e7-part2
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+      a755e991-ee07-4251-9a93-ddbb10695d94
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              124203008
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                start
+        </th>
+        <td>
+              532480
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              59.22 GB
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuid
+        </th>
+        <td>
+              a755e991-ee07-4251-9a93-ddbb10695d94
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                mmcblk0p1
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+      boot
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+      mmc-SR64G_0x8fb449e7-part1
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+      7C7A-DCF2
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              524288
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                start
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              256.00 MB
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuid
+        </th>
+        <td>
+              7C7A-DCF2
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                serial
+        </th>
+        <td>
+              0x8fb449e7
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              59.48 GB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram8
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram9
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram4
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram5
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram6
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram7
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram0
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram1
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram2
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ram3
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              8192
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              4.00 MB
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop3
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop2
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop1
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop0
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop7
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop6
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop5
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                loop4
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                scheduler_mode
+        </th>
+        <td>
+              none
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                rotational
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                vendor
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectors
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                links
+        </th>
+        <td>
+              
+  
+  <table>
+      
+      <tr>
+        <th>
+                masters
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                labels
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                ids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuids
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_device_handle
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sas_address
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                virtual
+        </th>
+        <td>
+              1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                host
+        </th>
+        <td>
+              
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                sectorsize
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                removable
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                support_discard
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                model
+        </th>
+        <td>
+              None
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                partitions
+        </th>
+        <td>
+              
+  
+  <table>
+  </table>
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                holders
+        </th>
+        <td>
+              
+  
+
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size
+        </th>
+        <td>
+              0.00 Bytes
+        </td>
+      </tr>
+  </table>
+
+        </td>
+      </tr>
+  </table>
+
+      </td>
+    </tr>
+    <tr>
+      <th>Mounts</th>
+      <td>
+        
+  
+      
+  
+  <table>
+      
+      <tr>
+        <th>
+                block_used
+        </th>
+        <td>
+              3291583
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuid
+        </th>
+        <td>
+              N/A
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size_total
+        </th>
+        <td>
+              62536339456
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                block_total
+        </th>
+        <td>
+              15267661
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                inode_available
+        </th>
+        <td>
+              3647701
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                block_available
+        </th>
+        <td>
+              11976078
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size_available
+        </th>
+        <td>
+              49054015488
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                fstype
+        </th>
+        <td>
+              ext4
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                inode_total
+        </th>
+        <td>
+              3845088
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                mount
+        </th>
+        <td>
+              /
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                device
+        </th>
+        <td>
+              /dev/root
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                inode_used
+        </th>
+        <td>
+              197387
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                block_size
+        </th>
+        <td>
+              4096
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                options
+        </th>
+        <td>
+              rw,noatime
+        </td>
+      </tr>
+  </table>
+
+      
+  
+  <table>
+      
+      <tr>
+        <th>
+                block_used
+        </th>
+        <td>
+              102868
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                uuid
+        </th>
+        <td>
+              7C7A-DCF2
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size_total
+        </th>
+        <td>
+              264289280
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                block_total
+        </th>
+        <td>
+              516190
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                inode_available
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                block_available
+        </th>
+        <td>
+              413322
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                size_available
+        </th>
+        <td>
+              211620864
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                fstype
+        </th>
+        <td>
+              vfat
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                inode_total
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                mount
+        </th>
+        <td>
+              /boot
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                device
+        </th>
+        <td>
+              /dev/mmcblk0p1
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                inode_used
+        </th>
+        <td>
+              0
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                block_size
+        </th>
+        <td>
+              512
+        </td>
+      </tr>
+      
+      <tr>
+        <th>
+                options
+        </th>
+        <td>
+              rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,flush,errors=remount-ro
+        </td>
+      </tr>
+  </table>
+
+
+      </td>
+    </tr>
+  </table>
+  </div>
+
+    </div>
+
+</div>
+
+  <footer>
+    <p>Generated by <a href="https://github.com/fboender/ansible-cmdb">ansible-cmdb</a> v1.31 &dash; &copy; Ferry Boender 2017</p>
+  </footer>
+
+
+<script>
+$(document).ready( function () {
+  
+  // Open the detailed host information when clicking on the hosts header
+  $('.toggle-collapse').on('click', function(e) {
+    $(this).toggleClass('collapsed');
+    $(this).toggleClass('uncollapsed');
+    $(this).next().toggleClass('collapsed');
+  });
+
+  // Toggle opening and closing all information for a host.
+  $('a.toggle-all').on('click', function(e) {
+    e.preventDefault();
+    if ($(this).text() == "Open all") {
+      $(this).siblings('.collapsed').each(function(item) {
+        $(this).addClass('uncollapsed');
+        $(this).removeClass('collapsed');
+        $(this).next().toggleClass('collapsed');
+      });
+      $(this).text("Close all");
+    } else {
+      $(this).text("Open all");
+      $(this).siblings('.uncollapsed').each(function(item) {
+        $(this).addClass('collapsed');
+        $(this).removeClass('uncollapsed');
+        $(this).next().toggleClass('collapsed');
+      });
+    }
+  });
+
+});
+</script>
+
+
+  </body>
+  </html>
+
