@@ -10,6 +10,12 @@ __pycache__/
 
 !.gitignore
 **/data
+**/tmp.0
+**/tmp.1
+**/tmp.2
+**/tmp.3
+**/tmp.4
+**/tmp.5
 
 v2/doc/figures
 

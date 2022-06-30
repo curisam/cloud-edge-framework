@@ -5,11 +5,12 @@
 
 ## 사전 준비 : 가상환경 관리자 poetry 설치
 
-- poetry 설치
+- poetry 의존성 패키지 설치
 
 ```bash
 $ poetry install
 ```
+
 
 - 자세한 설치 방법은 아래 문서를 참고합니다.
 

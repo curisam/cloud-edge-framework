@@ -1,0 +1,9 @@
+- name: Test Copy
+  hosts: all
+  remote_user: jpark
+  tasks:
+    - name: Copying files from remote server
+      copy:
+        src: "test.txt"
+        dest: "/home/jpark/test_clone.txt"
+        backup: yes

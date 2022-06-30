@@ -23,22 +23,31 @@ $ python3 get-poetry.py
 
 ## poetry 환경변수를 설정합니다.
 
+- zsh 을 사용중이라면 아래처럼 편집하고 환경변수를 기입합니다.
 ```bash
-$ vi .zshrc 
+$ vi ~/.zshrc 
+
+  export PATH="$HOME/.poetry/bin:$PATH"
+
+$ source ~/.zshrc
 ```
 
-- 파일에 아래 명령행을 추가합니다.
+- bash 을 사용중이라면 아래처럼 편집하고 환경변수를 기입합니다.
 ```bash
+$ vi .bashrc 
+
   export PATH="$HOME/.poetry/bin:$PATH"
+
+$ source ~/.bashrc
 ```
+
+
 
 ## 환경변수 설정이 잘되는지, 실행해 봅니다.
 
 ```bash
 $ poetry --version
 ```
-python get-poetry.py --uninstall
-POETRY_UNINSTALL=1 python get-poetry.py
 
 
 ## poetry 제거는 아래와 같이 합니다.
