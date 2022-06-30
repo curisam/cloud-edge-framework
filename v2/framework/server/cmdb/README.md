@@ -44,8 +44,16 @@ $ ansible-cmdb -t html_fancy tmp.0/ > tmp.1/overview.html
 $ open tmp.1/overview.html
 ```
 
+- HTML 출력 예시입니다.
+- 라즈베리파이 컴퓨터 3대의 정보 {rpi01, rpi02, rpi03} 를 원격에서 수집합니다.
+- {rpi01} 은 Arm 64비트 Linux OS가 설치 되었습니다.
+- {rpi02}는 네트워크와 연결이 안된 상태입니다.
+- {rpi03} 은 Arm 32비트 Linux OS가 설치 되었습니다.
+
 ![HTML출력 예시](img4doc/overview01.png)
 ![HTML출력 예시](img4doc/overview02.png)
+
+
 
 
 ### (단계 2 - 2) CSV 파일 생성
@@ -94,3 +102,25 @@ Ansible-cmdb currently provides the following templates out of the box:
 - csv: The CSV template outputs a CSV file of your hosts.
 - markdown: The Markdown template generates host information in the Markdown format.
 - sql: The SQL template generates an .sql file that can be loaded into an SQLite or MySQL database.
+
+
+## 고급 옵션
+
+### 컬럼 필터링
+
+- 특정 컬럼 정보만 선택하여 추출 가능
+```bash
+$ ansible-cmdb -t txt_table --columns name,os,ip,mem,cpus tmp.0/  > tmp.1/overview.txt
+
+$ open tmp.1/overview.txt
+```
+
+- 특정 컬럼 정보만 빼고 추출 가능
+```bash
+$ ansible-cmdb -t html_fancy \
+             --exclude-cols comment,groups,mem_usage,arch,swap_usage,disk_usage,physdisk_size \
+             -i edges.ini \
+             tmp.0/ > tmp.1/overview.html
+
+$ open tmp.1/overview.html
+```
