@@ -147,12 +147,13 @@ https://zdnet.co.kr/view/?no=20210816112957
 - 회의체의 정의, 기타 커뮤니케이션 규칙, 진척 관리 등의 프로젝트 관리 방침을 정의한다.
 
 
-
 ### 주요 참고문헌
 
+```bibtex
 @article{mathur2021device,
   title={On-device federated learning with flower},
   author={Mathur, Akhil and Beutel, Daniel J and de Gusmao, Pedro Porto Buarque and Fernandez-Marques, Javier and Topal, Taner and Qiu, Xinchi and Parcollet, Titouan and Gao, Yan and Lane, Nicholas D},
   journal={arXiv preprint arXiv:2104.03042},
   year={2021}
 }
+```
