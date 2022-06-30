@@ -54,6 +54,15 @@ Nvidia Jetson TX2
 Nvidia Jetson NANO
 ```
 
+## 주요 참고문헌
 
+```bibtex
+@article{mathur2021device,
+  title={On-device federated learning with flower},
+  author={Mathur, Akhil and Beutel, Daniel J and de Gusmao, Pedro Porto Buarque and Fernandez-Marques, Javier and Topal, Taner and Qiu, Xinchi and Parcollet, Titouan and Gao, Yan and Lane, Nicholas D},
+  journal={arXiv preprint arXiv:2104.03042},
+  year={2021}
+}
+```
 
 
