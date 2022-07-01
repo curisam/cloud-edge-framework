@@ -7,6 +7,18 @@
 
 
 
+## Examples
+
+- 연동 서버 동작 확인
+
+![ping](img4doc/ansible-ping2.png)
+
+
+- 주기적인 온도 측정
+
+![ping](img4doc/ansible-get_temperature.png)
+
+
 
 
 

@@ -10,10 +10,9 @@
 
 
 
+## 내용
 
-# 내용
-
-## 설치
+### 설치
 
 - Python 환경
 ```bash
@@ -32,14 +31,14 @@ $ sudo apt install ansible
 $ brew install ansible
 ```
 
-## SSH 연결 사전 설정
+### SSH 연결 사전 설정
 
-### 절차
+#### 절차
 
 - 단계 1. ssh-keygen으로 키를 생성하고,
 - 단계 2. ssh-copy-id로 키를 추가합니다.
 
-### 예시
+#### 예시
 
 - 동일 네트워크에 2대의 컴퓨터 {A, B}가 있다고 가정합니다.
 - A 는 "192.168.1.5" IP를 갖는다고 하고,
@@ -65,9 +64,9 @@ $ ssh jpark@192.168.1.3
 ![ssh](img4doc/ssh-connection.png)
 
 
-## Ansible 사용해보기
+### Ansible 사용해보기
 
-### 절차
+#### 절차
 
 - Ansible 이 설치되어 있는지 확인합니다.
 
