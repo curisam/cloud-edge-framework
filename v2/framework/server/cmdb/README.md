@@ -9,18 +9,61 @@
 $ brew install ansible-cmdb
 ```
 
+## demo
+
+[demo](demo/overview.html)
+
+
 ## Quick 사용법
 
 
 ```bash
 $ mkdir tmp
 
-$ ansible -i edges.ini edges -m setup --tree tmp/
+$ ansible -i hosts.ini all -m setup --tree tmp/
 
 $ ansible-cmdb tmp/ > tmp/overview.html    
 
 $ open tmp/overview.html
 ```
+
+
+## 연결할 에지 디바이스 SSH 연결 사전 설정
+
+### 절차
+
+- 단계 1. ssh-keygen으로 키를 생성하고,
+- 단계 2. ssh-copy-id로 키를 추가합니다.
+
+### 예시
+
+- 네트워크에 2대의 컴퓨터 {A, B}가 있다고 가정합니다.
+- A 는 "192.168.1.5" IP를 갖는다고 하고,
+- B 는 "192.168.1.3" IP를 갖는다고 가정합니다.
+- B 의 사용자 id는 "jpark"이라고 가정합니다.
+
+- A에서 ssh-keygen으로 먼저 키를 만듭니다.
+```bash
+$ ssh-keygen -t rsa
+```
+
+- private key(비밀키)와 public key(공개키)가 짝으로 만들어집니다.
+
+- A에서 만든 공개키를 B로 전송합니다.
+- A의 공개키 ~/.ssh/id_rsa.pub 의 내용이 B에 전달되어 B의 ~/.ssh/authorized_keys 파일에 추가됩니다.
+
+```bash
+$ ssh-copy-id jpark@192.168.1.3
+```
+
+- A에서 B로 암호 입력 없이 접속 가능합니다.
+
+```bash
+$ ssh jpark@192.168.1.3
+```
+
+
+
 
 
 ## 세부 사용법
@@ -32,7 +75,7 @@ $ open tmp/overview.html
 $ mkdir tmp.0
 $ mkdir tmp.1
 
-$ ansible -i edges.ini edges -m setup --tree tmp.0/
+$ ansible -i hosts.ini all -m setup --tree tmp.0/
 ```
 
 
@@ -119,7 +162,7 @@ $ open tmp.1/overview.txt
 ```bash
 $ ansible-cmdb -t html_fancy \
              --exclude-cols comment,groups,mem_usage,arch,swap_usage,disk_usage,physdisk_size \
-             -i edges.ini \
+             -i hosts.ini \
              tmp.0/ > tmp.1/overview.html
 
 $ open tmp.1/overview.html
