@@ -1,6 +1,6 @@
 # CMDB 
 
-- 구성관리 데이터베이스 입니다.
+- 구성관리 데이터베이스 (Configuration Management DataBase) 입니다.
 - 참고 : https://ansible-cmdb.readthedocs.io/en/latest/usage/
 
 ## Mac에서 설치
