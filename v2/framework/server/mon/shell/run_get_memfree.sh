@@ -1,1 +1,1 @@
-ansible all -m shell -a "free" -i edges.ini
+ansible all -m shell -a "free" -i hosts.ini

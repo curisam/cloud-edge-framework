@@ -54,5 +54,4 @@ $ poetry --version
 
 ```bash
 $ python get-poetry.py --uninstall
-POETRY_UNINSTALL=1 python get-poetry.py
 ```
