@@ -4,7 +4,7 @@
 
 - by : JPark @ KETI
 - since : 2022-06-08
-
+- 참고, https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
 
 
 ## Examples
@@ -19,6 +19,9 @@
 ![ping](img4doc/ansible-get_temperature.png)
 
 
+- ntp 시간 동기화
+
+![ping](img4doc/ansible-ntp_sync.png)
 
 
 
