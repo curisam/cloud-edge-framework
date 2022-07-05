@@ -7,6 +7,10 @@
 - 참고, https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
 
 
+## 목표
+
+- Resource Aware Federated Learning
+
 ## Examples
 
 - 연동 서버 동작 확인
