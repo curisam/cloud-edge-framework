@@ -99,7 +99,7 @@ $ ssh jpark@192.168.1.3
 
 
 ## Ansible 사용해보기
-
+a
 ### ping으로 연결상태 확인하기
 
 - Ansible 이 설치되어 있는지 확인합니다.
@@ -110,13 +110,13 @@ $ ansible --version
 ![ansible-version](img4doc/ansible-version.png)
 
 
-- server.ini 파일을 만듭니다.
+- hosts.ini 파일을 만듭니다.
 
 ```bash
-$ vi server.ini
+$ vi hosts.ini
 ```
 
-- server.ini 파일에 서버 목록을 기입합니다.
+- hosts.ini 파일에 서버 목록을 기입합니다.
 - 아래 예시에서는 192.168.1.3 은 존재하는 서버지만, 192.168.1.7 은 존재하지 않는 서버입니다.
 
 ```bash
@@ -128,7 +128,7 @@ $ vi server.ini
 - 터미널에서 ansible을 통해 ping을 실행합니다.
 
 ```bash
-ansible server -i server.ini -m ping
+ansible server -i hosts.ini -m ping
 ```
 
 ![ansible-ping](img4doc/ansible-ping.png)
@@ -137,7 +137,7 @@ ansible server -i server.ini -m ping
 - ansible을 통해 ping을 실행시에 사용자 명을 옵션으로 줄 수 있습니다.
 
 ```bash
-ansible server -i server.ini -m ping -jpark
+ansible server -i hosts.ini -m ping -jpark
 ```
 
 
@@ -162,7 +162,7 @@ ansible server -i server.ini -m ping -jpark
 
 
 ```bash
-$ ansible-playbook copy.yaml -i server.ini
+$ ansible-playbook copy.yaml -i hosts.ini
 ```
 
 ![ansible-version](img4doc/ansible-copy.png)
@@ -210,7 +210,7 @@ $ ansible-playbook copy.yaml -i server.ini
 
 
 ```bash
-$ ansible-playbook shell_cmd01.yaml -i server.ini
+$ ansible-playbook shell_cmd01.yaml -i hosts.ini
 ```
 
 ![ansible-version](img4doc/ansible-shell-cmd.png)
