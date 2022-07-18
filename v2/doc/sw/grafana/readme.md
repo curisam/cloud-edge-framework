@@ -19,7 +19,9 @@ docker run -d -p 3000:3000 grafana/grafana-oss
 - 기본 접속 정보
 
 ```bash
-id: admin
-pw: admin
+    기본 포트: 3000
+    기본 ID: admin
+    기본 PW: admin
 ```
+
 
