@@ -68,3 +68,10 @@
 ```bash
     $ del mykey2
 ```
+
+
+
+## Python 기반 사용법
+
+
+
