@@ -21,8 +21,9 @@
 
 ## 클라이언트에서 서버 접속 시 SSL Handshake과정
 
-- 참고 https://nuritech.tistory.com/25 
-
+- 참고 
+  . https://nuritech.tistory.com/25 
+  . https://eun-jeong.tistory.com/27
 
 
 ## 브라우저에서 웹사이트 서버 접속 시 인증과정
