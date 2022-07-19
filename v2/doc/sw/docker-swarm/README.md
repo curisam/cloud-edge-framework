@@ -29,3 +29,6 @@ docker swarm join --token SWMTKN-1-3k5r45mfx71b0qhaoz2n3l5szwp9qckhwtg4rhb0gz36p
 
 
 ## 기본 명령어
+
+- docer swarm 
+
