@@ -5,8 +5,10 @@ __pycache__/
 #---------------
 # jpark
 #---------------
-.DS_Store
-.*.swp
+**/.DS_Store
+**/.*.swp
+**/wandb
+**/results
 
 !.gitignore
 **/data
