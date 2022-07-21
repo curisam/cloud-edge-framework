@@ -30,7 +30,8 @@
 
 ## 구축 순서
 
-- todo
+- TODO 
+
 
 
 ## Acknowledgement
