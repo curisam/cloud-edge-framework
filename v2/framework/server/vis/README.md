@@ -17,3 +17,35 @@
     $ docker run -d --name=grafana -p 3000:3000 grafana/grafana
 ```
 
+
+- 하지만 위와 같이 실행하면 dashboard가 로딩되거나 저장되지 않습니다.
+
+```bash
+version: "3"
+services:
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    restart: always
+volumes:
+  grafana-storage:
+```
+
+
+## Install Plugins
+
+- Example
+
+```bash
+    $ grafana-cli plugins install corpglory-progresslist-panel
+```
+
+```bash
+    $ docker run -d --name grafana -p 3000:3000 -v grafana-storage:/var/lib/grafana cognite/grafana-cdf
+```
+
+grafana-diagram
