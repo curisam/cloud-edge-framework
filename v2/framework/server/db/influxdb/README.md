@@ -48,6 +48,11 @@
 ```bash
     $ influxd 
 ```
+![influxd](img4doc/influxd.png)
+
+
+![telegraf](img4doc/telegraf.png)
+
 
 admin / adminadmin
 
