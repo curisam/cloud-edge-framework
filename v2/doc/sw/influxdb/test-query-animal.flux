@@ -1,0 +1,7 @@
+from(bucket: "edge")
+  |> range(start: 2020-05-15T00:00:00Z, stop: 2020-05-16T00:00:00Z)
+  |> filter(fn: (r) => r["_measurement"] == "cats")
+  |> filter(fn: (r) => r["_field"] == "adult")
+  |> filter(fn: (r) => r["shelter"] == "A")
+  |> filter(fn: (r) => r["type"] == "calico")
+  |> limit(n:100)
