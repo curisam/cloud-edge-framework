@@ -1,4 +1,4 @@
-# cloud-edge-framework (Server S/W)
+# cloud-edge-framework (Server side S/W)
 
 ## 클라우드-에지 프레임워크 ?
 - 클라우드와 에지가 협력하는 기계학습 프레임워크 기술입니다.
