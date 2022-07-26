@@ -14,3 +14,5 @@ CREATE TABLE labjack (
 	data1 INTEGER,
 	data2 TEXT
 );
+
+
