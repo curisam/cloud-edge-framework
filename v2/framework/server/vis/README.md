@@ -49,3 +49,12 @@ volumes:
 ```
 
 grafana-diagram
+
+
+### grafana datasource
+
+- 연동 테스트
+
+![grafana_data_source](./img4doc/grafana_data_source.png)
+
+

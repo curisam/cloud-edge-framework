@@ -7,8 +7,8 @@ import psycopg2
 
 def open_db(tablename):
     dbname = 'test'
-    user = 'jpark'
-    password = 'jpark'
+    user = 'keti'
+    password = 'keti'
     host = 'localhost'
     port = 5432
 
@@ -17,10 +17,10 @@ def open_db(tablename):
     return conn
 
 
-tablename = "grafana"
+tablename = "sensordata"
 conn = open_db(tablename)
 cur = conn.cursor()
-cur.execute("SELECT ts, data from " + tablename)
+cur.execute("SELECT ts, data0 from " + tablename)
 rows = cur.fetchall()
 for row in rows:
    print ("ts = ", row[0])
