@@ -31,7 +31,6 @@ https://www.raspberrypi.com/software/
 
 - 운영체제별로 기계학습을 위한 패키지 설치방법이 다르므로, 이는 별도의 문서로 정리합니다.
 
-
 ## 에지 동작 환경 구축
 
 ### 하드웨어 준비
@@ -112,3 +111,32 @@ IM_CONFIG_DEFAULT_MODE=fcitx
 
 - GUI에서 Category / Window / Translation : Received data 메뉴 이동합니다.
 - 인코딩을 'UTF-8'로 설정합니다.
+
+
+### SSH 연결 시 멈춤현상
+
+- 원인에 대한 설명은 아래와 같습니다.
+
+```bash
+https://discourse.osmc.tv/t/solved-ssh-connection-sometimes-hangs/76504/5
+
+
+IPQoS cs0 cs0
+
+Edit: explaination of the problem:
+OpenSSH sets the TOS (type Of Service) field in the IP datagram as “lowdelay” for interactive sessions and “throughput” for non-interactive sessions. My router doesn’t handle properly those settings, so I changed them in Cs0, Cs0 (aka 0x00, 0x00) <==> (best effort, best effort) and solved the instability/freeze SSH issues.
+```
+
+- 처리 방법 
+
+파일 열기 
+
+```bash
+    $ vi /etc/ssh/sshd_config
+```
+
+아래 내용 추가
+
+```bash
+      IPQoS cs0 cs0
+```
