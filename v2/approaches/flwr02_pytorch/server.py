@@ -25,3 +25,4 @@ fl.server.start_server(
     config={"num_rounds": 30},
     strategy=strategy,
 )
+
