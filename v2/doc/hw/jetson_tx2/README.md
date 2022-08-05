@@ -388,3 +388,12 @@ pip3 install tqdm
 pip3 install opencv-python
 
 ```
+
+
+### Jetson TX2에 SD card를 끼우고, Root 시스템을 복사하는 법
+
+- 기본 탑재된 emmc 메모리 용량이 적음
+- 대용량 SD카드를 끼우고 확장 가능
+- 아래 주소에 설명이 상세히 잘 되어 있음
+https://www.forecr.io/blogs/bsp-development/change-root-file-system-to-sd-card-directly
+
