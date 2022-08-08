@@ -39,3 +39,57 @@ docker run -d -p 3000:3000 grafana/grafana-oss
 ```
 
 
+
+## Grafana 사용팁
+
+### iframe 으로 웹페이지 넣기
+
+- grafana.ini 파일을 열기 
+```bash
+$ sudo vi /etc/grafana/grafana.ini
+```
+
+- 아래와 같이 편집하기 
+
+```
+allow_embedding = true
+disable_sanitize_html = true
+
+[auth.anonymous]
+enabled = true
+org_name = Main Org
+org_role = Viewer
+```
+
+- 서비스 재시작 하기 (Ubuntu의 경우)
+
+```bash
+$ sudo systemctl restart grafana-server
+```
+
+
+- 서비스 동작상태 확인하기 (Ubuntu의 경우)
+
+```bash
+$ sudo systemctl status grafana-server
+```
+
+- 그라파나 HTML UI / 방패 아이콘 / Settings / "allow_embedding" 찾기
+
+- allow_embedding 이 true인지 확인 
+
+
+### 콘솔 명령어로 플러그인 설치하기
+
+- 예를들어, diagram, ajax 플러그인 설치시
+
+```bash
+    $ grafana-cli plugins install jdbranham-diagram-panel
+    $ grafana-cli plugins install ryantxu-ajax-panel
+```
+
+```bash
+    $ sudo systemctl restart grafana-server
+    $ sudo systemctl status grafana-server
+```
+
