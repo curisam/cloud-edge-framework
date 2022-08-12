@@ -6,6 +6,7 @@ if __name__ == "__main__":
 
     # init device
     device = fedml.device.get_device(args)
+    print('device = ', device)
 
     # load data
     dataset, output_dim = fedml.data.load(args)

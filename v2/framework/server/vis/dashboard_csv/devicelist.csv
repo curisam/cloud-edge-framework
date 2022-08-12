@@ -1,0 +1,15 @@
+ClusterID, lat, lon, ansible_group, ansible_name, ansible_host, ansible_port, ansible_dtap, ansible_comment
+1, 37.5808648, 126.8885334, mac, localhost, localhost, 22, dev, Host server
+1, 37.5808648, 126.8885334, server, w01, ketiabcs.iptime.org, 39021, dev, w01 GPU GTX 1080 ubuntu
+1, 37.5808648, 126.8885334, server, dell01, ketiabcs.iptime.org, 39022, dev, dell01 ubuntu
+1, 37.5808648, 126.8885334, server, dell01, ketiabcs.iptime.org, 39023, dev, dell02 ubuntu
+1, 37.5808648, 126.8885334, jetson, tx2_01, ketiabcs.iptime.org, 39031, dev, Nvidia Jetson TX2
+1, 37.5808648, 126.8885334, nuc, nuc_01, ketiabcs.iptime.org, 39041, dev, Intel NUC windows
+1, 37.5808648, 126.8885334, rpi, rpi6401, ketiabcs.iptime.org, 39001, dev, Edge RPI 64bit
+1, 37.5808648, 126.8885334, rpi, rpi6402, ketiabcs.iptime.org, 39002, dev, Edge RPI 64bit
+1, 37.5808648, 126.8885334, rpi, rpi6403, ketiabcs.iptime.org, 39003, dev, Edge RPI 64bit
+1, 37.5808648, 126.8885334, rpi, rpi3201, ketiabcs.iptime.org, 39011, dev, Edge RPI 32bit
+1, 37.5808648, 126.8885334, rpi, rpi3202, ketiabcs.iptime.org, 39012, dev, Edge RPI 32bit
+21, 37.5808648, 126.8885334, 상암동 전자회관 클러스터, todo, todo, 1111, dev, todo
+31, 37.579313,127.980063, 서울 카이스트 (위치 수정 예정), todo, todo, 1111, dev, todo
+41, 36.579313,126.980063, 동탄 클러스터 (위치 수정 예정), todo, todo, 1111, dev, todo
