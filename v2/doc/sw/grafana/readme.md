@@ -84,8 +84,11 @@ $ sudo systemctl status grafana-server
 - 예를들어, diagram, ajax 플러그인 설치시
 
 ```bash
-    $ grafana-cli plugins install jdbranham-diagram-panel
-    $ grafana-cli plugins install ryantxu-ajax-panel
+    $ grafana-cli plugins install jdbranham-diagram-panel # DIAGRAM
+    $ grafana-cli plugins install ryantxu-ajax-panel # AJAX
+    $ grafana-cli plugins install marcusolsson-csv-datasource # CSV
+
+    grafana-cli plugins install innius-video-panel # Video
 ```
 
 ```bash
