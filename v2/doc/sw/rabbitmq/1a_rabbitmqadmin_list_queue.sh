@@ -1,0 +1,1 @@
+rabbitmqadmin list queues
