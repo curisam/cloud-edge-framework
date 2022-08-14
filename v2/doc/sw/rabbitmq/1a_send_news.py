@@ -5,9 +5,9 @@ import pika
 con = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 ch = con.channel()
 
-ch.queue_declare(queue='book')
+ch.queue_declare(queue='book', durable=True)
 ch.basic_publish(exchange='news',
                       routing_key='book.12345',
-                      body='book data')
+                      body='Book Data')
 print(" [d] Sent ok ")
 con.close()

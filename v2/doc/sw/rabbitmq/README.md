@@ -1,6 +1,13 @@
 # RabbitMQ
 
 - 메시지 전달 브로커 기술
+- {Exchange, Queue, Binding}의 개념을 이해하면 사용법이 명확하다.
+- Exchange는 전화교환원이나 우체국을 연상할 수 있다. 메시지를 이곳에 보내면 목적지로 간다.
+- Queue는 메시지의 임시 보관 장소다. 메시지가 목적지에 가기전에 이곳에 순서대로 모인다.     
+- Binding은 Exchange와 Queue를 연결하는 과정이다. 라우팅 설정이 가능하다.
+- 이 개념은 rabbitmq를 설치하고 rabbitmqadmin CLI 프로그램으로 시험해보면 이해가 잘 된다.
+
+
 
 ## Kafaka vs. RabbitMQ vs. MQTT ?
 
@@ -83,3 +90,145 @@ brew install rabbitmq
 ```bash
     $ rabbitmqctl list_users
 ```
+
+
+## "rabbitmqadmin"으로 만들어 보기
+
+- 참고 주소 : http://corecode.pe.kr/2018/02/04/RabbitMQ_usage/
+- 본 예제는 {Exchange, Queue, Binding}의 개념을 이해하기 위한 것이다.
+- Exchange는 전화교환원이나 우체국을 연상하면 좋다. 
+- Exchange에 메시지를 보내면 목적지까지 간다.
+- Queue는 메시지의 임시 보관 장소다. 
+- 메시지가 목적지에 가기전에 이곳에 순서대로 모인다.     
+- Binding은 Exchange와 Queue를 연결하는 과정이다. 일종의 라우팅을 할 수 있으며, 설정도 다양하게 가능하다.
+- 상기 요소들의 개념이해를 위해 rabbitmqadmin CLI 프로그램으로 시험해 본다.
+- rabbitmq는 이미 설치되어 있고, 터미널에서 프로그램 실행이 가능하도록 시스템 경로가 설정되어 있음을 가정한다.
+
+![rabbitmq 개념도](./img4doc/rabbitmq_example01.jpg)
+
+
+### 
+
+- 'sms'라는 Exchange와 'edge1', 'edge2'라는 Queue를 생성한 다음에 'edge1'으로 'hi edge1'이라는 메시지를 보내는 예제이다.
+
+![rabbitmq](./img4doc/rabbitmq_example02.jpg)
+
+
+- 먼저 'sms'라는 Exchange 를 생성한다.
+
+```bash
+ $ rabbitmqadmin declare exchange name=sms type=topic
+exchange declared
+```
+
+- 먼저 {'edge1', 'edge2'}라는 Queue 를 생성한다.
+
+```bash
+$ rabbitmqadmin declare queue name=edge1
+queue declared
+$ rabbitmqadmin declare queue name=edge2
+queue declared
+```
+
+- 생성한 큐 목록을 확인한다.
+
+```bash
+$ rabbitmqadmin list queues
+
++--------+----------+
+|  name  | messages |
++--------+----------+
+| edge1  | 0        |
+| edge2  | 0        |
++--------+----------+
+```
+
+- 바인딩을 생성한다.
+
+```bash
+$ rabbitmqadmin declare binding source="sms" destination_type="queue" destination="edge1" routing_key="edge1.*"
+binding declared
+$ rabbitmqadmin declare binding source="sms" destination_type="queue" destination="edge2" routing_key="edge2.*"
+binding declared
+```
+
+- 바인딩 상태를 확인한다.
+
+```bash
+$ rabbitmqadmin list bindings
+
++--------+-------------+-------------+
+| source | destination | routing_key |
++--------+-------------+-------------+
+|        | edge1       | edge1       |
+|        | edge2       | edge2       |
+| sms    | edge1       | edge1.*     |
+| sms    | edge2       | edge2.*     |
++--------+-------------+-------------+
+```
+
+
+- rabbitmqadmin 을 사용해서 edge1에 메시지를 보낸다.
+
+```bash
+$ rabbitmqadmin publish exchange=sms routing_key="edge1.0" payload="hi edge1"
+Message published
+```
+
+- 큐 목록을 확인하여 큐에 메시지가 들어 있는지 확인한다.
+
+```bash
+$ rabbitmqadmin list queues
+
++--------+----------+
+|  name  | messages |
++--------+----------+
+| edge1  | 1        |
+| edge2  | 0        |
++--------+----------+
+```
+
+- 큐에 메시지가 들어 있는지 확인한다.
+
+```bash
+ $ rabbitmqadmin get queue=edge1
++-------------+----------+---------------+----------+---------------+------------------+------------+-------------+
+| routing_key | exchange | message_count | payload  | payload_bytes | payload_encoding | properties | redelivered |
++-------------+----------+---------------+----------+---------------+------------------+------------+-------------+
+| edge1.0     | sms      | 0             | hi edge1 | 8             | string           |            | True        |
++-------------+----------+---------------+----------+---------------+------------------+------------+-------------+
+ $ 
+ ```
+
+
+- python 스크립트로 해당 메시지를 얻어올 수도 있다.
+
+```python
+#!/usr/bin/env python
+import pika
+
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+channel = connection.channel()
+
+channel.queue_declare(queue='edge1', durable=True)
+
+def callback(ch, method, properties, body):
+    print(" [d] Received %r" % body)
+
+channel.basic_consume(queue='edge1', on_message_callback=callback, auto_ack=True)
+print('[*] Waiting for messages. To exit press CTRL+C')
+channel.start_consuming()
+
+```
+
+
+- 실행한다.
+
+```bash
+$ python 2b_recv_sms.py 
+ [*] Waiting for messages. To exit press CTRL+C
+   [d] Received b'hi edge1'
+```
+
+
+
