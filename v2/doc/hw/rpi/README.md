@@ -91,6 +91,21 @@ $ sudo systemctl start ssh
 $ ifconfig | grep 192
 ```
 
+### SuperUser 권한을 가진 사용자 계정 만들기
+
+- 생성 
+
+```bash
+    $ sudo adduser newuser
+    $ sudo usermod -aG sudo newuser
+```
+
+- 확인
+
+```bash
+    $ su - newuser
+```
+
 ### 한글 설정
 
 - 설치 시 한글을 설정하면 자동으로 패키지가 설치되기도 하지만, 한글이 깨져서 표현되는 경우가 있습니다.
