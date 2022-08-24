@@ -9,17 +9,22 @@
 - 본, 문서에서는 Ansible을 이용한 배포/관리 기술의 개요를 기술합니다.
 
 
-
-
 # 내용
 
 ## 설치
 
-- Python 환경
+- Python PIP
+
 ```bash
 $ pip install ansible
 # 설치 할 앤서블 버전 설정
 $ pip install ansible==2.10.7
+```
+
+- Python conda
+
+```bash
+$ conda install ansible
 ```
 
 - Ubuntu Linux
