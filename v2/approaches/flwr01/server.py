@@ -4,6 +4,6 @@ import flwr as fl
 
 # Start Flower server
 fl.server.start_server(
-  "[::]:8080",
-  config={"num_rounds": 3},
+  server_address="[::]:8080",
+  config=fl.server.ServerConfig(num_rounds=3),
 )
