@@ -27,3 +27,4 @@ class CifarClient(fl.client.NumPyClient):
 
 # Start Flower client
 fl.client.start_numpy_client("[::]:8080", client=CifarClient())
+
