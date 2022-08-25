@@ -57,6 +57,7 @@
 
 ```bash
     https://www.whatwant.com/entry/M1-TensorFlow-GPU
+    https://github.com/mrdbourke/m1-machine-learning-test
 ```
 
 - 기본 확인
@@ -73,6 +74,8 @@
 
 ```bash
     $ wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
+
+    $ chmod +x Miniforge3-MacOSX-arm64.sh
 
     $ sh Miniforge3-MacOSX-arm64.sh
 
@@ -94,8 +97,59 @@
     $ which python3
 
     # 가상환경을 나옵니다.
-    $ conda deactivate {envname}
+    $ conda deactivate
+
 ```
+
+
+
+
+- 실제 tensorflow 가상환경을 구축하고 실험합니다.
+
+```bash
+    $ mkdir make_tensorflow_env_for_m1
+    $ cd make_tensorflow_env_for_m1
+    $ conda create --prefix ./env python=3.8
+    $ conda activate ./env
+    $ conda install -c apple tensorflow-deps
+    $ python -m pip install tensorflow-macos
+    $ python -m pip install tensorflow-metal
+    $ python -m pip install tensorflow-datasets
+    $ conda install jupyter pandas numpy matplotlib scikit-learn
+    $ jupyter notebook
+```
+
+- jupyter notebook에서 테스트
+
+```python
+
+# Test code
+import numpy as np
+import pandas as pd
+import sklearn
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+# Check for TensorFlow GPU access
+print(f"TensorFlow has access to the following devices:\n{tf.config.list_physical_devices()}")
+
+# See TensorFlow version
+print(f"TensorFlow version: {tf.__version__}")
+
+# End of test code
+
+```
+
+- 수행 결과 예시
+
+```bash
+TensorFlow has access to the following devices:
+[PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+TensorFlow version: 2.9.2
+
+```
+
+
 
 
 ### MiniForge로 설치된 환경 (Arm64)
