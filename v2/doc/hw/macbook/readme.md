@@ -119,6 +119,7 @@
     $ jupyter notebook
 ```
 
+
 - jupyter notebook에서 테스트
 
 ```python
@@ -148,6 +149,52 @@ TensorFlow has access to the following devices:
 TensorFlow version: 2.9.2
 
 ```
+
+
+
+### Ubuntu Linux 20.04에서 가상환경 만들고 pip 명령어로 패키지 설치 방법
+
+
+sudo apt install python3.8-venv
+
+
+```bash
+python3 -m venv ./env
+source ./env/bin/activate
+pip3 install tensorflow-gpu
+pip3 install jupyter pandas numpy matplotlib scikit-learn flwr
+pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+pip3 list
+ipython
+
+```
+
+
+- jupyter notebook에서 테스트
+
+```python
+
+# Test code
+import numpy as np
+import pandas as pd
+import sklearn
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+# Check for TensorFlow GPU access
+print(f"TensorFlow has access to the following devices:\n{tf.config.list_physical_devices()}")
+
+# See TensorFlow version
+print(f"TensorFlow version: {tf.__version__}")
+
+# End of test code
+
+```
+
+
+
+### Jetson TX2
+
 
 
 

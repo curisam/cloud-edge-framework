@@ -12,3 +12,8 @@ https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=junghoon5000
 
 ## 운영체제 설치
 
+- Jetson 계열 디바이스에 대한 설치 방법에 대해서 아래 참고문서가 유용합니다.
+
+```bash
+https://judo0179.tistory.com/128
+```
