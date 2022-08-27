@@ -6,10 +6,8 @@ explanations are given in the official PyTorch tutorial:
 https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
 """
 
-
 # mypy: ignore-errors
 # pylint: disable=W0223
-
 
 from typing import Tuple, Dict
 
@@ -106,6 +104,7 @@ def test(
 
 def main():
 
+    # by JPark
     if platform.processor() == 'arm':
         # for Mac Silicon GPU
         DEVICE = 'mps' 
