@@ -1,6 +1,6 @@
 # Redis
 
-## 설치 및 실행 (MacOS)
+## 기본적인 Redis 설치 및 실행 (MacOS)
 
 - 설치 
 ```bash
@@ -69,6 +69,30 @@
     $ del mykey2
 ```
 
+
+## RedisAI 설치 및 실행 (Ubuntu Linux)
+
+
+
+- (TODO), 다시작성할 것 ..설치 
+```bash
+    $ sudo apt install redis-server
+    ## $ brew install git-lfs cmake
+    $ redis-server --version
+
+    $ git clone git@github.com:RedisAI/RedisAI.git
+    $ cd RedisAI
+    $ bash get_deps.sh
+    $ mkdir build
+    $ cd build
+    $ cmake -DDEPS_PATH=../deps/install ..
+    $ make
+    $ cd ..
+
+
+```
+
+redis-cli -h 192.168.0.2(ip) -a redis(username)
 
 
 ## Python 기반 사용법
