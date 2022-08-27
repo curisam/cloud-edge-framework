@@ -13,16 +13,17 @@ import torchvision
 
 #import cifar
 #import cifar_simple as cifar
-#import cifar_resnet50 as cifar
-import cifar_fedavg as cifar
+import cifar_resnet50 as cifar
 
 USE_FEDBN: bool = True
 
 # pylint: disable=no-member
-#DEVICE: str = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-DEVICE: str = torch.device("mps")
-#DEVICE: str = torch.device("cpu")
-
+if platform.processor() == 'arm':
+    # for Mac Silicon GPU
+    DEVICE = 'mps' 
+else:
+    # for CUDA or i386 CPU
+    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # pylint: enable=no-member
 
 # Flower Client
