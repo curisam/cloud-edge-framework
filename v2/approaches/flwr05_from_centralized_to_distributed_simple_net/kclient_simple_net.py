@@ -9,6 +9,7 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import CIFAR10
 from torchvision.transforms import Compose, Normalize, ToTensor
 from tqdm import tqdm
+import platform # platform.processor()
 
 
 # #############################################################################
@@ -16,8 +17,13 @@ from tqdm import tqdm
 # #############################################################################
 
 warnings.filterwarnings("ignore", category=UserWarning)
-#DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-DEVICE = torch.device("mps")
+
+if platform.processor() == 'arm':
+    # for Mac Silicon GPU
+    DEVICE = 'mps' 
+else:
+    # for CUDA or i386 CPU
+    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 class Net(nn.Module):
