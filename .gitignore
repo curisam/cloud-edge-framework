@@ -12,6 +12,7 @@ __pycache__/
 
 !.gitignore
 **/data
+**/dataset
 **/tmp.0
 **/tmp.1
 **/tmp.2

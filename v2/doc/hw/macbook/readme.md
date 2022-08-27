@@ -155,8 +155,8 @@ TensorFlow version: 2.9.2
 ### Ubuntu Linux 20.04에서 가상환경 만들고 pip 명령어로 패키지 설치 방법
 
 
-sudo apt install python3.8-venv
-
+sudo apt-get install python3.8-venv
+sudo apt-get install python3-venv
 
 ```bash
 python3 -m venv ./env
