@@ -1,2 +1,2 @@
-python3 kserver.py
+python3 server.py
 

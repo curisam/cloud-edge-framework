@@ -1,63 +1,56 @@
-# 실행방법  
+# 연합학습 예제코드
 
-- 참고 : https://flower.dev/
-- 참고 : https://github.com/adap/flower/tree/main/examples/quickstart_pytorch
+- Cifar10으로 Resnet50을 학습합니다.
+- 학습에 상대적으로 오랜 시간이 걸립니다.
 
-## 사전 준비 : 가상환경 관리자 poetry 설치
+## Cifar10 dataset 
 
-- poetry 의존성 패키지 설치
-
+- https://www.cs.toronto.edu/~kriz/cifar.html
+- classes
 ```bash
-$ poetry install
+    airplane										
+    automobile										
+    bird										
+    cat										
+    deer										
+    dog										
+    frog										
+    horse										
+    ship										
+    truck
 ```
 
 
-- 자세한 설치 방법은 아래 문서를 참고합니다.
-
-  (1) https://python-poetry.org/docs/
-
-
-- No module named 'virtualenv.activation.xonsh' 에러 발생시, 기존 virtualenv 삭제합니다.
-
-  . https://stackoverflow.com/questions/71086270/no-module-named-virtualenv-activation-xonsh
+## 수행절차
 
 ```bash
-$ pip uninstall virtualenv
+    # open new terminal and,
+    $ sh 01_run_server.sh
+    
+    # open new terminal and,
+    $ sh 02_run_client1.sh
+
+    # open new terminal and,
+    $ sh 03_run_client2.sh 
 ```
 
 
-1. 터미널 열고 poetry shell 실행 및 의존성 패키지 설치
+## 동작 예시
 
-```bash
-$ poetry shell
-$ pip install flwr
-$ pip install torch torchvision
-$ pip install tqdm
-```
+- 서버 프로세스 실행
+![fig](./img4doc/server_run.png)
 
-2. 터미널 열고, poetry shell 실행 후 서버 실행 
+- 클라이언트 1 프로세스 실행
+![fig](./img4doc/client1.png)
 
-```bash
-$ poetry shell
-$ python server.py
-```
+- 클라이언트 2 프로세스 실행
+![fig](./img4doc/client2.png)
 
-![연합학습 서버 실행 모습](img4doc/server.png)
+- 클라이언트 1 프로세스 완료
+![fig](./img4doc/client1_finish.png)
 
-3. 새로운 터미널 열고, poetry shell 실행 후, 클라이언트 1번 실행 
+- 클라이언트 2 프로세스 완료
+![fig](./img4doc/client2_finish.png)
 
-```bash
-$ poetry shell
-$ python client.py
-```
-
-![연합학습 클라이언트 1 실행 모습](img4doc/client1.png)
-
-4. 새로운 터미널 열고, poetry shell 실행 후, 클라이언트 2번 실행 
-
-```bash
-$ poetry shell
-$ python client.py
-```
-
-![연합학습 클라이언트 2 실행 모습](img4doc/client2.png)
+- 서버 프로세스 완료
+![fig](./img4doc/server_finish.png)
