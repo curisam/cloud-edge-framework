@@ -14,10 +14,12 @@ import torchvision
 #import cifar
 #import cifar_simple as cifar
 import cifar_resnet50 as cifar
+import platform
 
 USE_FEDBN: bool = True
 
 # pylint: disable=no-member
+# by JPark
 if platform.processor() == 'arm':
     # for Mac Silicon GPU
     DEVICE = 'mps' 
