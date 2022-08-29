@@ -1,3 +1,5 @@
+""" Modifed by JPark @ KETI """
+
 import flwr as fl
 
 # Start Flower server

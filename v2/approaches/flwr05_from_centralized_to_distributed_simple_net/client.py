@@ -1,5 +1,13 @@
 """Flower client example using PyTorch for CIFAR-10 image classification."""
 
+""" 
+  - Modifed by JPark @ KETI 
+  - 참고 : 
+    . 여기의 코드는 실제 연합학습 상황과는 다소 차이가 있습니다.
+    . 모든 클라이언트들은 모두 같은 데이터셋을 가지고 있다고 가정합니다.
+    . 클라이언트별로 다른 데이터셋을 가지도록 수정할 수 있으나 지금은 이 내용을 반영하지 않습니다.
+"""
+
 import os
 import sys
 import timeit
@@ -13,13 +21,17 @@ import torchvision
 
 import cifar_simple as cifar
 #import cifar_resnet50 as cifar
-import platform
 
 USE_FEDBN: bool = True
 
+print("flwr", fl.__version__)
+print("numpy", np.__version__)
+print("torch", torch.__version__)
+print("torchvision", torchvision.__version__)
+
 # pylint: disable=no-member
 # by JPark
-if platform.processor() == 'arm':
+if torch.backends.mps.is_available():
     # for Mac Silicon GPU
     DEVICE = 'mps' 
 else:

@@ -1,179 +1,133 @@
-# Copyright 2020 Adap GmbH. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-"""PyTorch CIFAR-10 image classification.
-
-The code is generally adapted from 'PyTorch: A 60 Minute Blitz'. Further
-explanations are given in the official PyTorch tutorial:
-
-https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
-"""
-
-
-# mypy: ignore-errors
-# pylint: disable=W0223
-
-
-from collections import OrderedDict
-from pathlib import Path
-from time import time
-from typing import Tuple
-
-import flwr as fl
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import torchvision.transforms as transforms
-from torch import Tensor
-from torchvision import datasets
-from torchvision.models import resnet18
+from torchvision.datasets import CIFAR10
+from tqdm import tqdm
 
-DATA_ROOT = Path("./data")
+import warnings
 
+warnings.filterwarnings("ignore")
 
-# pylint: disable=unsubscriptable-object
-class Net(nn.Module):
-    """Simple CNN adapted from 'PyTorch: A 60 Minute Blitz'."""
-
-    def __init__(self) -> None:
-        super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(3, 6, 5)
-        self.pool = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(16 * 5 * 5, 120)
-        self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 10)
-
-    # pylint: disable=arguments-differ,invalid-name
-    def forward(self, x: Tensor) -> Tensor:
-        """Compute forward pass."""
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(-1, 16 * 5 * 5)
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
-
-    def get_weights(self) -> fl.common.Weights:
-        """Get model weights as a list of NumPy ndarrays."""
-        return [val.cpu().numpy() for _, val in self.state_dict().items()]
-
-    def set_weights(self, weights: fl.common.Weights) -> None:
-        """Set model weights from a list of NumPy ndarrays."""
-        state_dict = OrderedDict(
-            {k: torch.tensor(v) for k, v in zip(self.state_dict().keys(), weights)}
-        )
-        self.load_state_dict(state_dict, strict=True)
-
-
-def ResNet18():
-    """Returns a ResNet18 model from TorchVision adapted for CIFAR-10."""
-
-    model = resnet18(num_classes=10)
-
-    # replace w/ smaller input layer
-    model.conv1 = torch.nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
-    nn.init.kaiming_normal_(model.conv1.weight, mode="fan_out", nonlinearity="relu")
-    # no need for pooling if training for CIFAR-10
-    model.maxpool = torch.nn.Identity()
-
-    return model
-
-
-def load_model(model_name: str) -> nn.Module:
-
-    if model_name == "Net":
-        return Net()
-    elif model_name == "ResNet18":
-        return ResNet18()
-    else:
-        raise NotImplementedError(f"model {model_name} is not implemented")
-
-
-# pylint: disable=unused-argument
-def load_cifar(download=False) -> Tuple[datasets.CIFAR10, datasets.CIFAR10]:
+def load_data():
     """Load CIFAR-10 (training and test set)."""
     transform = transforms.Compose(
         [
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
             transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
-    trainset = datasets.CIFAR10(
-        root=DATA_ROOT / "cifar-10", train=True, download=download, transform=transform
+
+    trainset = CIFAR10("./dataset", train=True, download=True, transform=transform)
+    testset = CIFAR10("./dataset", train=False, download=True, transform=transform)
+
+    num_examples = {"trainset": len(trainset), "testset": len(testset)}
+    return trainset, testset, num_examples
+
+
+def load_partition(idx: int):
+    """Load 1/10th of the training and test data to simulate a partition."""
+    assert idx in range(10)
+    trainset, testset, num_examples = load_data()
+    n_train = int(num_examples["trainset"] / 10)
+    n_test = int(num_examples["testset"] / 10)
+
+    train_parition = torch.utils.data.Subset(
+        trainset, range(idx * n_train, (idx + 1) * n_train)
     )
-    testset = datasets.CIFAR10(
-        root=DATA_ROOT / "cifar-10", train=False, download=download, transform=transform
+    test_parition = torch.utils.data.Subset(
+        testset, range(idx * n_test, (idx + 1) * n_test)
     )
-    return trainset, testset
+    return (train_parition, test_parition)
 
 
-def train(
-    net: Net,
-    trainloader: torch.utils.data.DataLoader,
-    epochs: int,
-    device: torch.device,  # pylint: disable=no-member
-) -> None:
-    """Train the network."""
-    # Define loss and optimizer
-    criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
-
-    print(f"Training {epochs} epoch(s) w/ {len(trainloader)} batches each")
-    t = time()
-    # Train the network
-    for epoch in range(epochs):  # loop over the dataset multiple times
-        running_loss = 0.0
-        for i, data in enumerate(trainloader, 0):
-            images, labels = data[0].to(device), data[1].to(device)
-
-            # zero the parameter gradients
+def train(net, trainloader, valloader, epochs, device: str = "cpu"):
+    """Train the network on the training set."""
+    print("Starting training...")
+    net.to(device)  # move model to GPU if available
+    criterion = torch.nn.CrossEntropyLoss().to(device)
+    optimizer = torch.optim.SGD(
+        net.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4
+    )
+    net.train()
+    for _ in range(epochs):
+        for images, labels in tqdm(trainloader):
+            images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad()
-
-            # forward + backward + optimize
-            outputs = net(images)
-            loss = criterion(outputs, labels)
+            loss = criterion(net(images), labels)
             loss.backward()
             optimizer.step()
 
-            # print statistics
-            running_loss += loss.item()
-            if i % 2000 == 1999:  # print every 2000 mini-batches
-                print("[%d, %5d] loss: %.3f" % (epoch + 1, i + 1, running_loss / 2000))
-                running_loss = 0.0
+    net.to("cpu")  # move model back to CPU
 
-    print(f"Epoch took: {time() - t:.2f} seconds")
+    train_loss, train_acc = test(net, trainloader)
+    val_loss, val_acc = test(net, valloader)
+
+    results = {
+        "train_loss": train_loss,
+        "train_accuracy": train_acc,
+        "val_loss": val_loss,
+        "val_accuracy": val_acc,
+    }
+    return results
 
 
-def test(
-    net: Net,
-    testloader: torch.utils.data.DataLoader,
-    device: torch.device,  # pylint: disable=no-member
-) -> Tuple[float, float]:
+def test(net, testloader, steps: int = None, device: str = "cpu"):
     """Validate the network on the entire test set."""
-    criterion = nn.CrossEntropyLoss()
-    correct = 0
-    total = 0
-    loss = 0.0
+    print("Starting evalutation...")
+    net.to(device)  # move model to GPU if available
+    criterion = torch.nn.CrossEntropyLoss()
+    correct, total, loss = 0, 0, 0.0
+    net.eval()
     with torch.no_grad():
-        for data in testloader:
-            images, labels = data[0].to(device), data[1].to(device)
+        for batch_idx, (images, labels) in enumerate(testloader):
+            images, labels = images.to(device), labels.to(device)
             outputs = net(images)
             loss += criterion(outputs, labels).item()
-            _, predicted = torch.max(outputs.data, 1)  # pylint: disable=no-member
+            _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
+            if steps is not None and batch_idx == steps:
+                break
+    if steps is None:
+        loss /= len(testloader.dataset)
+    else:
+        loss /= total
     accuracy = correct / total
+    net.to("cpu")  # move model back to CPU
     return loss, accuracy
+
+
+def replace_classifying_layer(efficientnet_model, num_classes: int = 10):
+    """Replaces the final layer of the classifier."""
+    num_features = efficientnet_model.classifier.fc.in_features
+    efficientnet_model.classifier.fc = torch.nn.Linear(num_features, num_classes)
+
+
+def load_efficientnet(entrypoint: str = "nvidia_efficientnet_b0", classes: int = None):
+    """Loads pretrained efficientnet model from torch hub. Replaces final
+    classifying layer if classes is specified.
+
+    Args:
+        entrypoint: EfficientNet model to download.
+                    For supported entrypoints, please refer
+                    https://pytorch.org/hub/nvidia_deeplearningexamples_efficientnet/
+        classes: Number of classes in final classifying layer. Leave as None to get the downloaded
+                 model untouched.
+    Returns:
+        EfficientNet Model
+
+    Note: One alternative implementation can be found at https://github.com/lukemelas/EfficientNet-PyTorch
+    """
+    efficientnet = torch.hub.load(
+        "NVIDIA/DeepLearningExamples:torchhub", entrypoint, pretrained=True
+    )
+
+    if classes is not None:
+        replace_classifying_layer(efficientnet, classes)
+    return efficientnet
+
+
+def get_model_params(model):
+    """Returns a model's parameters."""
+    return [val.cpu().numpy() for _, val in model.state_dict().items()]

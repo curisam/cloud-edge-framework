@@ -1,5 +1,14 @@
 """Flower client example using PyTorch for CIFAR-10 image classification."""
 
+""" 
+  - Modifed by JPark @ KETI 
+  - 참고 : 
+    . 여기의 코드는 실제 연합학습 상황과는 다소 차이가 있습니다.
+    . 모든 클라이언트들은 모두 같은 데이터셋을 가지고 있다고 가정합니다.
+    . 클라이언트별로 다른 데이터셋을 가지도록 수정할 수 있으나 지금은 이 내용을 반영하지 않습니다.
+"""
+
+
 import os
 import sys
 import timeit
@@ -29,7 +38,7 @@ else:
 # pylint: enable=no-member
 
 # Flower Client
-class CifarClient(fl.client.NumPyClient):
+class FlowerClient(fl.client.NumPyClient):
     """Flower client implementing CIFAR-10 image classification using
     PyTorch."""
 
@@ -91,7 +100,7 @@ class CifarClient(fl.client.NumPyClient):
 
 
 def main() -> None:
-    """Load data, start CifarClient."""
+    """Load data, start FlowerClient."""
 
     # Load data
     trainloader, testloader, num_examples = cifar.load_data()
@@ -103,7 +112,7 @@ def main() -> None:
     _ = model(next(iter(trainloader))[0].to(DEVICE))
 
     # Start client
-    client = CifarClient(model, trainloader, testloader, num_examples)
+    client = FlowerClient(model, trainloader, testloader, num_examples)
     fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=client)
 
 

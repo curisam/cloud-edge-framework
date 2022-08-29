@@ -1,188 +1,157 @@
-# Copyright 2020 Adap GmbH. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-"""Flower client example using PyTorch for CIFAR-10 image classification."""
-
-
-import argparse
-import timeit
-from collections import OrderedDict
-from importlib import import_module
-
-import flwr as fl
-import numpy as np
-import torch
-import torchvision
-from flwr.common import EvaluateIns, EvaluateRes, FitIns, FitRes, ParametersRes, Weights
-
 import utils
+from torch.utils.data import DataLoader
+import torchvision.datasets
+import torch
+import flwr as fl
+import argparse
+from collections import OrderedDict
+import warnings
 
-# pylint: disable=no-member
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-# pylint: enable=no-member
-
-
-def get_weights(model: torch.nn.ModuleList) -> fl.common.Weights:
-    """Get model weights as a list of NumPy ndarrays."""
-    return [val.cpu().numpy() for _, val in model.state_dict().items()]
-
-
-def set_weights(model: torch.nn.ModuleList, weights: fl.common.Weights) -> None:
-    """Set model weights from a list of NumPy ndarrays."""
-    state_dict = OrderedDict(
-        {
-            k: torch.tensor(np.atleast_1d(v))
-            for k, v in zip(model.state_dict().keys(), weights)
-        }
-    )
-    model.load_state_dict(state_dict, strict=True)
+warnings.filterwarnings("ignore")
 
 
-class CifarClient(fl.client.Client):
-    """Flower client implementing CIFAR-10 image classification using
-    PyTorch."""
-
+class CifarClient(fl.client.NumPyClient):
     def __init__(
         self,
-        cid: str,
-        model: torch.nn.Module,
-        trainset: torchvision.datasets.CIFAR10,
-        testset: torchvision.datasets.CIFAR10,
-    ) -> None:
-        self.cid = cid
-        self.model = model
+        trainset: torchvision.datasets,
+        testset: torchvision.datasets,
+        device: str,
+        validation_split: int = 0.1,
+    ):
+        self.device = device
         self.trainset = trainset
         self.testset = testset
+        self.validation_split = validation_split
 
-    def get_parameters(self) -> ParametersRes:
-        print(f"Client {self.cid}: get_parameters")
+    def set_parameters(self, parameters):
+        """Loads a efficientnet model and replaces it parameters with the ones
+        given."""
+        model = utils.load_efficientnet(classes=10)
+        params_dict = zip(model.state_dict().keys(), parameters)
+        state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
+        model.load_state_dict(state_dict, strict=True)
+        return model
 
-        weights: Weights = get_weights(self.model)
-        parameters = fl.common.weights_to_parameters(weights)
-        return ParametersRes(parameters=parameters)
+    def fit(self, parameters, config):
+        """Train parameters on the locally held training set."""
 
-    def _instantiate_model(self, model_str: str):
+        # Update local model parameters
+        model = self.set_parameters(parameters)
 
-        # will load utils.model_str
-        m = getattr(import_module("utils"), model_str)
-        # instantiate model
-        self.model = m()
+        # Get hyperparameters for this round
+        batch_size: int = config["batch_size"]
+        epochs: int = config["local_epochs"]
 
-    def fit(self, ins: FitIns) -> FitRes:
-        print(f"Client {self.cid}: fit")
+        n_valset = int(len(self.trainset) * self.validation_split)
 
-        weights: Weights = fl.common.parameters_to_weights(ins.parameters)
-        config = ins.config
-        fit_begin = timeit.default_timer()
-
-        # Get training config
-        epochs = int(config["epochs"])
-        batch_size = int(config["batch_size"])
-        pin_memory = bool(config["pin_memory"])
-        num_workers = int(config["num_workers"])
-
-        # Set model parameters
-        set_weights(self.model, weights)
-
-        if torch.cuda.is_available():
-            kwargs = {
-                "num_workers": num_workers,
-                "pin_memory": pin_memory,
-                "drop_last": True,
-            }
-        else:
-            kwargs = {"drop_last": True}
-
-        # Train model
-        trainloader = torch.utils.data.DataLoader(
-            self.trainset, batch_size=batch_size, shuffle=True, **kwargs
-        )
-        utils.train(self.model, trainloader, epochs=epochs, device=DEVICE)
-
-        # Return the refined weights and the number of examples used for training
-        weights_prime: Weights = get_weights(self.model)
-        params_prime = fl.common.weights_to_parameters(weights_prime)
-        num_examples_train = len(self.trainset)
-        metrics = {"duration": timeit.default_timer() - fit_begin}
-        return FitRes(
-            parameters=params_prime, num_examples=num_examples_train, metrics=metrics
+        valset = torch.utils.data.Subset(self.trainset, range(0, n_valset))
+        trainset = torch.utils.data.Subset(
+            self.trainset, range(n_valset, len(self.trainset))
         )
 
-    def evaluate(self, ins: EvaluateIns) -> EvaluateRes:
-        print(f"Client {self.cid}: evaluate")
+        trainLoader = DataLoader(trainset, batch_size=batch_size, shuffle=True)
+        valLoader = DataLoader(valset, batch_size=batch_size)
 
-        weights = fl.common.parameters_to_weights(ins.parameters)
+        results = utils.train(model, trainLoader, valLoader, epochs, self.device)
 
-        # Use provided weights to update the local model
-        set_weights(self.model, weights)
+        parameters_prime = utils.get_model_params(model)
+        num_examples_train = len(trainset)
 
-        # Evaluate the updated model on the local dataset
-        testloader = torch.utils.data.DataLoader(
-            self.testset, batch_size=32, shuffle=False
-        )
-        loss, accuracy = utils.test(self.model, testloader, device=DEVICE)
+        return parameters_prime, num_examples_train, results
 
-        # Return the number of evaluation examples and the evaluation result (loss)
-        metrics = {"accuracy": float(accuracy)}
-        return EvaluateRes(
-            loss=float(loss), num_examples=len(self.testset), metrics=metrics
-        )
+    def evaluate(self, parameters, config):
+        """Evaluate parameters on the locally held test set."""
+        # Update local model parameters
+        model = self.set_parameters(parameters)
+
+        # Get config values
+        steps: int = config["val_steps"]
+
+        # Evaluate global model parameters on the local test data and return results
+        testloader = DataLoader(self.testset, batch_size=16)
+
+        loss, accuracy = utils.test(model, testloader, steps, self.device)
+        return float(loss), len(self.testset), {"accuracy": float(accuracy)}
+
+
+def client_dry_run(device: str = "cpu"):
+    """Weak tests to check whether all client methods are working as
+    expected."""
+
+    model = utils.load_efficientnet(classes=10)
+    trainset, testset = utils.load_partition(0)
+    trainset = torch.utils.data.Subset(trainset, range(10))
+    testset = torch.utils.data.Subset(testset, range(10))
+    client = CifarClient(trainset, testset, device)
+    client.fit(
+        utils.get_model_params(model),
+        {"batch_size": 16, "local_epochs": 1},
+    )
+
+    client.evaluate(utils.get_model_params(model), {"val_steps": 32})
+
+    print("Dry Run Successful")
 
 
 def main() -> None:
-    """Load data, create and start CifarClient."""
+    # Parse command line argument `partition`
     parser = argparse.ArgumentParser(description="Flower")
     parser.add_argument(
-        "--server_address",
-        type=str,
-        required=True,
-        help=f"gRPC server address",
+        "--dry",
+        type=bool,
+        default=False,
+        required=False,
+        help="Do a dry-run to check the client",
     )
     parser.add_argument(
-        "--cid", type=str, required=True, help="Client CID (no default)"
+        "--partition",
+        type=int,
+        default=0,
+        choices=range(0, 10),
+        required=False,
+        help="Specifies the artificial data partition of CIFAR10 to be used. \
+        Picks partition 0 by default",
     )
     parser.add_argument(
-        "--log_host",
-        type=str,
-        help="Logserver address (no default)",
+        "--toy",
+        type=bool,
+        default=False,
+        required=False,
+        help="Set to true to quicky run the client using only 10 datasamples. \
+        Useful for testing purposes. Default: False",
     )
     parser.add_argument(
-        "--data_dir",
-        type=str,
-        help="Directory where the dataset lives",
+        "--use_cuda",
+        type=bool,
+        default=False,
+        required=False,
+        help="Set to true to use GPU. Default: False",
     )
-    parser.add_argument(
-        "--model",
-        type=str,
-        default="ResNet18",
-        choices=["Net", "ResNet18"],
-        help="model to train",
-    )
+
     args = parser.parse_args()
 
-    # Configure logger
-    fl.common.logger.configure(f"client_{args.cid}", host=args.log_host)
+    # by JPark
+    if torch.backends.mps.is_available():
+        # for Mac Silicon GPU
+        device = 'mps' 
+    else:
+        # for CUDA or i386 CPU
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    # model
-    model = utils.load_model(args.model)
-    model.to(DEVICE)
-    # load (local, on-device) dataset
-    trainset, testset = utils.load_cifar()
+    if args.dry:
+        client_dry_run(device)
+    else:
+        # Load a subset of CIFAR-10 to simulate the local data partition
+        trainset, testset = utils.load_partition(args.partition)
 
-    # Start client
-    client = CifarClient(args.cid, model, trainset, testset)
-    fl.client.start_client(args.server_address, client)
+        if args.toy:
+            trainset = torch.utils.data.Subset(trainset, range(10))
+            testset = torch.utils.data.Subset(testset, range(10))
+
+        # Start Flower client
+        client = CifarClient(trainset, testset, device)
+
+        fl.client.start_numpy_client(server_address="0.0.0.0:8080", client=client)
 
 
 if __name__ == "__main__":
