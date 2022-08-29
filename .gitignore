@@ -25,6 +25,9 @@ v2/approaches/flwr01/env
 v2/approaches/flwr01/env/
 
 
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
 
 # tests and coverage
 *.pytest_cache
