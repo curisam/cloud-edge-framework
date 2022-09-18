@@ -122,6 +122,47 @@ $ sudo vi /etc/default/im-config
 IM_CONFIG_DEFAULT_MODE=fcitx
 ```
 
+
+
+### hostname 설정 및 변경 
+
+- 'hostname' 명령어를 터미널에 입력하여 현재 호스트명을 확인합니다.
+
+```bash
+    $ hostname
+
+      raspberrypi
+```
+
+- '/etc/hostname' 파일을 관리자 권한으로 열어서 호스트명을 변경합니다. 
+
+```bash
+    $ sudo vi /etc/hostname
+```
+
+
+- '/etc/hostname' 파일을 참고하는 '/etc/hosts' 파일에서 기존의 호스트명을 새로 바꾼 호스트명으로 바꿉니다. 
+
+```bash
+    $ sudo vi /etc/hosts
+```
+
+
+- 시스템을 재시작합니다.
+
+```bash
+    $ sudo reboot
+```
+
+- 위의 과정으로 호스트명 변경이 완료되었습니다. 'raspi-config' 유틸리티를 통해서도 호스트명 변경이 가능합니다.
+
+```bash
+    $ sudo raspi-config
+```
+
+
+
+
 ### ssh terminal에서 한글이 깨지는 경우
 
 - GUI에서 Category / Window / Translation : Received data 메뉴 이동합니다.

@@ -25,8 +25,22 @@ v2/approaches/flwr01/env
 v2/approaches/flwr01/env/
 
 
+# model
+*.onnx
+
+# 모든 위치의 아래 폴더는 무시 
+**/checkpoint/
+#**/dataset/
+**/tmp/
+
 .ipynb_checkpoints
+.ipynb_checkpoints/*
 */.ipynb_checkpoints/*
+
+# C extensions
+*.so
+
+
 
 
 # tests and coverage
