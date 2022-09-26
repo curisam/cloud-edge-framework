@@ -28,7 +28,8 @@
 - 상기 데이터는 PoC의 목적에 맞게 차로 위반과 관련된 사진들과 pytorch model, docker file을 제공합니다.
 
 <center>
-<img src="img4doc/aihub_car.png">
+<img src="img4doc/aihub_car01.png">
+<img src="img4doc/aihub_car02.png">
 </center>
 
 ## PoC 범위 (Scope)
@@ -67,8 +68,13 @@
 </center>
 
 - 다종의 서버급(GPU 탑재) 및 라즈베리파이 에지노드의 운영체제 정보 확인
+
 <center>
-<img src="img4doc/03.png">
+<img src="img4doc/04.png">
+</center>
+
+<center>
+<img src="img4doc/05.png">
 </center>
 
 
@@ -108,7 +114,7 @@
 </center>
 
 
-### 3.2.4 모니터링 기능
+### 3.2.4 그룹별 에지노드 모니터링 기능
 
 - 다종의 라즈베리파이 및 다종의 서버급(GPU 탑재) 에지노드의 CPU 온도 측정 기능 확인
 <center>
@@ -142,7 +148,7 @@
 
 
 
-### 3.2.5 모델 다운로드 및 docker 빌드 기능
+### 3.2.5 그룹별 에지노드 모델 다운로드 및 docker 빌드 기능
 
 - AI Hub에서 다운로드 받은 모델을 모델 리포지토리에 탑재
 
@@ -154,9 +160,18 @@
 - 에지노드에 모델 리포지토리의 aihub_model.zip을 배포
 
 <center>
-<img src="img4doc/41.png">
+<img src="img4doc/41a.png">
 </center>
 
+
+<center>
+<img src="img4doc/41b.png">
+</center>
+
+
+<center>
+<img src="img4doc/41c.png">
+</center>
 
 
 - 에지노드에 docker 설치를 위한 파일 전송
