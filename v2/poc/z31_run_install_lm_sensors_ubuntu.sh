@@ -1,0 +1,1 @@
+ansible server -m shell -a "sudo apt install lm-sensors" -i hosts.ini 

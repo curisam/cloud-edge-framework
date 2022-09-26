@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: ["rpi"]
   remote_user: jpark
   become: true
   become_method: sudo
@@ -10,10 +10,10 @@
     - name: Upgrade all packages on Pi's
       apt: upgrade=dist force_apt_get=yes
 
-    - name: Check if a reboot is needed on all Pi's
-      register: reboot_required_file
-      stat: path=/var/run/reboot-required get_md5=no
-
+#    - name: Check if a reboot is needed on all Pi's
+#      register: reboot_required_file
+#      stat: path=/var/run/reboot-required get_md5=no
+#
 #    - name: Reboot the Pi's if kernel updated
 #      reboot:
 #        msg: "Reboot initiated by Ansible for kernel updates"

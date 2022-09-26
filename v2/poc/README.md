@@ -3,30 +3,22 @@
 - 본 문서에서는 개발한 cloud-edge-framework 를 기반으로 PoC 수행 내용을 기술합니다.
 - 한국전자기술연구원 (Korea Electronics Technology Institude)
 
-## cloud-edge-framework를 위한 PoC
 
-### 목적 및 목표 
+## 목적 및 목표 
 - 이기종의 에지 디바이스 연동 플랫폼 성능을 검증하는 것을 목적으로 합니다.
 - AI hub의 개방 데이터셋을 활용하여 개발한 플랫폼을 시험합니다.
 
-### 목표 일정
-- 9월
+## 목표 일정
+- 9월 22일 : 데이터 수집
+- 9월 26일 : 데이터 수집 및 정제
 
-### 2.4.2 사전 준비
 
-- AI Hub 개방 데이터셋 다운로드
+
+## 2.4.2 사전 준비 : AI Hub 개방 데이터셋 다운로드
+
+- AI Hub에 회원가입합니다.
 
 ```url
-    https://aihub.or.kr/
-```
-
-
-
-##### AI Hub 개방 데이터셋 다운로드 
-
-- AI Hub의 회원으로 가입합니다.
-
-```bash
     https://aihub.or.kr/
 ```
 
@@ -35,16 +27,137 @@
 - 상기 데이터의 규모는 286.69G입니다.
 - 상기 데이터는 PoC의 목적에 맞게 차로 위반과 관련된 사진들과 pytorch model, docker file을 제공합니다.
 
+<center>
+<img src="img4doc/aihub_car.png">
+</center>
 
-
-#### Scope
+## PoC 범위 (Scope)
 - 전체 서비스 중에서 검토가 필요한 대상의 범위는 다음과 같습니다.
-- 기계학습에서 "분류(classification)" 문제를 다룹니다.
-- 개방 데이터셋에서 "이미지"처리 문제를 다룹니다.
-- 개방 데이터셋에서 {"차량", "상품", "농작물"} 중의 하나를 선정하여 진행합니다.
- 
 
-#### PoC 실시 내용
+- [ ] 그룹별 에지노드 접속성 확인 기능
+
+- 
+
+
+## 제3장 PoC 결과
+
+
+### 3.1 PoC 결과 요약
+
+
+
+
+## 3.2 PoC 결과 상세
+
+### 3.2.1 그룹별 에지노드 접속성 확인 기능
+
+- 제어노드의 접속성 확인
+<center>
+<img src="img4doc/01.png">
+</center>
+
+- 다종의 라즈베리파이 에지노드의 접속성 확인
+<center>
+<img src="img4doc/02.png">
+</center>
+
+- 다종의 서버급(GPU 탑재) 에지노드의 접속성 확인
+<center>
+<img src="img4doc/03.png">
+</center>
+
+- 다종의 서버급(GPU 탑재) 및 라즈베리파이 에지노드의 운영체제 정보 확인
+<center>
+<img src="img4doc/03.png">
+</center>
+
+
+
+### 3.2.2 그룹별 에지노드 패키지 업데이트 및 업그레이드 수행 기능
+
+- 다종의 라즈베리파이 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
+<center>
+<img src="img4doc/11.png">
+</center>
+
+- 다종의 서버급(GPU 탑재) 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
+<center>
+<img src="img4doc/12.png">
+</center>
+
+
+### 3.2.3 그룹별 에지노드 시간 동기화 기능
+
+- 다종의 라즈베리파이 에지노드의 시간동기화 수행 확인
+<center>
+<img src="img4doc/21a.png">
+</center>
+
+<center>
+<img src="img4doc/21b.png">
+</center>
+
+- 다종의 서버급(GPU 탑재) 에지노드의 시간동기화 수행 확인
+
+<center>
+<img src="img4doc/22a.png">
+</center>
+
+<center>
+<img src="img4doc/22b.png">
+</center>
+
+
+### 3.2.4 모니터링 기능
+
+- 다종의 라즈베리파이 및 다종의 서버급(GPU 탑재) 에지노드의 CPU 온도 측정 기능 확인
+<center>
+<img src="img4doc/31.png">
+</center>
+
+- 다종의 라즈베리파이 및 다종의 서버급(GPU 탑재) 에지노드의 CPU 정보 수집 기능 확인
+<center>
+<img src="img4doc/32.png">
+</center>
+
+- 다종의 라즈베리파이 및 다종의 서버급(GPU 탑재) 에지노드의 Memory 정보 수집 기능 확인
+<center>
+<img src="img4doc/33.png">
+</center>
+
+- 다종의 라즈베리파이 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
+<center>
+<img src="img4doc/34.png">
+</center>
+
+- 다종의 서버급(GPU 탑재) 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
+<center>
+<img src="img4doc/35.png">
+</center>
+
+- CUDA 지원 GPU 탑재된 에지노드의 GPU 정보 수집 (아래 이미지에서 w01은 GPU SW 환경이 구축된 경우이고, p01은 GPU 사용을 위한 SW환경이 구축되지 않은 경우임)
+<center>
+<img src="img4doc/36.png">
+</center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## PoC 실시 내용
 - 구체적으로 검증할 내용은 다음과 같습니다.
 
 1. 상기 Scope 섹션에서 결정한 AI Hub의 개방 데이터셋을 활용 하여, 개발한 cloud-edge-framework의 통합 동작을 확인합니다.
@@ -72,15 +185,6 @@ TODO
 - 준비한 하드웨어 시스템
 
 - 역할 분담
-
-
-
-#### 스케줄
-
-- 준비 스케줄
-
-
-- 실시 스케줄
 
 
 
