@@ -142,6 +142,30 @@
 
 
 
+### 3.2.5 모델 다운로드 및 docker 빌드 기능
+
+- AI Hub에서 다운로드 받은 모델을 모델 리포지토리에 탑재
+
+<center>
+<img src="img4doc/40.png">
+</center>
+
+
+- 에지노드에 모델 리포지토리의 aihub_model.zip을 배포
+
+<center>
+<img src="img4doc/41.png">
+</center>
+
+
+
+- 에지노드에 docker 설치를 위한 파일 전송
+
+<center>
+<img src="img4doc/42.png">
+</center>
+
+
 
 
 

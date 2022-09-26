@@ -1,0 +1,15 @@
+---
+- hosts: ["rpi"]
+  remote_user: jpark
+  become: false
+  tasks:
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /home/jpark/run
+        state: directory
+        mode: '0755'
+    - name: Unarchive a file that needs to be downloaded (added in 2.0)
+      ansible.builtin.unarchive:
+        src: http://keticmr.iptime.org:22080/edgeai/aihub_model.zip
+        dest: /home/jpark/run
+        remote_src: yes
