@@ -1,0 +1,4 @@
+- hosts: ["server"]
+  tasks:
+    - name: install rm-sensors
+      raw: sudo apt-get -y install rm-sensors
