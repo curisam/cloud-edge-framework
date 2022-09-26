@@ -110,5 +110,28 @@ export LD_LIBRARY_PATH=/usr/lib/cuda/include:$LD_LIBRARY_PATH
 https://pytorch.org
 ```
 
+## ssh 설치
+
+```bash
+$ sudo apt update
+$ sudo apt install openssh-server
+
+$ sudo systemctl status ssh
+$ sudo systemctl enable ssh
+$ sudo systemctl start ssh
+
+$ sudo ufw allow ssh
+
+```
+
+## ssh client 설치 및 접속
+
+```bash
+$ sudo apt-get install openssh-client
+$ ssh id@locahost
+```
+
+
+
 
 
