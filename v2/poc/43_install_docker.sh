@@ -1,1 +1,1 @@
-ansible-playbook --inventory-file hosts.ini copy_get_docker.yaml    --ask-become-pass
+ansible rpi -m shell -a "sh /home/jpark/run/get-docker.sh" -i hosts.ini 
