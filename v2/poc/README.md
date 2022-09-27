@@ -54,96 +54,96 @@
 
 - 제어노드의 접속성 확인
 <center>
-<img src="img4doc/01.png">
+<img src="img4doc/01.png" width=500>
 </center>
 
-- 다종의 라즈베리파이 에지노드의 접속성 확인
+- 초경량 에지노드(라즈베리파이4) 그룹의 접속성 확인
 <center>
-<img src="img4doc/02.png">
+<img src="img4doc/02.png" width=500>
 </center>
 
-- 다종의 서버급(GPU 탑재) 에지노드의 접속성 확인
+- 고성능 에지노드(GPU 탑재) 그룹의 접속성 확인
 <center>
-<img src="img4doc/03.png">
+<img src="img4doc/03.png" width=500>
 </center>
 
-- 다종의 서버급(GPU 탑재) 및 라즈베리파이 에지노드의 운영체제 정보 확인
+- 고성능 및 초경량 에지노드의 운영체제 정보 확인
 
 <center>
-<img src="img4doc/04.png">
+<img src="img4doc/04.png" width=500>
 </center>
 
 <center>
-<img src="img4doc/05.png">
+<img src="img4doc/05.png" width=500>
 </center>
 
 
 
 ### 3.2.2 그룹별 에지노드 패키지 업데이트 및 업그레이드 수행 기능
 
-- 다종의 라즈베리파이 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
+- 초경량 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
 <center>
-<img src="img4doc/11.png">
+<img src="img4doc/11.png" width=500>
 </center>
 
-- 다종의 서버급(GPU 탑재) 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
+- 고성능 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
 <center>
-<img src="img4doc/12.png">
+<img src="img4doc/12.png" width=500>
 </center>
 
 
 ### 3.2.3 그룹별 에지노드 시간 동기화 기능
 
-- 다종의 라즈베리파이 에지노드의 시간동기화 수행 확인
+- 초경량 에지노드의 시간동기화 수행 확인
 <center>
-<img src="img4doc/21a.png">
+<img src="img4doc/21a.png" width=500>
 </center>
 
 <center>
-<img src="img4doc/21b.png">
+<img src="img4doc/21b.png" width=500>
 </center>
 
-- 다종의 서버급(GPU 탑재) 에지노드의 시간동기화 수행 확인
+- 고성능 에지노드의 시간동기화 수행 확인
 
 <center>
-<img src="img4doc/22a.png">
+<img src="img4doc/22a.png" width=500>
 </center>
 
 <center>
-<img src="img4doc/22b.png">
+<img src="img4doc/22b.png" width=500>
 </center>
 
 
 ### 3.2.4 그룹별 에지노드 모니터링 기능
 
-- 다종의 라즈베리파이 및 다종의 서버급(GPU 탑재) 에지노드의 CPU 온도 측정 기능 확인
+- 고성능 및 초경량 에지노드의 CPU 온도 측정 기능 확인
 <center>
-<img src="img4doc/31.png">
+<img src="img4doc/31.png" width=500>
 </center>
 
-- 다종의 라즈베리파이 및 다종의 서버급(GPU 탑재) 에지노드의 CPU 정보 수집 기능 확인
+- 고성능 및 초경량 에지노드의 CPU 정보 수집 기능 확인
 <center>
-<img src="img4doc/32.png">
+<img src="img4doc/32.png" width=500>
 </center>
 
-- 다종의 라즈베리파이 및 다종의 서버급(GPU 탑재) 에지노드의 Memory 정보 수집 기능 확인
+- 고성능 및 초경량 에지노드의 Memory 정보 수집 기능 확인
 <center>
-<img src="img4doc/33.png">
+<img src="img4doc/33.png" width=500>
 </center>
 
-- 다종의 라즈베리파이 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
+- 초경량 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
 <center>
-<img src="img4doc/34.png">
+<img src="img4doc/34.png" width=500>
 </center>
 
-- 다종의 서버급(GPU 탑재) 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
+- 고성능 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
 <center>
-<img src="img4doc/35.png">
+<img src="img4doc/35.png" width=500>
 </center>
 
 - CUDA 지원 GPU 탑재된 에지노드의 GPU 정보 수집 (아래 이미지에서 w01은 GPU SW 환경이 구축된 경우이고, p01은 GPU 사용을 위한 SW환경이 구축되지 않은 경우임)
 <center>
-<img src="img4doc/36.png">
+<img src="img4doc/36.png" width=500>
 </center>
 
 
@@ -153,31 +153,31 @@
 - AI Hub에서 다운로드 받은 모델을 모델 리포지토리에 탑재
 
 <center>
-<img src="img4doc/40.png">
+<img src="img4doc/40.png" width=500>
 </center>
 
 
 - 에지노드에 모델 리포지토리의 aihub_model.zip을 배포
 
 <center>
-<img src="img4doc/41a.png">
+<img src="img4doc/41a.png" width=500>
 </center>
 
 
 <center>
-<img src="img4doc/41b.png">
+<img src="img4doc/41b.png" width=500>
 </center>
 
 
 <center>
-<img src="img4doc/41c.png">
+<img src="img4doc/41c.png" width=500>
 </center>
 
 
 - 에지노드에 docker 설치를 위한 파일 전송
 
 <center>
-<img src="img4doc/42.png">
+<img src="img4doc/42.png" width=500>
 </center>
 
 
