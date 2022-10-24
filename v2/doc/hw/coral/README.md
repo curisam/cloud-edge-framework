@@ -1,4 +1,12 @@
-# Coral Dev Board
+-----------------------------------------------------
+# 기술문서 
+ - 기술문서명 : 연동분석 프레임워크 구성을 위한 Coral Dev Board 에지 디바이스
+ - 과제명 : 능동적 즉시 대응 및 빠른 학습이 가능한 적응형 경량 엣지 연동분석 기술개발
+ - 영문과제명 : Development of Adaptive and Lightweight Edge-Collaborative Analysis Technology for Enabling Proactively Immediate Response and Rapid Learning
+ - Acknowledgement : This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (No. 2021-0-00907, Development of Adaptive and Lightweight Edge-Collaborative Analysis Technology for Enabling Proactively Immediate Response and Rapid Learning).
+ - 작성자 : 박종빈
+-----------------------------------------------------
+
 
 - 구글이 만든 머신러닝 특화형 미니 개발 보드입니다.
 - 자세한 설치 과정은 아래 링크를 참고할 수 있습니다.
