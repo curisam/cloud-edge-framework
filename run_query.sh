@@ -1,4 +1,5 @@
-# by JPark @ 2022
+# Find files in source code
+#  by JPark @ 2022
 
 query=$1
 if [ x$1 == x ]; then
