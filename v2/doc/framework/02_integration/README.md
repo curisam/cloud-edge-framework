@@ -16,6 +16,24 @@
 ---------------------------------------------------------
 
 - 시스템의 핵심구성요소는 제어노드와 분산학습노드(에지노드) 입니다.
+- 모델을 관리하는 모델레지스트리(Model Registry)를 포함할 수 있습니다.
+
+```mermaid
+graph TD;
+    ControlNode-->Edge1;
+    Edge1-->ControlNode;
+    ControlNode-->Edge2;
+    Edge2-->ControlNode;
+    ControlNode-->Edge_i;
+    Edge_i-->ControlNode;
+    ControlNode-->EdgeN;
+    EdgeN-->ControlNode;
+    ControlNode-->ModelRegistry;
+    ModelRegistry-->Edge1;
+    ModelRegistry-->Edge2;
+    ModelRegistry-->Edge_i;
+    ModelRegistry-->EdgeN;
+```
 
 
 ## 앤서블 환경 구축
@@ -369,8 +387,10 @@ docker run -it -p 8080:8080 --name registry-web \
 ```
 
 ### Distribution
-도커를 활용하여 다양한 방식으로 모델을 배포할 수 있습니다.<br>
-작업 내용들을 바탕으로 모델 배포 파이프라인의 예상도를 도식화합니다.<br>
+
+- 도커를 활용하여 다양한 방식으로 모델을 배포할 수 있습니다.
+- 작업 내용들을 바탕으로 모델 배포 파이프라인의 예상도를 도식화합니다.
+
 
 ```mermaid
 classDiagram
