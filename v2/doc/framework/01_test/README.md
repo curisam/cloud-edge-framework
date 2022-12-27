@@ -22,10 +22,9 @@
 ## 연동분석을 위한 자원 정의/식별/접근 기능 시험
 ---------------------------------------------------
 
-- 연동분석을 위한 정의/식별/접근 가능 확인
-- Ansible 환경을 통해 제어노드는 에지노드 디바이스에서 학습된 가중치 또는 결과물을 상호 전달/공유 가능합니다. 
-- 에지 모니터링 및 자원 관리까지 고려한 구성입니다.
-
+- 연동분석을 위한 정의/식별/접근 가능을 확인합니다.
+- Ansible 환경을 통해 제어노드는 에지노드 디바이스에서 학습된 가중치 또는 결과물을 상호 전달/공유합니다. 
+- 에지 모니터링 및 자원 관리까지 수행할 수 있도록 구조를 설계했습니다.
 
 ### 사전 준비 : AI Hub 개방 데이터셋 다운로드
 
@@ -41,8 +40,8 @@
 - 상기 데이터는 PoC의 목적에 맞게 차로 위반과 관련된 사진들과 pytorch model, docker file을 제공합니다.
 
 <center>
-<img src="img4doc/aihub_car01.png">
-<img src="img4doc/aihub_car02.png">
+<img width=600 src="img4doc/aihub_car01.png">
+<img width=600 src="img4doc/aihub_car02.png">
 </center>
 
 ### 그룹별 에지노드 접속성 확인 기능
@@ -535,21 +534,21 @@ Ubuntu 20.04 LTS, Pytorch
 ### (참고) RESNET 구조
 
 - Resnet18
-<img src="img4doc/resnet18.png" height="300">
+<img src="img4doc/resnet18.png" height="600">
 
 - Resnet34
-<img src="img4doc/resnet34.png" height="300">
+<img src="img4doc/resnet34.png" height="600">
 
 
 - Resnet50
-<img src="img4doc/resnet50.png" height="300">
+<img src="img4doc/resnet50.png" height="600">
 
 
 - Resnet101
-<img src="img4doc/resnet101.png" height="300">
+<img src="img4doc/resnet101.png" height="600">
 
 - Resnet152
-<img src="img4doc/resnet152.png" height="300">
+<img src="img4doc/resnet152.png" height="600">
 
 
 ### (참고) 모델의 크기
