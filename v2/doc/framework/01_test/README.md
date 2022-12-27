@@ -541,7 +541,7 @@ Ubuntu 20.04 LTS, Pytorch
 ![img](img4doc/device_chart.png)
 
 
-
+<!--
 ### (참고) RESNET 구조
 
 - Resnet18
@@ -560,7 +560,7 @@ Ubuntu 20.04 LTS, Pytorch
 
 - Resnet152
 <img src="img4doc/resnet152.png" width=400>
-
+-->
 
 ### (참고) 모델의 크기
 
