@@ -19,22 +19,168 @@
 -->
 
 
-
-
 ## 연동분석을 위한 자원 정의/식별/접근 기능 시험
 ---------------------------------------------------
 
-
-### (1) 클라우드-엣지 또는 엣지-엣지 간의 네트워크 및 자원 정의/식별/접근이 가능한 연동분석 환경을 설정함 
-
-- 상기 Ansible 설치를 통해 연동분석을 위한 1차적으로 자원 정의/식별/접근 가능합니다.
-
-
-### (2) 클라우드 서버는 분석모델을 엣지로 프로비저닝(Provisioning)할 수 있어야 하며, 엣지는 서버로 학습된 가중치 또는 (중간) 결과물을 전달/공유할 수 있어야 합니다.
-
+- 연동분석을 위한 정의/식별/접근 가능 확인
 - Ansible 환경을 통해 제어노드는 에지노드 디바이스에서 학습된 가중치 또는 결과물을 상호 전달/공유 가능합니다. 
-- 이는 연합학습 과정과는 별개로 지원 가능한 기능입니다.
-- [주의] 이러한 연동환경은 연합학습도 일부 지원하지만, 에지 모니터링 및 자원 관리까지 고려한 구성입니다.
+- 에지 모니터링 및 자원 관리까지 고려한 구성입니다.
+
+
+### 사전 준비 : AI Hub 개방 데이터셋 다운로드
+
+- AI Hub에 회원가입합니다.
+
+```url
+    https://aihub.or.kr/
+```
+
+- 가입 정보로 AI Hub에 로그인하고, "차로 위반 영상" 개방 데이터셋을 다운로드 합니다.
+- 상기 데이터는 2021년 구축되었고, 본 PoC에서는 2022-07월 갱신된 버전을 사용했습니다.
+- 상기 데이터의 규모는 286.69G입니다.
+- 상기 데이터는 PoC의 목적에 맞게 차로 위반과 관련된 사진들과 pytorch model, docker file을 제공합니다.
+
+<center>
+<img src="img4doc/aihub_car01.png">
+<img src="img4doc/aihub_car02.png">
+</center>
+
+### 그룹별 에지노드 접속성 확인 기능
+
+- 제어노드의 접속성 확인
+<center>
+<img src="img4doc/01.png" width=700>
+</center>
+
+- 초경량 에지노드(라즈베리파이4) 그룹의 접속성 확인
+<center>
+<img src="img4doc/02.png" width=700>
+</center>
+
+- 고성능 에지노드(GPU 탑재) 그룹의 접속성 확인
+<center>
+<img src="img4doc/03.png" width=700>
+</center>
+
+- 고성능 및 초경량 에지노드의 운영체제 정보 확인
+
+<center>
+<img src="img4doc/04.png" width=700>
+</center>
+
+<center>
+<img src="img4doc/05.png" width=700>
+</center>
+
+
+
+### 그룹별 에지노드 패키지 업데이트 및 업그레이드 수행 기능
+
+- 초경량 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
+<center>
+<img src="img4doc/11.png" width=700>
+</center>
+
+- 고성능 에지노드의 패키지 업데이트 및 업그레이드 수행 확인
+<center>
+<img src="img4doc/12.png" width=700>
+</center>
+
+
+### 그룹별 에지노드 시간 동기화 기능
+
+- 초경량 에지노드의 시간동기화 수행 확인
+<center>
+<img src="img4doc/21a.png" width=700>
+</center>
+
+<center>
+<img src="img4doc/21b.png" width=700>
+</center>
+
+- 고성능 에지노드의 시간동기화 수행 확인
+
+<center>
+<img src="img4doc/22a.png" width=700>
+</center>
+
+<center>
+<img src="img4doc/22b.png" width=700>
+</center>
+
+
+### 그룹별 에지노드 모니터링 기능
+
+- 고성능 및 초경량 에지노드의 CPU 온도 측정 기능 확인
+<center>
+<img src="img4doc/31.png" width=700>
+</center>
+
+- 고성능 및 초경량 에지노드의 CPU 정보 수집 기능 확인
+<center>
+<img src="img4doc/32.png" width=700>
+</center>
+
+- 고성능 및 초경량 에지노드의 Memory 정보 수집 기능 확인
+<center>
+<img src="img4doc/33.png" width=700>
+</center>
+
+- 초경량 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
+<center>
+<img src="img4doc/34.png" width=700>
+</center>
+
+- 고성능 에지노드의 네트워크 업링크/다운링크 속도 측정 기능 확인
+<center>
+<img src="img4doc/35.png" width=700>
+</center>
+
+- CUDA 지원 GPU 탑재된 에지노드의 GPU 정보 수집 (아래 이미지에서 w01은 GPU SW 환경이 구축된 경우이고, p01은 GPU 사용을 위한 SW환경이 구축되지 않은 경우임)
+<center>
+<img src="img4doc/36.png" width=700>
+</center>
+
+
+
+### 그룹별 에지노드 모델 다운로드 및 docker 빌드 기능
+
+- AI Hub에서 다운로드 받은 모델을 모델 리포지토리에 탑재
+
+<center>
+<img src="img4doc/40.png" width=700>
+</center>
+
+
+- 에지노드에 모델 리포지토리의 aihub_model.zip을 배포
+
+<center>
+<img src="img4doc/41a.png" width=700>
+</center>
+
+
+<center>
+<img src="img4doc/41b.png" width=700>
+</center>
+
+
+<center>
+<img src="img4doc/41c.png" width=700>
+</center>
+
+
+- 에지노드에 docker 설치를 위한 파일 전송
+
+<center>
+<img src="img4doc/42.png" width=700>
+</center>
+
+
+
+
+
+
+
 
 
 
