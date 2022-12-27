@@ -534,21 +534,21 @@ Ubuntu 20.04 LTS, Pytorch
 ### (참고) RESNET 구조
 
 - Resnet18
-<img src="img4doc/resnet18.png">
+<img src="img4doc/resnet18.png" width=400>
 
 - Resnet34
-<img src="img4doc/resnet34.png">
+<img src="img4doc/resnet34.png" width=400>
 
 
 - Resnet50
-<img src="img4doc/resnet50.png">
+<img src="img4doc/resnet50.png" width=400>
 
 
 - Resnet101
-<img src="img4doc/resnet101.png">
+<img src="img4doc/resnet101.png" width=400>
 
 - Resnet152
-<img src="img4doc/resnet152.png">
+<img src="img4doc/resnet152.png" width=400>
 
 
 ### (참고) 모델의 크기
