@@ -1,3 +1,14 @@
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
 -----------------------------------------------------
 # 기술문서 
  - 기술문서명 : 연동분석 프레임워크 자체시험서
@@ -530,7 +541,7 @@ Ubuntu 20.04 LTS, Pytorch
 ![img](img4doc/device_chart.png)
 
 
-
+<!--
 ### (참고) RESNET 구조
 
 - Resnet18
@@ -549,7 +560,7 @@ Ubuntu 20.04 LTS, Pytorch
 
 - Resnet152
 <img src="img4doc/resnet152.png" width=400>
-
+-->
 
 ### (참고) 모델의 크기
 
