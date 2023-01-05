@@ -1,6 +1,15 @@
-# Visulaization Server
+# Visulaization Server (Ubuntu)
 
 - Demo : http://ketiabcs.iptime.org:39080
+
+
+## apt-get 으로 설치 및 실행
+
+```bash
+$ sudo apt update
+$ sudo apt -y install grafana
+```
+
 
 
 ## Docker 기반 실행
