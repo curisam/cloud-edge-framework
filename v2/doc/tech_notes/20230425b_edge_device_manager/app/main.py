@@ -167,7 +167,7 @@ class TimeSeriesBase(BaseModel):
     json_data: str
     done: bool
     
-class TimeSeriesListup(BaseModel):
+class TimeSeriesAll(BaseModel):
     access_token: str
     created_at: str
     json_data: str
@@ -320,7 +320,7 @@ def get_api_key():
 # API for TimeSeries DataSource
 #--------------------------------------------------------------
 @app.post("/api/ts/create")
-async def create_ts(ts: TimeSeriesBase):
+async def create_ts(ts: TimeSeriesAll):
     try:
         new_ts = db_ts.create_ts(ts)
         return new_ts
@@ -335,7 +335,7 @@ async def get_all_ts():
     except HTTPException as ex:
         raise ex
         
-@app.get("/api/ts/debug", response_model=List[TimeSeriesListup])
+@app.get("/api/ts/debug", response_model=List[TimeSeriesAll])
 async def get_all_ts_debug():
     try:
         tss = db_ts.get_all_ts_debug()
