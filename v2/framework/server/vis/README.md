@@ -5,9 +5,47 @@
 
 ## apt-get 으로 설치 및 실행
 
+- 참고 : https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
+
+
+### Install
+
 ```bash
 $ sudo apt update
 $ sudo apt -y install grafana
+```
+
+### Start
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start grafana-server
+sudo systemctl status grafana-server
+```
+
+or
+
+```
+sudo systemctl enable --now grafana-server
+systemctl status grafana-server.service 
+```
+
+### Install Plugins
+
+https://grafana.com/grafana/plugins/frser-sqlite-datasource/
+
+```bash
+grafana-cli plugins install frser-sqlite-datasource
+
+```
+
+### (옵션) 방화벽 이슈 (ufw 사용시)
+
+```bash
+sudo apt -y install ufw
+sudo ufw enable
+sudo ufw allow ssh
+sudo ufw allow 3000/tcp
 ```
 
 
