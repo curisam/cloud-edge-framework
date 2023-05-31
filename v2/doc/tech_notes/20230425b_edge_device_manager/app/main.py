@@ -247,7 +247,7 @@ db_ts = TimeSeriesDatabase()
 # Redirection
 @app.get("/", include_in_schema=False)
 async def root():
-    return RedirectResponse(url='/docs')
+    return RedirectResponse(url='/')
 
 @app.get("/api/edges", response_model=List[EdgeListup])
 async def get_all_edges():
