@@ -140,6 +140,36 @@ rpi6406   Ready    <none>                 2m8s    v1.26.5+k3s1
 rpi6401   Ready    control-plane,master   17m     v1.26.5+k3s1
 ```
 
+
+- (Master node) k3s 파일 퍼미션 변경
+
+```bash
+$ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+```
+
+
+
+
+## Master node에서 클러스터 확인
+
+
+
+
+```bash
+$ kubectl cluster-info
+$ kubectl cluster-info dump
+
+
+
+
+$ kubectl proxy
+```
+
+
+
+
+
+
 ### 5. k8s dashboard를 설치합니다.
 
 - 참고문헌은 다음과 같습니다 (https://docs.k3s.io/installation/kube-dashboard)
@@ -208,11 +238,13 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6ImNiZ1BpU0NwVnFhUUdnTE9uOHE2V084UFRFbmFfbEp2a0Z3Q0kw
 ```
 
 
+
 - (Master node) start dashboard
 
 ```bash
 sudo k3s kubectl proxy --port=9090 --address=0.0.0.0 --accept-hosts='^*$'
-Starting to serve on [::]:9090
+
+    Starting to serve on [::]:9090
 ```
 
 
@@ -284,6 +316,28 @@ $ wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy
 $ sudo kubectl apply -f kubernetes-dashboard.yaml
 ```
 
+
+
+
+
+## 오류 내용 대응 방안
+
+### 퍼미션 오류
+
+- 오류 
+
+```bash
+WARN[0000] Unable to read /etc/rancher/k3s/k3s.yaml, please start server with --write-kubeconfig-mode to modify kube config permissions 
+error: error loading config file "/etc/rancher/k3s/k3s.yaml": open /etc/rancher/k3s/k3s.yaml: permission denied
+```
+
+- 해결책
+
+https://0to1.nl/post/k3s-kubectl-permission/
+
+```bash
+$ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+```
 
 
 ## 연구 내용
