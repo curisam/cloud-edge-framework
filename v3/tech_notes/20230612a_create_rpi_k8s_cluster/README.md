@@ -127,6 +127,7 @@ $ sudo kubectl get nodes
 
 ```
 
+
 - 설치가 문제없다면 아래와 유사한 결과를 얻게 됩니다.
 
 ```bash
