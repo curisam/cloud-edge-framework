@@ -48,6 +48,7 @@ console=serial0,115200 console=tty1 root=PARTUUID=c8d8ee5a-02 rootfstype=ext4 fs
 ```
 
 
+
 - reboot
 
 ```bash
