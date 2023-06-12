@@ -24,6 +24,14 @@
 - https://www.youngju.dev/blog/202212/raspberrypi_kubernetes_install
 
 
+
+## 목표
+
+- 6대의 라즈베리파이(Raspberry pi, rpi)가 있습니다.
+- 1번 rpi 는 master node로 동작하고, 나머지 2 ~ 6번 rpi는 worker node로 동작합니다.
+
+
+
 ## 설치 순서
 
 ### 1. 그룹 설정
@@ -33,6 +41,8 @@
 - 각각 라즈베리파이 다바이스에서 /boot/cmdline.txt 파일을 열어 첫줄 맨 뒤에, "cgroup_memory=1 cgroup_enable=memory" 내용을 추가후 reboot합니다.
 
 
+- 즉, 아래와 같이 파일을 변경합니다.
+
 ```bash
 
 $ sudo vi /boot/cmdline.txt
@@ -41,15 +51,13 @@ $ sudo vi /boot/cmdline.txt
 
 ```
 
-- '/boot/cmdline.txt' file
+- 변경된 '/boot/cmdline.txt' 파일은 아래와 같습니다.
 
 ```bash
 console=serial0,115200 console=tty1 root=PARTUUID=c8d8ee5a-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles cgroup_memory=1 cgroup_enable=memory
 ```
 
-
-
-- reboot
+- 리부팅하여 설정을 적용합니다.
 
 ```bash
 
@@ -57,11 +65,20 @@ $ sudo reboot
 
 ```
 
+- 앞서의 과정을 수행하지 않으면 Master node 및 Worker node에서 프로그램 설치시 오류가 발생할 수 있습니다.
+
 
 
 ### 2. Master node 설정
 
 
+- 설치 스크립크 수행
+
+```bash
+
+$ curl -sfL https://get.k3s.io | sh -
+
+```
 
 ## 연구 내용
 
