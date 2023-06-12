@@ -116,6 +116,124 @@ $ curl -sfL https://get.k3s.io | K3S_URL=https://192.168.1.241:6443 K3S_TOKEN=K1
 - 그리고 K3S_URL에는 https 프로토콜을 지원하므로 주소에 https를 추가해줘야 합니다.
 
 
+### 4. 정상적으로 설치되었는지 확인합니다.
+
+- Master node로 접속합니다.
+- 아래와 같은 명령어를 실행합니다.
+
+```bash
+
+$ sudo kubectl get nodes
+
+```
+
+- 설치가 문제없다면 아래와 유사한 결과를 얻게 됩니다.
+
+```bash
+$ sudo kubectl get nodes
+NAME      STATUS   ROLES                  AGE     VERSION
+rpi6402   Ready    <none>                 3m39s   v1.26.5+k3s1
+rpi6403   Ready    <none>                 2m26s   v1.26.5+k3s1
+rpi6404   Ready    <none>                 2m20s   v1.26.5+k3s1
+rpi6405   Ready    <none>                 2m13s   v1.26.5+k3s1
+rpi6406   Ready    <none>                 2m8s    v1.26.5+k3s1
+rpi6401   Ready    control-plane,master   17m     v1.26.5+k3s1
+```
+
+### 5. k8s dashboard를 설치합니다.
+
+- 참고문헌은 다음과 같습니다 (https://docs.k3s.io/installation/kube-dashboard)
+
+- Master node로 접속합니다.
+
+- (Master node) 아래와 같은 명령어를 실행합니다.
+
+```bash
+GITHUB_URL=https://github.com/kubernetes/dashboard/releases
+VERSION_KUBE_DASHBOARD=$(curl -w '%{url_effective}' -I -L -s -S ${GITHUB_URL}/latest -o /dev/null | sed -e 's|.*/||')
+sudo k3s kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/${VERSION_KUBE_DASHBOARD}/aio/deploy/recommended.yaml
+
+```
+
+- (Master node) 홈 디렉토리에 dashboard.admin-user.yml 파일을 생성하고 다음의 내용을 기입합니다.
+
+```bash
+$ vi dashboard.admin-user.yml
+
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+```
+
+- (Master node) 홈 디렉토리에 dashboard.admin-user-role.yml 파일을 생성하고 다음의 내용을 기입합니다.
+
+```bash
+$ vi dashboard.admin-user-role.yml
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+  
+```
+ 
+- (Master node) deploy admin-user configuration
+
+```bash
+sudo k3s kubectl create -f dashboard.admin-user.yml -f dashboard.admin-user-role.yml
+
+```
+
+
+- (Master node) get bearer token
+
+```bash
+sudo k3s kubectl -n kubernetes-dashboard create token admin-user
+
+eyJhbGciOiJSUzI1NiIsImtpZCI6ImNiZ1BpU0NwVnFhUUdnTE9uOHE2V084UFRFbmFfbEp2a0Z3Q0kwVkJjVFkifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiLCJrM3MiXSwiZXhwIjoxNjg2NTQ3MjcxLCJpYXQiOjE2ODY1NDM2NzEsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiMGU1ZTU1MDctMDZmNi00NGIyLTk1N2ItODMxYjBlMGU3YmExIn19LCJuYmYiOjE2ODY1NDM2NzEsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDphZG1pbi11c2VyIn0.HsJ_goL35YRG35vgOGNyyYlv8X2y_NND5fJSU1ty5zm7fLz8dOnyD-KG70eaMC4BY0DxeucnE87RkNkNsUJR1aWkxODkRN8WRcgwBnEGey8IrI86-YBNcTS0Swfs80ELT5PMJ7OuZ12PsUp7XQhWln6OwzJ-aHztTGSi1rLeXIJAABGyVOO6E2EMW0Q4YQG3jdKTkBG8eImkbhnTIEzUAbPwtL-jg6YdBQCY6nP7Vuh40dJ6X70Qil0HPWXXO-btSJYR3_lHn7GMHGU9eSu5FCeYTR4qQHwwHxD0FCWGouKoF4GfQrrYLV3E_1BulOj_qI_kN8BYNEGJ20G-zaBABA
+
+```
+
+
+- (Master node) start dashboard
+
+```bash
+sudo k3s kubectl proxy --port=9090 --address=0.0.0.0 --accept-hosts='^*$'
+Starting to serve on [::]:9090
+```
+
+
+- (네트워크 내부의 다른 컴퓨터) 대시보드 접속 테스트
+
+```bash
+http://192.168.1.241:9090/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ 에 접속.
+```
+
+- 보안 문제로 로그인이 안되고, https 프로토콜을 사용하라는 오류가 발생합니다.
+
+
+
+
+- 상기 대시보드 로그인 문제를 해결하기 위해 https를 설정합니다.
+- 참고문헌 : https://yunhochung.medium.com/k8s-%EB%8C%80%EC%89%AC%EB%B3%B4%EB%93%9C-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%99%B8%EB%B6%80-%EC%A0%91%EC%86%8D-%EA%B8%B0%EB%8A%A5-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0-22ed1cd0999f
+
+
+
+
+
 
 ## 연구 내용
 
