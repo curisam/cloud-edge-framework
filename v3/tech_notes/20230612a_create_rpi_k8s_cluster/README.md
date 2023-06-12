@@ -88,6 +88,12 @@ $ sudo cat  /var/lib/rancher/k3s/server/node-token
 
 ```
 
+- 예를들어 아래와 같은 토큰이 출력되었습니다.
+
+```bash
+K102ae5a6cfc0634f30e6d6a7d0ef5cd9c19f098dd795fe164ff5878ee71b4b8c63::server:a4947c7a5e2cf637fcebdc73ffacffdf
+```
+
 
 
 
