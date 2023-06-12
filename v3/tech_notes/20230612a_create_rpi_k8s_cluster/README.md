@@ -39,9 +39,24 @@ $ sudo vi /boot/cmdline.txt
 
   cgroup_memory=1 cgroup_enable=memory
 
+```
+
+- '/boot/cmdline.txt' file
+
+```bash
+console=serial0,115200 console=tty1 root=PARTUUID=c8d8ee5a-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles cgroup_memory=1 cgroup_enable=memory
+```
+
+
+- reboot
+
+```bash
+
 $ sudo reboot
 
 ```
+
+
 
 ### 2. Master node 설정
 
