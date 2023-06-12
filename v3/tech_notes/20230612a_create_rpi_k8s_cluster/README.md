@@ -231,7 +231,58 @@ http://192.168.1.241:9090/api/v1/namespaces/kubernetes-dashboard/services/https:
 - 참고문헌 : https://yunhochung.medium.com/k8s-%EB%8C%80%EC%89%AC%EB%B3%B4%EB%93%9C-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%99%B8%EB%B6%80-%EC%A0%91%EC%86%8D-%EA%B8%B0%EB%8A%A5-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0-22ed1cd0999f
 
 
+- 인증서를 위한 Key파일, CSR(Certificate Signing Request, 인증서 서명 요청 파일) 생성
 
+
+```bash
+
+$ mkdir certs; cd certs
+
+$ openssl genrsa -des3 -passout pass:x -out dashboard.pass.key 2048
+
+    Generating RSA private key, 2048 bit long modulus (2 primes)
+    ..........................................................+++++
+    ............................................+++++
+    e is 65537 (0x010001)
+
+
+$ openssl rsa -passin pass:x -in dashboard.pass.key -out dashboard.key
+
+    writing RSA key
+
+$ openssl req -new -key dashboard.key -out dashboard.csr
+
+
+```
+
+
+- SSL 생성
+
+```bash
+
+$ openssl x509 -req -sha256 -days 365 -in dashboard.csr -signkey dashboard.key -out dashboard.crt
+
+```
+
+- k8s secret 생성
+
+
+```bash
+
+$ cd ..
+$ sudo kubectl create secret generic kubernetes-dashboard-certs --from-file=./certs -n kube-system
+
+
+    secret/kubernetes-dashboard-certs created
+```
+
+- kubectl 적용하기
+
+```bash
+$ wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+# dashboard server 수정. spec type을 LoadBalancer로 지정.
+$ sudo kubectl apply -f kubernetes-dashboard.yaml
+```
 
 
 
