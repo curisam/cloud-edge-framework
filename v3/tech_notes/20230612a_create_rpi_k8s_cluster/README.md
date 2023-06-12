@@ -103,16 +103,17 @@ K102ae5a6cfc0634f30e6d6a7d0ef5cd9c19f098dd795fe164ff5878ee71b4b8c63::server:a494
 
 ```bash
 
-
-$ curl -sfL https://get.k3s.io | K3S_URL=192.168.1.241:6443 K3S_TOKEN=K102ae5a6cfc0634f30e6d6a7d0ef5cd9c19f098dd795fe164ff5878ee71b4b8c63::server:a4947c7a5e2cf637fcebdc73ffacffdf sh -
+$ curl -sfL https://get.k3s.io | K3S_URL=https://192.168.1.241:6443 K3S_TOKEN=K102ae5a6cfc0634f30e6d6a7d0ef5cd9c19f098dd795fe164ff5878ee71b4b8c63::server:a4947c7a5e2cf637fcebdc73ffacffdf sh -
 
 ```
+
 
 - 기본적으로 쿠버네티스 API 서버는 TLS에 의해 보호되는 첫번째 non-localhost 네트워크 인터페이스의 6443번 포트에서 수신을 대기합니다 (출처: https://kubernetes.io/ko/docs/concepts/security/controlling-access/)
 - 일반적인 쿠버네티스 클러스터에서 API는 443번 포트에서 서비스합니다 (출처: https://kubernetes.io/ko/docs/concepts/security/controlling-access/)
 - 단, 포트번호는 --secure-port 플래그를 통해, 수신 대기 IP 주소는 --bind-address 플래그를 통해 변경될 수 있습니다 (출처: https://kubernetes.io/ko/docs/concepts/security/controlling-access/)
 
 
+- 그리고 K3S_URL에는 https 프로토콜을 지원하므로 주소에 https를 추가해줘야 합니다.
 
 
 
