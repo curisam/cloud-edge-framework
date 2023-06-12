@@ -124,6 +124,16 @@ $ curl -sfL https://get.k3s.io | K3S_URL=https://192.168.1.241:6443 K3S_TOKEN=K1
 
 ```bash
 
+$ kubectl version
+
+```
+
+- 더 많은 명령어들을 실행해볼 수 있습니다.
+
+```bash
+
+$ kubectl version
+
 $ kubectl get nodes
 
 $ kubectl get nodes --show-labels
@@ -141,6 +151,7 @@ $ kubectl config view
 $ kubectl get services 
 
 ```
+
 
 
 - 모니터링
