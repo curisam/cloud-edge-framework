@@ -72,13 +72,25 @@ $ sudo reboot
 ### 2. Master node 설정
 
 
-- 설치 스크립크 수행
+- 설치 스크립트를 수행합니다.
 
 ```bash
 
 $ curl -sfL https://get.k3s.io | sh -
 
 ```
+
+- 마스터 노드의 토큰을 읽은 후 이를 소정의 장소에 보관합니다.
+
+```bash
+
+$ sudo cat  /var/lib/rancher/k3s/server/node-token
+
+```
+
+
+
+
 
 ## 연구 내용
 
