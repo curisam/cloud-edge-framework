@@ -3,8 +3,8 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "name": "ETRI-RPI01",
-  "host": "deepcase.mynetgear.com",
+  "name": "ETRI New Edge",
+  "host": "192.111.111.111",
   "port": 22,
   "description": "Test",
   "access_token": "AAAABBBB",
