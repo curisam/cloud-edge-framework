@@ -6,15 +6,17 @@
  - Acknowledgement : This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (No. 2021-0-00907, Development of Adaptive and Lightweight Edge-Collaborative Analysis Technology for Enabling Proactively Immediate Response and Rapid Learning).
  - 작성자 : 박종빈
  
- - 날짜 : 2023-06-12
+ - 날짜 : 2023-06-12 ~ 19
  - 연구자 : 박종빈
 -----------------------------------------------------
+
 
 ## 필요성
 
 - 컨네이너화된 워크로드와 서비스를 관리하기 위한 도구로 k8s(kubernetes) 혹은 이것의 경량화 버전 k3s(light weight kubernetes)가 존재합니다.
 
 - EVC(Edge Vision Cluster)에서는 계층 클러스터로 k8s, k3s 지원을 추진 중이기 때문에 본 문서를 통해 구체적인 설치 방법 및 특징을 정리하도록 합니다.
+
 
 ### k8s(kubernetes) 특징
 
@@ -33,7 +35,12 @@
 
 - 외부 클라우드와의 연동기능을 최소화하여 의존성을 줄입니다.
 
-- 설치를 위한 쉘 스크립트를 제공하여 대부분의 시스템에서 잘 설치
+- 설치를 위한 쉘 스크립트를 제공하여 대부분의 시스템에서 잘 설치됩니다.
+
+- 예컨데 라즈베리파이 4b 정도의 초경량 연산자원에서도 설치되고 클러스터를 구축할 수 있습니다.
+
+- 그러나 오래된 쿠버네티스 API에 대한 완벽한 하위호환성을 갖지는 않습니다. 
+
 
 
 ## 설치
