@@ -82,6 +82,16 @@ $ curl -sfL https://get.k3s.io | sh -
 
 ```
 
+- 설치 상태를 확인합니다.
+
+```bash
+$ systemctl status k3s
+```
+
+<img width = 700, src='img4doc/k3s_status.png'>
+
+
+
 - 마스터 노드의 토큰을 읽은 후 이를 소정의 장소에 보관합니다.
 
 ```bash
