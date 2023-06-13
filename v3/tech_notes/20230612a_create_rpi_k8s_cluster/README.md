@@ -128,11 +128,11 @@ $ kubectl version
 
 ```
 
-- 더 많은 명령어들을 실행해볼 수 있습니다.
+### 5. 다양한 명령어들을 실행해 봅니다.
+
+- 노드 상태
 
 ```bash
-
-$ kubectl version
 
 $ kubectl get nodes
 
@@ -150,6 +150,20 @@ $ kubectl config view
 
 $ kubectl get services 
 
+```
+
+- IP 정보 획득
+
+```bash
+$ kubectl get nodes -o wide --no-headers  | awk '{print $6}'
+
+E0612 13:29:18.818905   40027 memcache.go:287] couldn't get resource list for argoproj.io/v1alpha1: the server could not find the requested resource
+192.168.1.245
+192.168.1.15
+192.168.1.243
+192.168.1.241
+192.168.1.246
+192.168.1.242
 ```
 
 
