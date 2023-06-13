@@ -13,7 +13,8 @@
 ## 개요
 
 - 컨네이너화된 워크로드와 서비스를 관리하기 위한 도구로 kubernetes(k8s) 기술이 존재합니다.
-- 본 연구에서는 라즈베리파이 초경량 에지 디바이스를 이용하여 k8s 클러스터를 구축하는 방법을 정리합니다.
+- 또한 k8s의 경량화 버전이라 할 수 있는 k3s도 최근 많이 활용되고 있습니다.
+- 본 연구에서는 라즈베리파이 초경량 에지 디바이스를 이용하여 k3s 클러스터를 구축하는 방법을 정리합니다.
 - 설치 절차는 스크립트를 실행하여 자동 처리하는 것이 바람직합니다.
 
 
@@ -176,14 +177,6 @@ $ kubectl top node
 $ kubectl top pod
 
 $ kubectl top pod --all-namespaces --containers=true
-
-$
-
-$
-
-$
-
-$
 
 $
 
@@ -537,12 +530,3 @@ https://0to1.nl/post/k3s-kubectl-permission/
 $ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 ```
 
-
-## 연구 내용
-
-- Port 방화벽 처리 (8000번 포트를 여는 예시)
-
-```bash
-$ sudo iptables -I INPUT -p tcp --dport 8000 -j ACCEPT
-$ sudo iptables -I OUTPUT -p tcp --sport 8000 -j ACCEPT
-```
