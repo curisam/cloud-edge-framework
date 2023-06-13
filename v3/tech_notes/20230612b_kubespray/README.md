@@ -13,9 +13,9 @@
 
 ## 필요성
 
-- 컨네이너화된 워크로드와 서비스를 관리하기 위한 도구로 k8s(kubernetes) 혹은 이것의 경량화 버전 k3s(light weight kubernetes)가 존재합니다.
+- 컨네이너화된 워크로드와 서비스를 관리하기 위한 도구로 k8s(kubernetes) 혹은 이것의 경량화 버전 k3s(light weight kubernetes)이 있습니다.
 
-- EVC(Edge Vision Cluster)에서는 계층 클러스터로 k8s, k3s 지원을 추진 중이기 때문에 본 문서를 통해 구체적인 설치 방법 및 특징을 정리하도록 합니다.
+- EVC(Edge Vision Cluster)에서는 계층적 클러스터를 지향하며, 하위 클러스터로 {k8s, k3s} 지원을 추진 중이기 때문에 본 문서를 통해 구체적인 설치 방법 및 특징을 정리하도록 합니다.
 
 
 ### k8s(kubernetes) 특징
