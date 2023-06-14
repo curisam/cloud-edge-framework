@@ -145,8 +145,10 @@ $ kubectl version
 
 ```bash
 
+# 노드의 상태를 표시합니다.
 $ kubectl get nodes
 
+# 노드의 상태를 레이블 정보와 함께 표시합니다.
 $ kubectl get nodes --show-labels
 
 $ kubectl describe nodes
@@ -155,6 +157,7 @@ $ kubectl api-resources
 
 $ kubectl get all
 
+# kubernetes 시스템 Pod 상태를 확인합니다.
 $ kubectl get pods --all-namespaces
 
 $ kubectl config view
