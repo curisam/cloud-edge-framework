@@ -6,8 +6,8 @@
 
 body { 
   height: 100%;
-  background-color: #333; 
-  color: whitesmoke; 
+  background-color: #333;
+  color: whitesmoke;
   font-size: 16px; 
   font-family: 'Lato';
 } 
@@ -18,9 +18,10 @@ p { margin: 0 0 15px; line-height: 24px; color: gainsboro; }
 a { color: dodgerblue; text-decoration: none; border-bottom: 1px dotted; }
 a:hover { color: tomato; }
 
+
 .container { 
-  max-width: 960px; 
-  height: 11000px;
+  max-width: 1200px; 
+  height: 100%;
   margin: 0 auto; 
   padding: 20px;
 }
@@ -33,7 +34,7 @@ a:hover { color: tomato; }
 .tabs {
   position: relative;
   display: flex;
-  min-height: 300px;
+  min-height: 1000px;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
 }
@@ -69,7 +70,8 @@ a:hover { color: tomato; }
   
   padding: 20px;
   border-radius: 0 0 8px 8px;
-  background: #553285;
+  /* background: #553285; */
+  background: #FFFFFF;
   
   transition: 
     opacity 0.8s ease,
