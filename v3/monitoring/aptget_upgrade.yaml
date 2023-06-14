@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: rpi
   remote_user: jpark
   become: true
   become_method: sudo
