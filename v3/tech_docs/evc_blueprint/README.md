@@ -321,10 +321,23 @@
 
 
 
-### 
+### (모델 등록 단계)
 
 <img src='img4doc/img.png'>
 
 
+### (모델 배포 단계)
+
+<img src='img4doc/img.png'>
+
+
+### (모델 수행 단계)
+
+<img src='img4doc/img.png'>
+
+
+### (디바이스 모니터링 단계)
+
+<img src='img4doc/img.png'>
 
 
