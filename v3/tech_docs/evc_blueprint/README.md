@@ -341,3 +341,281 @@
 <img src='img4doc/img.png'>
 
 
+
+
+## 시스템 구현
+
+
+
+### 앤서블 설치
+
+- Python PIP
+
+```bash
+$ pip install ansible
+# 설치 할 앤서블 버전 설정
+$ pip install ansible==2.10.7
+```
+
+- Python conda
+
+```bash
+$ conda install ansible
+```
+
+- Ubuntu Linux
+```bash
+$ sudo apt install ansible
+```
+
+- MacOS
+```bash
+$ brew install ansible
+```
+
+#### SSH 연결 사전 설정
+
+##### 절차
+
+- 단계 1. ssh-keygen으로 키를 생성하고,
+- 단계 2. ssh-copy-id로 키를 추가합니다.
+
+##### 예시
+
+- 네트워크에 2대의 컴퓨터 {A, B}가 있다고 가정합니다.
+- A 는 "192.168.1.5" IP를 갖는다고 하고,
+- B 는 "192.168.1.3" IP를 갖는다고 가정합니다.
+- B 의 사용자 id는 "jpark"이라고 가정합니다.
+
+- A에서 ssh-keygen으로 먼저 키를 만듭니다.
+```bash
+$ ssh-keygen -t rsa
+```
+
+- private key(비밀키)와 public key(공개키)가 짝으로 만들어집니다.
+
+- A에서 만든 공개키를 B로 전송합니다.
+- A의 공개키 ~/.ssh/id_rsa.pub 의 내용이 B에 전달되어 B의 ~/.ssh/authorized_keys 파일에 추가됩니다.
+
+```bash
+$ ssh-copy-id jpark@192.168.1.3
+```
+
+
+- A에서 B로 암호 입력 없이 접속 가능합니다.
+
+```bash
+$ ssh jpark@192.168.1.3
+```
+
+
+#### Ansible 사용해보기
+
+##### ping으로 연결상태 확인하기
+
+- Ansible 이 설치되어 있는지 확인합니다.
+
+```bash
+$ ansible --version
+```
+![ansible-version](img4doc/ansible-version.png)
+
+
+- server.ini 파일을 만듭니다.
+
+```bash
+$ vi server.ini
+```
+
+- server.ini 파일에 서버 목록을 기입합니다.
+- 아래 예시에서는 192.168.1.3 은 존재하는 서버지만, 192.168.1.7 은 존재하지 않는 서버입니다.
+
+```bash
+[server]
+192.168.1.3
+192.168.1.7
+```
+
+- 터미널에서 ansible을 통해 ping을 실행합니다.
+
+```bash
+ansible server -i server.ini -m ping
+```
+
+![ansible-ping](img4doc/ansible-ping.png)
+
+
+- ansible을 통해 ping을 실행시에 사용자 명을 옵션으로 줄 수 있습니다.
+
+```bash
+ansible server -i server.ini -m ping -jpark
+```
+
+
+##### localhost에서 원격지 컴퓨터로 파일 복사하기 
+
+
+- copy.yaml 파일을 작성합니다.
+
+```yaml
+- name: Test Copy
+  hosts: all
+  remote_user: jpark
+  tasks:
+    - name: Copying files from remote server
+      copy:
+        src: "test.txt"
+        dest: "/home/jpark/test_clone.txt"
+        backup: yes
+```
+
+- copy.yaml 파일을 실행합니다.
+
+
+```bash
+$ ansible-playbook copy.yaml -i server.ini
+```
+
+
+##### localhost에서 원격지 컴퓨터에 명령어를 실행하고 stdout 결과를 확인하기 
+
+
+- shell_cmd01.yaml 파일을 작성합니다.
+
+```yaml
+# This playbook runs a basic DF command.
+- hosts: 192.168.1.3
+  remote_user: jpark
+
+  tasks:
+  - name: find disk space available.
+    command: df -hPT
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: ls -al
+    command: 'ls -al'
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: ls
+    shell: 'ls'
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+
+  - name: uptime
+    shell: 'uptime'
+    register: command_output
+  - debug:
+      var: command_output.stdout_lines
+```
+
+- shell_cmd01.yaml 파일을 실행합니다.
+
+
+```bash
+$ ansible-playbook shell_cmd01.yaml -i server.ini
+```
+
+
+### Grafana 설치  
+
+
+- 참고주소 : https://grafana.com/
+
+#### Ubuntu 20.04 LTS에서 apt-get을 이용한 설치 방법
+
+- 아래 주소 참고하여 진행
+```bash
+    https://computingforgeeks.com/how-to-install-grafana-on-ubuntu-linux-2/
+```
+
+- 방화벽 열기
+
+```bash
+    $ sudo iptables -I INPUT 1 -p tcp --dport 3000 -j ACCEPT
+```
+
+#### docker를 이용한 설치
+
+- 아래 주소 문서를 참고하여 Grafana opensource version을 설치합니다.
+
+```bash
+https://grafana.com/docs/grafana/latest/setup-grafana/installation/docker/
+```
+
+- Grafana grafana/grafana-oss 설치 방법
+
+```bash
+docker run -d -p 3000:3000 grafana/grafana-oss
+```
+
+- 기본 접속 정보
+
+```bash
+    기본 포트: 3000
+    기본 ID: admin
+    기본 PW: admin
+```
+
+
+
+#### Grafana 사용팁
+
+##### iframe 으로 웹페이지 넣기
+
+- grafana.ini 파일을 열기 
+```bash
+$ sudo vi /etc/grafana/grafana.ini
+```
+
+- 아래와 같이 편집하기 
+
+```
+allow_embedding = true
+disable_sanitize_html = true
+
+[auth.anonymous]
+enabled = true
+org_name = Main Org
+org_role = Viewer
+```
+
+- 서비스 재시작 하기 (Ubuntu의 경우)
+
+```bash
+$ sudo systemctl restart grafana-server
+```
+
+
+- 서비스 동작상태 확인하기 (Ubuntu의 경우)
+
+```bash
+$ sudo systemctl status grafana-server
+```
+
+- 그라파나 HTML UI / 방패 아이콘 / Settings / "allow_embedding" 찾기
+
+- allow_embedding 이 true인지 확인 
+
+
+##### 콘솔 명령어로 플러그인 설치하기
+
+- 예를들어, diagram, ajax 플러그인 설치시
+
+```bash
+    $ grafana-cli plugins install jdbranham-diagram-panel # DIAGRAM
+    $ grafana-cli plugins install ryantxu-ajax-panel # AJAX
+    $ grafana-cli plugins install marcusolsson-csv-datasource # CSV
+
+    grafana-cli plugins install innius-video-panel # Video
+```
+
+```bash
+    $ sudo systemctl restart grafana-server
+    $ sudo systemctl status grafana-server
+```
+
