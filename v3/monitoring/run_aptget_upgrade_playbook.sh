@@ -1,1 +1,1 @@
-ansible-playbook --inventory-file hosts.ini aptget_upgrade.yaml
+ansible-playbook --inventory-file ../config/hosts.ini aptget_upgrade.yaml

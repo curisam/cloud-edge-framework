@@ -1,1 +1,1 @@
-ansible-playbook shell_cmd_multiline.yaml -i hosts.ini
+ansible-playbook shell_cmd_multiline.yaml -i ../config/hosts.ini

@@ -1,1 +1,1 @@
-ansible-playbook --inventory-file hosts.ini ntp_sync.yaml
+ansible-playbook --inventory-file ../config/hosts.ini ntp_sync.yaml

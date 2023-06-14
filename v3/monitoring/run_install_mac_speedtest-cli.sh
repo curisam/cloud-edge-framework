@@ -1,2 +1,2 @@
-ansible mac -m shell -a "brew install speedtest-cli" -i hosts.ini
+ansible mac -m shell -a "brew install speedtest-cli" -i ../config/hosts.ini
 

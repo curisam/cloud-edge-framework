@@ -1,1 +1,1 @@
-ansible-playbook --inventory-file hosts.ini ping.yaml
+ansible-playbook --inventory-file ../config/hosts.ini ping.yaml
