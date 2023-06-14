@@ -25,6 +25,7 @@ v2/doc/figures
 v2/approaches/flwr01/env
 v2/approaches/flwr01/env/
 
+v3/demo
 
 # model
 *.onnx
