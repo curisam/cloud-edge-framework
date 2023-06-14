@@ -282,6 +282,7 @@
 <img src='img4doc/img.png'>
 
 
+
 ### (디바이스 등록 단계) 에지 디바이스 ssh 연결 채널 확보
 
 - EVC는 종래의 사설 네트워크(private network) 환경에서의 에지 클러스터 구축의 한계를 넘어서는 기술입니다.
@@ -313,9 +314,11 @@
 <img src='img4doc/img.png'>
 
 
+
 ### (클러스터 구축 단계) 
 
 <img src='img4doc/img.png'>
+
 
 
 ### 
