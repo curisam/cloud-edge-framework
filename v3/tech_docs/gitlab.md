@@ -23,3 +23,114 @@ sudo apt install -y ca-certificates curl openssh-server
 ```bash
 sudo apt install -y ca-certificates curl openssh-server
 ```
+
+
+### 4. GitLab-CE repository 추가
+
+```bash
+
+curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+
+```
+
+
+### 5. GitLab 설치
+
+- 설치
+
+```bash
+
+sudo apt update
+sudo apt -y install gitlab-ce
+
+```
+
+- 완료 후 메시지 : 멋지 여우 그림
+
+```bash
+
+It looks like GitLab has not been configured yet; skipping the upgrade script.
+
+       *.                  *.
+      ***                 ***
+     *****               *****
+    .******             *******
+    ********            ********
+   ,,,,,,,,,***********,,,,,,,,,
+  ,,,,,,,,,,,*********,,,,,,,,,,,
+  .,,,,,,,,,,,*******,,,,,,,,,,,,
+      ,,,,,,,,,*****,,,,,,,,,.
+         ,,,,,,,****,,,,,,
+            .,,,***,,,,
+                ,*,.
+  
+
+
+     _______ __  __          __
+    / ____(_) /_/ /   ____ _/ /_
+   / / __/ / __/ /   / __ `/ __ \
+  / /_/ / / /_/ /___/ /_/ / /_/ /
+  \____/_/\__/_____/\__,_/_.___/
+  
+
+Thank you for installing GitLab!
+GitLab was unable to detect a valid hostname for your instance.
+Please configure a URL for your GitLab instance by setting `external_url`
+configuration in /etc/gitlab/gitlab.rb file.
+Then, you can start your GitLab instance by running the following command:
+  sudo gitlab-ctl reconfigure
+
+For a comprehensive list of configuration options please see the Omnibus GitLab readme
+https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
+
+Help us improve the installation experience, let us know how we did with a 1 minute survey:
+https://gitlab.fra1.qualtrics.com/jfe/form/SV_6kVqZANThUQ1bZb?installation=omnibus&release=16-0
+
+
+```
+
+
+
+### 6. GitLab 설정 변경
+
+- 설정파일 열기
+
+```bash
+
+sudo vi /etc/gitlab/gitlab.rb
+
+# 수정
+    external_url 'http://loaclhost:8081'
+    
+```
+
+
+- 설정 파일 적용을 위한 재시작
+
+```bash
+sudo gitlab-ctl reconfigure
+```
+
+
+### 7. root 초기 비밀번호 확인 및 변경
+
+- (1) root 계정 초기 비밀 번호
+
+```bash
+sudo su
+cat /etc/gitlab/initial_root_password
+```
+
+- (2) root 비밀번호 변경
+
+```bash
+sudo gitlab-rails console -e production
+
+user = User.where(id:1).first
+
+user.password='new password'
+user.password_confirmation='new password'
+user.save
+
+exit
+```
