@@ -137,10 +137,13 @@ user.save
 exit
 ```
 
-
-
 ## GitLab 페이지를 iframe에 넣기
 
 - (참고) https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/
 
+- gitlab.rb 파일 설정
+https://docs.gitlab.com/omnibus/settings/configuration.html
 
+```bash
+sudo gitlab-ctl reconfigure
+```
