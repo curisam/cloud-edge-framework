@@ -3,7 +3,10 @@
 - 참고 : https://velog.io/@ysy3285/AWS-Ubuntu-20.04%EC%97%90-GitLab-%EC%84%A4%EC%B9%98
 - 깃랩(GitLab)은 깃랩 회사(GitLab Inc.)가 개발한 깃 저장소 및 CI/CD, 이슈 추적, 보안성 테스트 등의 기능을 갖춘 웹 기반의 데브옵스 플랫폼입니다.
 
+
+
 ## Ubuntu 20.04 LTS 시스템에 GitLab 설치
+
 
 ### 1. 시스템 업데이트
 
@@ -90,7 +93,6 @@ https://gitlab.fra1.qualtrics.com/jfe/form/SV_6kVqZANThUQ1bZb?installation=omnib
 ```
 
 
-
 ### 6. GitLab 설정 변경
 
 - 설정파일 열기
@@ -134,3 +136,11 @@ user.save
 
 exit
 ```
+
+
+
+## GitLab 페이지를 iframe에 넣기
+
+- (참고) https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/
+
+
