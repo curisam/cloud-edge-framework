@@ -1,20 +1,44 @@
 # Grafana 설치  
 
 
-## 참고주소
-
-- https://grafana.com/
-- https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
-
 ## Ubuntu 20.04 LTS에서 apt-get을 이용한 설치 방법
+
+- 참고주소 1 : https://grafana.com/
+- 참고주소 2 : https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
+
+- 설치 버전 : Grafana OSS (free version)
+
+```bash
+
+sudo apt-get install -y apt-transport-https
+sudo apt-get install -y software-properties-common wget
+sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+
+echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+
+# echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com beta main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+
+
+
+# Update the list of available packages
+sudo apt-get update
+
+# Install the latest OSS release:
+sudo apt-get install grafana
+
+
+```
+
+
+
+
+## docker를 이용한 설치
 
 - 방화벽 열기
 
 ```bash
     $ sudo iptables -I INPUT 1 -p tcp --dport 3000 -j ACCEPT
 ```
-
-## docker를 이용한 설치
 
 - 참고 : https://computingforgeeks.com/how-to-install-grafana-on-ubuntu-linux-2/
 
