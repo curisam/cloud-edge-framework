@@ -32,6 +32,16 @@ sudo grafana server
 ```
 
 
+- backgroud 실행
+
+```bash 
+
+nohup sudo grafana server &
+
+```
+
+
+
 
 
 ## docker를 이용한 설치
