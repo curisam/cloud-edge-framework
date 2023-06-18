@@ -43,7 +43,6 @@ nohup sudo grafana server &
 
 
 
-
 ## docker를 이용한 설치
 
 - 방화벽 열기
