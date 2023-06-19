@@ -10,7 +10,7 @@
     <body>
         <div class="container">
 
-            <h1>Edge Vision Cluster(EVC) demo page, KETI</h1>
+            <h2>Edge Vision Cluster(EVC) demo page, KETI</h2>
             <!-- 
                 <p> http://deepcase.mynetgear.com:20080/cloud-edge-framework/v3 </p>
             -->
@@ -19,10 +19,13 @@
 
                 <div class="tabby-tab">
                   <input type="radio" id="tab-1" name="tabby-tabs" checked>
-                  <label for="tab-1">EVC 공개키 등록</label>
+                  <label for="tab-1">EVC 공개키 설정</label>
                   <div class="tabby-content">
                       
                       <p> <font color = "black"> 아래의 공개키를 EVC에 등록하려는 Edge 장치에 등록합니다. </font> </p>
+                      
+                      <p> <font color = "black"> (단, 아래의 공개키는 향후 바뀔 수 있습니다.) </font> </p>
+                      
                       
                       <p> <font color = "black"> vi ~/new_user/.ssh/authorized_keys </font> </p>
                       
@@ -46,8 +49,15 @@
                   <label for="tab-3">클러스터 구축</label>
                   <div class="tabby-content">
                     
+                    <p>
                     <a href="http://ketiabcs.iptime.org:39080/d/yr9KziTVk/edgeframework_admin?orgId=1&from=1686731955352&to=1686753555352" target="_blank"> 클러스터 확인 UI
                     </a>
+                    </p>
+                      
+                      <p> <font color = "black"> - 집접 연결 </font> </p>
+                      <p> <font color = "black"> - Container 기반 연결 </font> </p>
+                      <p> <font color = "black"> - k3s 클러스터 연결 : 초경량 에지 지향 </font> </p>
+                      <p> <font color = "black"> - k8s 클러스터 연결 : 고성능 에지 지향 </font> </p>
 
                     </div>
                 </div>
@@ -67,7 +77,14 @@
                   <label for="tab-5">지속 통합/배포</label>
                   <div class="tabby-content">
                       
+                      <p>
                       <a href="http://deepcase.mynetgear.com:28081" target="_blank"> 지속 통합/배포 (CI/CD)</a>
+                      </p>
+                       
+                      <p> <font color = "black"> - Git LFS (Large File Storage) </font> </p>
+                      <p> <font color = "black"> - CI/CD </font> </p>
+                      
+                      
                    
                   </div>
                 </div>
