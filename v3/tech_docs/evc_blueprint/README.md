@@ -41,6 +41,25 @@
 
 - 대용량 영상 데이터를 물리적으로 나누어 처리하려면 실행 환경을 쉽게 배포할 수 있어야 하며, 연산 처리 상황과 자원 및 리소스 사용량 등을 편리하고 효율적으로 모니터링 할 수 있어야 합니다.
 
+## Results {.tabset}
+
+### Plots
+
+We show a scatter plot in this section.
+
+```{r, fig.dim=c(5, 3)}
+par(mar = c(4, 4, .5, .1))
+plot(mpg ~ hp, data = mtcars, pch = 19)
+```
+
+### Tables
+
+We show the data in this tab.
+
+```{r}
+head(mtcars)
+```
+
 
 ## 에지 컴퓨팅 환경을 위한 EVC 
 
