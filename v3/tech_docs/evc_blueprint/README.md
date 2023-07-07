@@ -61,6 +61,22 @@ head(mtcars)
 ```
 
 
+# Tabs {.tabset}
+## First Tab
+
+Any content here will go into the first tab...
+
+## Second Tab
+
+Any content here will go into the second tab...
+
+## Third Tab
+
+Any content here will go into the third tab...
+
+
+
+
 ## 에지 컴퓨팅 환경을 위한 EVC 
 
 - EVC는 앞서 기술한 에지 컴퓨팅 구성이 가진 문제점을 해결하여 효과적이고 편리한 컴퓨터 비전 처리를 수행한 프레임워크 기술입니다.
