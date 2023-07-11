@@ -1,0 +1,50 @@
+{
+  "bolt": {
+    "host": "/home/jpark/www/cloud-edge-framework/v3/ansible_semaphore/semaphore.bolt",
+  },
+  "mysql": {
+    "host": "localhost",
+    "user": "root",
+    "pass": "*****",
+    "name": "semaphore",
+    "options": {}
+  },
+  "postgres": {
+    "host": "localhost",
+    "user": "postgres",
+    "pass": "*****",
+    "name": "semaphore",
+    "options": {}
+  },
+  "dialect": "postgres",
+  "port": "",
+  "interface": "",
+  "tmp_path": "/tmp/semaphore",
+  "cookie_hash": "*****",
+  "cookie_encryption": "*****",
+  "access_key_encryption": "*****",
+  "email_sender": "",
+  "email_host": "",
+  "email_port": "",
+  "web_host": "",
+  "ldap_binddn": "",
+  "ldap_bindpassword": "",
+  "ldap_server": "",
+  "ldap_searchdn": "",
+  "ldap_searchfilter": "",
+  "ldap_mappings": {
+    "dn": "",
+    "mail": "",
+    "uid": "",
+    "cn": ""
+  },
+  "telegram_chat": "",
+  "telegram_token": "",
+  "concurrency_mode": "",
+  "max_parallel_tasks": 0,
+  "email_alert": false,
+  "telegram_alert": false,
+  "slack_alert": false,
+  "ldap_enable": false,
+  "ldap_needtls": false
+}
