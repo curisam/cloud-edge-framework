@@ -5,6 +5,10 @@
 
 ## 용어
 
+### Ansible
+
+- Ansible은 인프라스트럭처 자동화를 위한 오픈 소스 IT 자동화 도구로, 서버 설정, 배포, 관리 등을 자동화할 수 있습니다
+
 ### Playbooks
 - Ansible 기본 단위이며, 자동화할 작업 리스트입니다.
 - YAML 파일로 작성합니다.
@@ -132,3 +136,32 @@ ansible-rulebook -i inventory.yml --rulebook hello_rulebook.yml --verbose
 - 참고문헌 : https://www.cherryservers.com/blog/how-to-run-remote-commands-with-ansible-shell-module#run-ansible-ad-hoc-shell-commands
 
 
+
+### Ansible Tower, Semaphore, AWX
+
+- (참고) https://lifeplan-b.tistory.com/144
+
+- Ansible Tower는 Ansible의 UI 기능을 제공하는 상용 기술입니다.
+- 이를 공개소스화 한 것이 Ansible Semaphore와 Ansible AWX 입니다.
+- 
+
+
+#### Ansible Tower
+
+- Ansible Tower는 Ansible을 사용한 자동화 작업의 관리 및 오케스트레이션을 제공하는 Redhat의 상용 제품입니다. 
+
+- Ansible Tower는 Ansible을 사용하는 조직이 작업을 중앙에서 관리하고 조정할 수 있도록 도와줍니다.
+
+- 구체적으로는 Ansible을 기반으로 한 자동화 작업의 중앙 집중 관리와 보안, 확장성, 감사 및 보고 기능을 제공하여 효율적인 인프라스트럭처 자동화를 도와줍니다.
+
+- Ansible Tower의 주요 기능은 다음과 같습니다
+
+  1. 웹 기반 대시보드: Ansible Tower는 사용자들에게 직관적이고 사용하기 쉬운 웹 기반 대시보드를 제공합니다. 이를 통해 작업 관리, 일정 관리, 작업 템플릿 등을 관리할 수 있습니다.
+
+  2. 롤 기반 액세스 제어: Ansible Tower는 사용자 및 팀에 대한 액세스 제어를 제공합니다. 롤 기반의 액세스 제어를 사용하여 작업을 할당하고, 사용자 및 그룹별로 권한을 제어할 수 있습니다.
+
+  3. 작업 관리: Ansible Tower를 사용하면 Ansible 작업을 중앙에서 관리하고 실행할 수 있습니다. 작업을 예약하고, 로그 및 보고서를 확인하며, 작업의 성공 여부를 모니터링할 수 있습니다.
+
+  4. 스케일 업 및 하이브리드 환경: Ansible Tower는 큰 규모의 인프라스트럭처에 대한 확장성을 제공합니다. 다중 플레이북 실행, 병렬 작업 처리 등을 통해 대규모 작업을 처리할 수 있습니다. 또한, 클라우드 및 온프레미스 환경의 자동화를 통합하여 하이브리드 환경에서 작업을 관리할 수 있습니다.
+
+  5. 보안 및 감사: Ansible Tower는 보안 기능을 제공하여 데이터의 기밀성과 무결성을 보호합니다. 또한, 작업 실행과 관련된 로그와 보고서를 생성하여 감사 및 규정 준수를 지원합니다.
