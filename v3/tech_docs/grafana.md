@@ -19,14 +19,13 @@ echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com st
 # echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com beta main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
 
 
-
 # Update the list of available packages
 sudo apt-get update
 
 # Install the latest OSS release:
 sudo apt-get install grafana
 
-# Chage port or other parameters
+# Chage port or other parameters : (주의) 그라파나에서는 세미콜론(;)이 주석을 의미함 
 sudo vi /etc/grafana/grafana.ini
 
 # Start server
