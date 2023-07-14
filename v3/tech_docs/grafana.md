@@ -26,6 +26,9 @@ sudo apt-get update
 # Install the latest OSS release:
 sudo apt-get install grafana
 
+# Chage port or other parameters
+sudo vi /etc/grafana/grafana.ini
+
 # Start server
 sudo grafana server
 
