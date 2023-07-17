@@ -7,37 +7,49 @@
 
 ### Ansible
 
-- Ansible은 인프라스트럭처 자동화를 위한 오픈 소스 IT 자동화 도구로, 서버 설정, 배포, 관리 등을 자동화할 수 있습니다
+- Ansible은 인프라스트럭처 자동화를 위한 오픈 소스 IT 자동화 도구로, 서버 설정, 배포, 관리 등을 자동화합니다.
 
 ### Playbooks
 - Ansible 기본 단위이며, 자동화할 작업 리스트입니다.
-- YAML 파일로 작성합니다.
+- playbooks는 통상적으로 YAML(야믈) 파일로 작성합니다.
+- YAML 파일은 배열과 딕셔너리를 텍스트 문서로 정리한 것으로 생각하면 이해가 쉽습니다.
+
 
 ### Control node
 - Ansible이 설치된 장치를 말합니다.
 - 등록된 여러 노드를 관리합니다.
 
+
+
 ### Managed nodes
 - Control node의 통제를 받는 장치입니다.
-- 호스트 라고도 부르며, 별도의 애이전트가 설치되지 않아도 됩니다.
+- 호스트라고도 부르며, 별도의 애이전트를 설치하지 않아도 됩니다.
+
+
 
 ### Inventory
 - Control node가 관리하고자 하는 노드의 목록입니다.
-- 자동화할 기기들을 포함하고 있습니다.
+- 자동화할 기기들을 포함합니다.
+
+
 
 ### Task
-- 기본적인 작업 단위위로써 Ansiable Playbook에 포함될 수 있습니다.
+- 기본 작업 단위로써 주로 Ansiable Playbook에 포함됩니다.
+
+
 
 ### Project
-- Playbook 파일이 물리적으로 위치하는 Repository를 뜻합니다.
+- Playbook YAML 파일이 물리적으로 위치하는 Repository를 뜻합니다.
+
 
 
 ## 설치
 
 ### OpenJDK 17 설치
 
-- openjdk 버전 17 설치
+- openjdk 버전 17 설치 (Ansible 버전에 따라 openjdk 버전은 달라질 수 있습니다) 
 - (참고) https://www.linuxcapable.com/how-to-install-openjdk-17-on-ubuntu-linux/
+
 
 ```bash
 sudo apt update && sudo apt upgrade
