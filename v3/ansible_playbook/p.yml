@@ -1,0 +1,9 @@
+---
+- name: Check OS Version to Target Server
+  hosts: all
+  tasks:
+  - name: Check OS Version
+    register: result
+    shell: cat /etc/redhat-release
+  - debug:
+      msg: "{{ result.stdout }}"
