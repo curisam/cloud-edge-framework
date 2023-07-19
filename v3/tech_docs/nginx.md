@@ -40,8 +40,12 @@ vi /etc/nginx/sites-available/default
 
 ```bash
 sudo nginx -s reload
-```
 
+# reload ... 설정 파일을 다시 불러오기
+# quit ... 서버 종료
+# stop ... 서버 즉시 중단
+# reopen ... 로그 파일을 다시 열기
+```
 
 
 

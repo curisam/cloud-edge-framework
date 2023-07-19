@@ -1,6 +1,10 @@
 
 
-- phpmyadmin
+
+
+마리아DB, phpmyadmin 
+
+- phpmyadmin (개발시에만 사용 예정, 보안에 취약)
 
 ```bash
 
