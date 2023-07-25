@@ -27,7 +27,7 @@ sudo find / -name nginx.conf
 - 설정 파일 편집
 
 ```bash
-/etc/nginx/nginx.conf
+vi /etc/nginx/nginx.conf
 ```
 
 - 기본 폴더 바꾸기 
