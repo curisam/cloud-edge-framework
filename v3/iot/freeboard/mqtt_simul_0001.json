@@ -1,0 +1,228 @@
+{
+	"version": 1,
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "gauge",
+					"settings": {
+						"title": "Temperature",
+						"value": "datasources[\"KETI Iot\"][\"Temp\"]",
+						"units": "Celcius",
+						"min_value": "-10",
+						"max_value": "40"
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "User",
+						"size": "regular",
+						"value": "datasources[\"KETI Iot\"][\"User\"]",
+						"animate": true
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "gauge",
+					"settings": {
+						"title": "Humidity",
+						"value": "datasources[\"KETI Iot\"][\"Humid\"]",
+						"units": "%",
+						"min_value": 0,
+						"max_value": 100
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "User",
+						"size": "regular",
+						"value": "datasources[\"KETI Iot\"][\"User\"]",
+						"animate": true
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "gauge",
+					"settings": {
+						"title": "Pressure",
+						"value": "datasources[\"KETI Iot\"][\"Pressure\"]",
+						"units": "hPa",
+						"min_value": 0,
+						"max_value": 1200
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "User",
+						"size": "regular",
+						"value": "datasources[\"KETI Iot\"][\"User\"]",
+						"animate": true
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"title": "Gyro",
+						"value": [
+							"datasources[\"KETI Iot\"][\"Gyro\"][0]",
+							"datasources[\"KETI Iot\"][\"Gyro\"][1]",
+							"datasources[\"KETI Iot\"][\"Gyro\"][2]"
+						]
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 6
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"title": "Magnatic Compass",
+						"value": [
+							"datasources[\"KETI Iot\"][\"Mag\"][0]",
+							"datasources[\"KETI Iot\"][\"Mag\"][1]",
+							"datasources[\"KETI Iot\"][\"Mag\"][2]"
+						]
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 11
+			},
+			"col_width": 3,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"title": "Temperature",
+						"value": [
+							"datasources[\"KETI Iot\"][\"Temp\"]"
+						]
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 16
+			},
+			"col_width": 3,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"title": "Humidity",
+						"value": [
+							"datasources[\"KETI Iot\"][\"Humid\"]"
+						]
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 21
+			},
+			"col_width": 3,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"title": "Pressure",
+						"value": [
+							"datasources[\"KETI Iot\"][\"Pressure\"]"
+						]
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "KETI Iot",
+			"type": "JSON",
+			"settings": {
+				"url": "http://ketihhc.iptime.org/2017seciot/getdata.php?sn=CCCC0001",
+				"use_thingproxy": true,
+				"refresh": 1,
+				"method": "GET",
+				"headers": [
+					{
+						"name": "data",
+						"value": ""
+					}
+				]
+			}
+		}
+	],
+	"columns": 3
+}
