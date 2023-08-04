@@ -141,7 +141,7 @@
 
 - 반면에 Ansible 기반의 연동 방식은 EVC의 다양한 기능을 충분히 적용할 수 있다는 장점은 있지만, SSH를 통한 접근 권한을 EVC에 제공한다는 특징이 존재합니다.
 
-<img src='img4doc/evc_cluster_profile02.jpg'>
+<img src='img4doc/evc_cluster_profile03.jpg'>
 
 
   
