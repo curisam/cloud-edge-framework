@@ -63,3 +63,11 @@ dpkg --list | grep phpmyadmin
 ```bash
 sudo dpkg-reconfigure phpmyadmin
 ```
+
+## phpmyadmin symbolic link 설정
+
+- 예시 : 개발 과정에서만 포함시키고, 커밋이나 배포시에는 해당 내용을 절대 공개하면 안됨
+
+```bash
+ln -s /usr/share/phpmyadmin/ /home/jpark/www/cloud-edge-aicontainers/v3/padmin
+```
