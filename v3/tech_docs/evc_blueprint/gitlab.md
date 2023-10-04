@@ -106,6 +106,13 @@ sudo vi /etc/gitlab/gitlab.rb
     
 ```
 
+- 기타 주요 설정 내용 (향후에 수정 가능)
+
+```bash
+nginx['enable'] = true # 웹 UI
+prometheus_monitoring['enable'] = false
+grafana['enable'] = false
+```
 
 - 설정 파일 적용을 위한 재시작
 
