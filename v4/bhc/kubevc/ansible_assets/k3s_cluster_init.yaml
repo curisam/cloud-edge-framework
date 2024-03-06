@@ -1,0 +1,61 @@
+- name: Install k3s in master node
+  hosts: master
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Download k3s cluster for master node
+      ansible.builtin.get_url:
+        url: "https://get.k3s.io"
+        dest: "/tmp/k3s-master-init.sh"
+        mode: "0755"
+
+    - name: Install k3s cluster
+      ansible.builtin.shell: "INSTALL_K3S_VERSION=v1.27.3+k3s1 INSTALL_K3S_EXEC=\"--tls-san={{ hostvars['master']['ansible_host'] }} --disable traefik --disable servicelb\" sh /tmp/k3s-master-init.sh -"
+
+    - name: Add the IP in SAN list
+      ansible.builtin.replace:
+        path: /etc/ssl/openssl.cnf
+        regexp: '^(\s*# identifier \(optional, default: sha1\)).*'
+        replace: |
+          \1
+          [kubevc]
+          subjectAltName = IP:{{ hostvars['master']['ansible_host'] }}, DNS:ip-192-168-10-238, DNS:kubernetes, DNS:kubernetes.default, DNS:kubernetes.default.svc, DNS:kubernetes.default.svc.cluster.local, DNS:localhost, IP:10.43.0.1, IP:127.0.0.1, IP:192.168.10.238, IP:0:0:0:0:0:0:0:1
+
+    - name: Create the .kube file in root
+      ansible.builtin.file:
+        path: $HOME/.kube/customCA
+        state: directory
+        mode: '0755'
+
+    - name: Create the new CA certificate
+      ansible.builtin.shell: |
+        openssl genrsa -out $HOME/.kube/customCA/privkey.pem 2048
+        openssl req -new -x509 -key $HOME/.kube/customCA/privkey.pem -subj "/CN=k3s" -out $HOME/.kube/customCA/mycert.pem -days 365 -extensions kubevc
+
+    - name: Apply the CA certificate
+      ansible.builtin.shell: |
+        kubectl config set-credentials default --client-certificate=$HOME/.kube/customCA/mycert.pem --client-key=$HOME/.kube/customCA/privkey.pem
+        systemctl stop k3s
+        k3s certificate rotate
+        systemctl start k3s
+
+    - name: Apply the cluster config file
+      become: false
+      ansible.builtin.shell: |
+        mkdir $HOME/.kube
+        sudo chmod 755 /etc/rancher/k3s/k3s.yaml
+        sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+        sudo chmod 755 $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+    - name: Copy config file
+      ansible.builtin.copy:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: /tmp/config
+        remote_src: yes
+
+    - name: Modified content
+      ansible.builtin.replace:
+        path: /tmp/config
+        regexp: "server:.*"
+        replace: "server: https://{{ hostvars['master']['ansible_host'] }}:6443"

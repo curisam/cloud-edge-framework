@@ -1,0 +1,23 @@
+# apply (리소스 생성)
+kubectl apply -f [파일명 또는 URL]
+
+# get (리소스 목록 보기)
+kubectl get [리소스 타입] # ex) pods, nodes, deployments, replicasets, services
+    # 리소스 타입 목록
+    kubectl api-resources
+
+# describe (리소스 정보 보기)
+kubectl describe [리소스 타입]/[이름] 또는 [리소스 타입] [이름]
+
+# delete (리소스 삭제)
+kubectl delete [리소스 타입]/[이름] 또는 [리소스 타입] [이름] 또는 [yaml 파일]
+
+# logs (리소스 로그 확인)
+kubectl logs [파드 이름]
+
+# exec (리소스 명령어 전달)
+kubectl exec [파드 이름] -- [명령어]
+
+# 여러 개의 클러스터가 있는 경우
+kubectl get nodes --kubeconfig=[cluster path] # ex) kubectl get nodes --kubeconfig=$HOME/.kube/config
+# --kubeconfig 옵션을 사용해 kubectl 명령어를 사용할 cluster를 지정할 수 있음.

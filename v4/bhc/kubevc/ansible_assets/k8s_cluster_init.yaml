@@ -1,0 +1,66 @@
+---
+- name: Initialize K8S Cluster - Deploy Kubernetes Cluster
+  hosts: master
+  tasks:
+    - name: Get private IP address of Master node
+      ansible.builtin.shell: ip addr | awk '/global/ {print $2}' | cut -d'/' -f1 | head -n 1
+      register: MASTER_PRIVATE_IP
+
+    - name: Generate Configuration YAML content
+      ansible.builtin.set_fact:
+        config_content: |
+          apiVersion: kubeadm.k8s.io/v1beta3
+          kind: ClusterConfiguration
+          kubernetesVersion: v1.27.3
+          clusterName: "{{ CLUSTER_NAME }}"
+          apiServer:
+            certSANs:
+              - "127.0.0.1"
+              - "{{ MASTER_PUBLIC_IP }}"
+          controlPlaneEndpoint: "{{ MASTER_PRIVATE_IP.stdout }}:6443"
+          imageRepository: registry.k8s.io
+          networking:
+            podSubnet: "{{ CLUSTER_CIDR }}"
+
+    - name: Create Configuration YAML file
+      become: yes
+      ansible.builtin.copy:
+        content: "{{ config_content }}"
+        dest: /tmp/init.yaml
+
+    - name: Reset Kubernetes Cluster
+      become: yes
+      ansible.builtin.shell: kubeadm reset -f
+      ignore_errors: yes
+
+    - name: Initialize Kubernetes control-plane
+      become: yes
+      ansible.builtin.shell: kubeadm init --config=/tmp/init.yaml
+      ignore_errors: yes
+
+    - name: .kube/config file for using K8S cluster
+      ansible.builtin.shell: |
+        mkdir -p $HOME/.kube
+        sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+    - name: Create Calico CNI plugin
+      vars:
+        CALICO_VERSION: "v3.26.1"
+      ansible.builtin.shell: |
+        kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/{{ CALICO_VERSION }}/manifests/calico.yaml
+      args:
+        executable: /bin/bash
+
+    - name: Copy config file
+      ansible.builtin.copy:
+        src: ~/.kube/config
+        dest: /tmp/config
+        remote_src: yes
+
+    ## 내부망일 경우 사용하지 않음
+    # - name: Change private IP to public IP in copied config file
+    #   ansible.builtin.replace:
+    #     path: /tmp/config
+    #     regexp: "server:.*"
+    #     replace: "server: https://{{ MASTER_PUBLIC_IP }}:39443"

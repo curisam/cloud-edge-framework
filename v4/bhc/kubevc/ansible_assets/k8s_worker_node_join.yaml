@@ -1,0 +1,28 @@
+- name: Get Token, CA Hash and IP address of Control plane
+  hosts: master_node
+  become: yes
+  tasks:
+    - name: Create Token
+      ansible.builtin.shell: kubeadm token create --ttl 1m
+      register: generated_token
+    - ansible.builtin.set_fact:
+        GENERATED_TOKEN: "{{ generated_token.stdout }}"
+
+    - name: Get CA Hash
+      ansible.builtin.shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+      register: ca_hash
+    - ansible.builtin.set_fact:
+        CA_HASH: "{{ ca_hash.stdout }}"
+
+    - name: Get private IP address of Master node
+      ansible.builtin.shell: ip addr | awk '/global/ {print $2}' | cut -d'/' -f1 | head -n 1
+      register: master_private_ip
+    - ansible.builtin.set_fact:
+        MASTER_PRIVATE_IP: "{{ master_private_ip.stdout }}" 
+
+- name: Join Worker Nodes to the Cluster
+  hosts: worker_node
+  become: yes
+  tasks:
+    - name: Join the cluster
+      ansible.builtin.shell: kubeadm join {{ hostvars[groups['master_node'][0]]['MASTER_PRIVATE_IP'] }}:6443 --token {{ hostvars[groups['master_node'][0]]['GENERATED_TOKEN'] }} --discovery-token-ca-cert-hash sha256:{{ hostvars[groups['master_node'][0]]['CA_HASH'] }}

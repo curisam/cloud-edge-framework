@@ -1,0 +1,30 @@
+- name: Install NFS Server
+  hosts: nfs_server
+
+  tasks:
+   - name: Install NFS-Kernel-Server
+     become: yes
+     shell: apt install nfs-kernel-server -y
+
+   - name: Make Model Directory
+     become: yes
+     shell: |
+      mkdir -p /models/mobilenet_v1
+      mkdir -p /models/inception_v3
+      mkdir -p /models/yolo_v5
+      mkdir -p /models/bert_imdb
+
+   - name: Change Permission of the Models Directory
+     become: yes
+     shell: |
+      chown  {{ ansible_user }}:{{ ansible_user }} /models -R
+      chmod 777 /models -R
+
+   - name: Setting /etc/exports
+     become: yes
+     shell: |
+      echo "/models *(rw,sync,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+
+   - name: Apply /etc/exports configuration
+     become: yes
+     shell: exportfs -ar

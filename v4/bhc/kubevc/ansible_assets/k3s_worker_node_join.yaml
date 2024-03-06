@@ -1,0 +1,32 @@
+- name: Create token for worker node
+  hosts: master_node
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Get k3s master token
+      ansible.builtin.shell: cat /var/lib/rancher/k3s/server/node-token
+      register: k3s_master_token
+
+    - name: Set Global Variable
+      ansible.builtin.set_fact:
+        token: "{{ k3s_master_token.stdout }}"
+
+    - name: Get private IP address of Master node
+      ansible.builtin.shell: ip addr | awk '/global/ {print $2}' | cut -d'/' -f1 | head -n 1
+      register: master_private_ip
+    - ansible.builtin.set_fact:
+        MASTER_PRIVATE_IP: "{{ master_private_ip.stdout }}" 
+
+- name: Join the worker
+  hosts: worker_node
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Download k3s worker cluster script
+      ansible.builtin.get_url:
+        url: "https://get.k3s.io"
+        dest: "$HOME/k3s-install.sh"
+        mode: "0755"
+
+    - name: Install k3s worker cluster
+      ansible.builtin.shell: "INSTALL_K3S_VERSION=v1.27.3+k3s1 K3S_URL=https://{{ hostvars[groups['master_node'][0]]['MASTER_PRIVATE_IP'] }}:6443 K3S_TOKEN={{ hostvars[groups['master_node'][0]]['token'] }} sh $HOME/k3s-install.sh -"

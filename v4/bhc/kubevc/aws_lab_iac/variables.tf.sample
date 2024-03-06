@@ -1,0 +1,45 @@
+variable "main_suffix" {
+  type = string
+  default = ""
+}
+
+variable "region" {
+  type = string
+  default = "us-west-1"
+}
+
+variable "awscli_profile" {
+  type = string
+  default = ""
+}
+
+variable "key_name" {
+  type = string
+  description = "EC2 Instance Key Name"
+  default = ""
+}
+
+variable "master_node_number" {
+  type = number
+  default = 1
+}
+
+variable "amd64_worker_node_number" {
+  type = number
+  default = 1
+}
+
+variable "arm64_worker_node_number" {
+  type = number
+  default = 1
+}
+
+variable "amd64_instance_type" {
+  type = string
+  default = "t3.medium"
+}
+
+variable "arm64_instance_type" {
+  type = string
+  default = "t4g.medium"
+}

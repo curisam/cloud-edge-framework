@@ -1,0 +1,7 @@
+- name: deploy models to NFS server
+  hosts: nfs
+  tasks:
+    - name: Copying models from Agent to NFS server
+      copy:
+        src: "{{ model_directory }}/"
+        dest: /models/
