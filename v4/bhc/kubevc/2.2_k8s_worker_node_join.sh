@@ -57,4 +57,4 @@ echo -e "\n[worker_node:vars]" >> "$inventory_path"
 
 ansible-playbook -i "$inventory_path" ansible_assets/k8s_worker_node_join.yaml 
 echo -e "\n\n### K8S worker node was successfully joined to the cluster! ###\n"
-rm "$inventory_path"
+# rm "$inventory_path"

@@ -1,0 +1,10 @@
+- name: Nodes config test
+  hosts: worker_node
+  become: yes
+  tasks:
+    - name: arch detect test
+      ansible.builtin.shell: uname -a
+      when: ansible_facts['architecture'] == "aarch64"
+      register: output
+    - debug: msg="{{ output.stdout }}"
+      when: ansible_facts['architecture'] == "aarch64"

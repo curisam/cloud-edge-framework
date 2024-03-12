@@ -67,7 +67,7 @@ spec:
         ports:
         - containerPort: 7860
       nodeSelector:
-        key: $CPU_ARCH
+        kubernetes.io/arch: $CPU_ARCH
 ---
 apiVersion: v1
 kind: Service
@@ -83,3 +83,5 @@ spec:
     app: evc-pod-$CPU_ARCH
 
 EOF
+
+kubectl apply -f /tmp/manifest.yaml
