@@ -39,7 +39,7 @@ k8s 환경 구성, 노드 간 인증 절차, 클러스터 구성 및 모델 배�
 cd kubevc/ansible_assets/
 ```
 
-## Get started EVC with KubEVC
+## Get started with KubEVC
 k8s 프로파일을 활용하여 EVC를 구성하고 모델을 배포하기 위한 튜토리얼 가이드라인
 
 ### 사전 작업
