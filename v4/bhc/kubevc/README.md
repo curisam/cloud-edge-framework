@@ -42,20 +42,33 @@ cd kubevc/ansible_assets/
 ## Get started with KubEVC
 k8s 프로파일을 활용하여 EVC를 구성하고 모델을 배포하기 위한 튜토리얼 가이드라인
 
-### 사전 작업
+### 1. 사전 작업
 1. 노드 원격 통신을 위한 Ansible 패키지 다운로드
+   >수행 위치 : Agent Node
    
    ```
    pip install ansible
    ```
    
-2. k8s 설치 및 환경 구성을 위한 자동화 스크립트 배포
+3. k8s 설치 및 환경 구성을 위한 자동화 스크립트 배포
+   >수행 위치 : Master Node, Worker Node
    
    ```
-   ## 해당 스크립트는 kubevc cluster를 구성하는 모든 master node, worker node에서 실행해야 함
    ## 스크립트는 파일 서버에 업로드 후 별도 관리
    wget evc.re.kr:20096/www/1_environment_setup_localhost.sh
 
    ## run script
    bash 1_environment_setup_localhost.sh
    ```
+
+### 2. 클러스터 구축
+
+todo
+
+### 3. Ingress, Load Balancer 배포
+
+todo
+
+### 4. EVC 학습모델 배포
+
+todo
