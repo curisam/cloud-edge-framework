@@ -1,1 +1,0 @@
-ansible rpi -m ping -i hosts.ini 

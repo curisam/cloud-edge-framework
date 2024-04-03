@@ -1,1 +1,0 @@
-ansible server -m ping -i hosts.ini 

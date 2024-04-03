@@ -1,1 +1,0 @@
-ansible-inventory --graph -i hosts.ini
