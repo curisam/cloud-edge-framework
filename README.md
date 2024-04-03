@@ -12,14 +12,8 @@
 
 ## 폴더 구조
 
-### v1
-- 프레임워크 버전 2021
-
-### v2
-- 프레임워크 버전 2022
-
-### v3
-- 프레임워크 버전 2023
+### evc
+- 클라우드-에지 연동분석 프레임워크 코드
 
 ## Acknowledgement
 This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (No. 2021-0-00907, Development of Adaptive and Lightweight Edge-Collaborative Analysis Technology for Enabling Proactively Immediate Response and Rapid Learning).
