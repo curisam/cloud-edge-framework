@@ -1,12 +1,16 @@
 import gradio as gr
 
 def greet(name, intensity):
-    return "Hello, " + name + "!" * int(intensity)
+    ret = [ "Hello, " + name + "!" * int(intensity), 
+            intensity,
+            intensity,
+          ]
+    return ret
 
 demo = gr.Interface(
     fn=greet,
     inputs=["text", "slider"],
-    outputs=["text"],
+    outputs=["text", "slider", "text"],
 )
 
 demo.queue().launch(share=False,
