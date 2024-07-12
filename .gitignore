@@ -11,6 +11,12 @@ __pycache__/
 **/results/
 
 !.gitignore
+
+doc/evc.html
+
+# model
+*.onnx
+
 **/data/
 **/dataset/
 **/tmp/
@@ -24,6 +30,22 @@ __pycache__/
 v2/doc/figures
 v2/approaches/flwr01/env
 v2/approaches/flwr01/env/
+
+# 모든 위치의 아래 폴더는 무시 
+**/checkpoints/
+**/checkpoint/
+**/dataset/
+**/data/
+**/keynote/
+**/tmp/
+**/_tmp/
+**/__tmp/
+**/wandb/
+**/venv/
+**/.ipynb_checkpoints/
+**/flagged/
+**/video_crafter/
+**/client/
 
 evc/demo
 
@@ -41,9 +63,6 @@ evc/demo
 
 # C extensions
 *.so
-
-
-
 
 # tests and coverage
 *.pytest_cache

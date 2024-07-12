@@ -1,5 +1,5 @@
 git pull
 git add .
 git status
-git commit -m "snapshot"
+git commit -m "snapshot & refactoring"
 git push

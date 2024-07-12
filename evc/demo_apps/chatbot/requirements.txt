@@ -1,0 +1,5 @@
+gradio_tools
+langchain_community
+langchain
+openai
+gpt4all
