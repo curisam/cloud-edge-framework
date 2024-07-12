@@ -21,4 +21,7 @@ with demo:
                 with gr.TabItem("222"):
                     pass
 
-demo.launch(server_name='0.0.0.0', server_port=8001)
+demo.queue().launch(share=False,
+                    debug=False,
+                    server_name="0.0.0.0",
+                    server_port=8001 )
