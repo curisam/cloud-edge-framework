@@ -102,7 +102,8 @@ services:
             - 3000
         networks:
             - dev_network
-        user: "$UID:$GID"
+        #user: "$UID:$GID"
+        user: "uid:gid"
   
     ## Grafana Image Renderer
     #renderer:
@@ -149,7 +150,8 @@ services:
         restart: always
         networks:
             - dev_network
-        user: "$UID:$GID"
+        #user: "$UID:$GID"
+        user: "uid:gid"
 
            
     # (참고) redis 기초 명령어 : https://tgyun615.com/192
