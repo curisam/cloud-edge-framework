@@ -37,3 +37,17 @@ sudo usermod -aG docker $USER
 newgrp docker
 
 ```
+
+
+- 실행
+
+```bash
+docker compose up
+```
+
+
+- 종료
+
+```bash
+docker compose down
+```
