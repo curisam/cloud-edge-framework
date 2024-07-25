@@ -39,6 +39,7 @@ services:
             - php
         networks:
             - dev_network
+        user: "$UID:$GID"
  
     pma:
         image: phpmyadmin/phpmyadmin
@@ -69,6 +70,7 @@ services:
             TZ: Asia/Seoul
         networks:
             - dev_network
+        user: "$UID:$GID"
             
     grafana:
         image: grafana/grafana-oss
@@ -102,8 +104,7 @@ services:
             - 3000
         networks:
             - dev_network
-        #user: "$UID:$GID"
-        user: "uid:gid"
+        user: "$UID:$GID"
   
     ## Grafana Image Renderer
     #renderer:
@@ -131,27 +132,28 @@ services:
         networks:
             - dev_network
 
-    prometheus:
-        image: prom/prometheus
-        container_name: prometheus
-        volumes:
-            - ./config/prometheus:/etc/prometheus
-            - ~/.evc/prometheus:/prometheus
-            - ~/.evc/prometheus/targets.json:/etc/prometheus/targets.json
 
-        ports:
-            - 9090:9090 # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
-        command: # web.enalbe-lifecycle은 api 재시작없이 설정파일들을 reload 할 수 있게 해줌
-            - '--web.enable-lifecycle'
-            - '--config.file=/etc/prometheus/prometheus.yml'
-            - '--storage.tsdb.path=/prometheus'
-            - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-            - '--web.console.templates=/usr/share/prometheus/consoles'
-        restart: always
-        networks:
-            - dev_network
-        #user: "$UID:$GID"
-        user: "uid:gid"
+    #prometheus:
+    #    image: prom/prometheus
+    #    container_name: prometheus
+    #    volumes:
+    #        - ./config/prometheus:/etc/prometheus
+    #        - ~/.evc/prometheus:/prometheus
+    #        #- ~/.evc/prometheus/targets.json:/etc/prometheus/targets.json
+
+    #    ports:
+    #        - 9090:9090 # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
+    #    command: # web.enalbe-lifecycle은 api 재시작없이 설정파일들을 reload 할 수 있게 해줌
+    #        - '--web.enable-lifecycle'
+    #        - '--config.file=/etc/prometheus/prometheus.yml'
+    #        - '--storage.tsdb.path=/prometheus'
+    #        - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+    #        - '--web.console.templates=/usr/share/prometheus/consoles'
+    #    restart: always
+    #    networks:
+    #        - dev_network
+    #    #user: "$UID:$GID"
+    #    user: "1000:1000"
 
            
     # (참고) redis 기초 명령어 : https://tgyun615.com/192
@@ -203,18 +205,18 @@ services:
         env_file:
             - .env
 
-    semaphore:
-        ports:
-            - 8009:3000
-        image: semaphoreui/semaphore:latest
-        environment:
-            SEMAPHORE_DB_DIALECT: bolt
-            SEMAPHORE_ADMIN_PASSWORD: admin
-            SEMAPHORE_ADMIN_NAME: admin
-            SEMAPHORE_ADMIN_EMAIL: admin@localhost
-            SEMAPHORE_ADMIN: admin
-        networks:
-            - dev_network
+    #semaphore:
+    #    ports:
+    #        - 8009:3000
+    #    image: semaphoreui/semaphore:latest
+    #    environment:
+    #        SEMAPHORE_DB_DIALECT: bolt
+    #        SEMAPHORE_ADMIN_PASSWORD: admin
+    #        SEMAPHORE_ADMIN_NAME: admin
+    #        SEMAPHORE_ADMIN_EMAIL: admin@localhost
+    #        SEMAPHORE_ADMIN: admin
+    #    networks:
+    #        - dev_network
 
 
     # [주의] 빌드 하는데  시간이 많이 걸림
@@ -293,7 +295,6 @@ services:
     #    networks:
     #        - dev_network
     
-
     kroki:
         image: yuzutech/kroki
         ports:
@@ -319,7 +320,7 @@ services:
     bpmn:
         image: yuzutech/kroki-bpmn
 
-    
+
 networks:
     dev_network:
         driver: bridge
