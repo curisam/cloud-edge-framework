@@ -1,10 +1,10 @@
 # evc_server 실행
 
-## docker-compose 설치
+## docker-compose 설치 및 권한설정
 
 - 참고 https://osg.kr/archives/2108#ubuntu-docker-compose-%EC%84%A4%EC%B9%98-%EB%B0%A9%EB%B2%95-%EA%B0%9C%EC%9A%94
 
-- 설치 방법
+- 설치
 
 ```bash
 
@@ -26,7 +26,14 @@ echo \
   
 sudo apt-get update
 
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose docker-compose-plugin
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
+```
+
+- 권한설정
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
 
 ```
