@@ -1,12 +1,14 @@
-version: '3'
-
+#-----------------------------------------
+#                 실행 방법
+#-----------------------------------------
 #
 # 1. 홈 위치에 .evc 폴더를 만듭니다. 
 #    mkdir ~/.evc
 #
 # 2. 도커 컴포즈를 실행합니다.
-#    docker-compose up
+#    docker compose up
 #
+#-----------------------------------------
 
 # JPark @ KETI, 2024
 services:
@@ -75,6 +77,7 @@ services:
     grafana:
         image: grafana/grafana-oss
         container_name: grafana
+        user: "$UID:$GID"
         ports:
             - 3000:3000 # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
         volumes:
@@ -104,7 +107,8 @@ services:
             - 3000
         networks:
             - dev_network
-        user: "$UID:$GID"
+
+            
   
     ## Grafana Image Renderer
     #renderer:
