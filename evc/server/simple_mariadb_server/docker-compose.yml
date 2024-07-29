@@ -1,0 +1,28 @@
+services:
+    mariadb:
+        image: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=test
+            - MYSQL_DATABASE=radio
+        volumes:
+            - ~/.evc/mariadb:/var/lib/mysql # maridadb data
+        networks:
+            - dev_network
+          
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        environment:
+            - PMA_HOST=mariadb
+            - PMA_PORT=3306
+        restart: always
+        ports:
+            - 8080:80
+        volumes:
+            - /sessions
+        networks:
+            - dev_network
+
+networks:
+    dev_network:
+        driver: bridge
