@@ -3,7 +3,7 @@ services:
         image: mariadb
         environment:
             - MYSQL_ROOT_PASSWORD=test
-            - MYSQL_DATABASE=radio
+            - MYSQL_DATABASE=test
         volumes:
             - ~/.evc/mariadb:/var/lib/mysql # maridadb data
         networks:
