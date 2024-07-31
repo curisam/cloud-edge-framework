@@ -1,3 +1,0 @@
-# Server Container
-
-- nginx
