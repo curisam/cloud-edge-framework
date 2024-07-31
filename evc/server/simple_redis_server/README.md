@@ -1,3 +1,3 @@
-# server container
+# simple test server
 
-- simple redis_server docker compose project
+- redis_server docker compose project
