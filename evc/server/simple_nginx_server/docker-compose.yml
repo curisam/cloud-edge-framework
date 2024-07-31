@@ -1,5 +1,3 @@
-version: '3'
-
 # JPark @ KETI, 2024
 services:
     web:
