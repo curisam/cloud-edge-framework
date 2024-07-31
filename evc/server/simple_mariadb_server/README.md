@@ -1,3 +1,3 @@
-# Server Container
+# simple test server
 
-- MariaDB
+- MariDB server docker compose project
