@@ -1,6 +1,7 @@
 # evc_server
 
-## docker-compose 설치 및 권한설정
+## docker-compose install and access
+
 
 - 참고 https://osg.kr/archives/2108#ubuntu-docker-compose-%EC%84%A4%EC%B9%98-%EB%B0%A9%EB%B2%95-%EA%B0%9C%EC%9A%94
 
