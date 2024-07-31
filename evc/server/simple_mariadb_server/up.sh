@@ -1,5 +1,5 @@
 mkdir ~/.evc
-mkdir ~/.evc/mariadb
+mkdir ~/.evc/mariadb_test
 
 #docker compose up -d
 docker compose up
