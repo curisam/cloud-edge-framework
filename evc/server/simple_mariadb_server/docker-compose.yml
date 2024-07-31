@@ -10,6 +10,7 @@ services:
         networks:
             - dev_network
 
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmin
