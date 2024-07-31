@@ -1,4 +1,3 @@
-# redis_server
+# server container
 
-- redis_server docker compose project
-
+- simple redis_server docker compose project
