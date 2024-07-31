@@ -28,11 +28,11 @@ services:
     mariadb:
         image: mariadb:latest    
         ports:
-            #- ${IP}:3300:3306 # 보안 강력 (실제 서비스에 적용) 
+            #- ${IP}:3300:3306 # [중요] 실 서비스에서는 보안 개선을 위해 수정 필요
             - 3306:3306 # 임시로 '${IP}:' 헤더를 제거
-        #command: "mysqld --init-file /data/application/init.sql"
         volumes:
             - ~/.evc/mariadb:/var/lib/mysql # maridadb data
+            - ./config/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql            
         environment:
             MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
             MYSQL_DATABASE: "${DB_NAME}"
