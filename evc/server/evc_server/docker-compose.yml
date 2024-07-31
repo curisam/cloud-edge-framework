@@ -24,7 +24,7 @@ services:
             - php
         networks:
             - dev_network
-            
+
     mariadb:
         image: mariadb:latest    
         ports:
