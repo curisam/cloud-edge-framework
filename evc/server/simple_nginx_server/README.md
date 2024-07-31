@@ -1,3 +1,3 @@
 # Server Container
 
-- MariaDB
+- nginx
