@@ -1,3 +1,4 @@
-# Server Container
+# simple test server
 
-- Grafana
+- Grafana server docker compose project
+ 
