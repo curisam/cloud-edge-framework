@@ -5,6 +5,7 @@ services:
             - MYSQL_ROOT_PASSWORD=test
             - MYSQL_DATABASE=test
         volumes:
+            - ./config/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
             - ~/.evc/mariadb:/var/lib/mysql # maridadb data
         networks:
             - dev_network
