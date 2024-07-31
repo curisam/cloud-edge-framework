@@ -1,4 +1,4 @@
-# evc_server 실행
+# evc_server
 
 ## docker-compose 설치 및 권한설정
 
