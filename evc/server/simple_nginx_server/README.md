@@ -1,3 +1,3 @@
-# Server Container
+# simple test server
 
-- nginx
+- nginx server docker compose project
