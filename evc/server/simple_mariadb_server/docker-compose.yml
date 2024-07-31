@@ -8,7 +8,7 @@ services:
             - ~/.evc/mariadb:/var/lib/mysql # maridadb data
         networks:
             - dev_network
-          
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmin
