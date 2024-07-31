@@ -55,7 +55,6 @@ services:
         networks:
             - dev_network
 
-            
     php:
         build:
             context: ./config/php
@@ -73,13 +72,6 @@ services:
         networks:
             - dev_network
  
-
- 
-
 networks:
     dev_network:
         driver: bridge
-
-
-
-
