@@ -10,7 +10,7 @@ services:
     # Redis' data persisted to the host's filesystem.
     # volumes:
     #   - ./dump.rdb:/data/dump.rdb
-
+    
   grafana:
     container_name: grafana
     image: grafana/grafana:master
@@ -33,3 +33,4 @@ services:
       - ../provisioning:/etc/grafana/provisioning
       # Uncomment to preserve Grafana configuration
       # - ./data:/var/lib/grafana
+
