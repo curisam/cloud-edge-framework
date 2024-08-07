@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS data (
     hostname VARCHAR(255) NOT NULL,
     temperature FLOAT NOT NULL,
     cpuclock FLOAT NOT NULL,
-    mem INT NOT NULL,
+    mem_total INT NOT NULL,
+    mem_available INT NOT NULL,
     json_str TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

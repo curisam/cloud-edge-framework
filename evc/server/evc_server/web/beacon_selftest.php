@@ -1,9 +1,10 @@
 <?php
-$accessed_ip = '192.168.1.6';
-$hostname = 'p01';
+$accessed_ip = '192.168.1.777';
+$hostname = 'dummy_server';
 $temperature = 45.5;
 $cpuclock = 2400.0;
-$mem = 1024;
+$mem_total = 1024;
+$mem_available = 720;
 $json_str = json_encode(array("key" => "value"));
 
 define("DB_SERVER", "mariadb");
@@ -20,8 +21,7 @@ if (!$conn) {
 }
 
 // 데이터 삽입 쿼리
-$sql = "INSERT INTO data (ip, hostname, temperature, cpuclock, mem, json_str) VALUES ('$accessed_ip', '$hostname', '$temperature', '$cpuclock', '$mem', '$json_str')";
-
+$sql = "INSERT INTO data (ip, hostname, temperature, cpuclock, mem_total, mem_available, json_str) VALUES ('{$accessed_ip}', '{$hostname}', '{$temperature}', '{$cpuclock}', '{$mem_total}', '{$mem_available}', '{$json_str}')";
 
 // 쿼리 실행
 $result = mysqli_query($conn, $sql);
