@@ -57,8 +57,7 @@ $mem = $_GET['mem'];
 $json_str = $_GET['json_str'];
 
 $accessed_ip = GetClientIP();
-print( $accessed_ip.' ' );
-
+#print( $accessed_ip.' ' );
 
 # Include connection
 require_once "./config_log.php";
@@ -72,6 +71,8 @@ if($result === false){
 }
 
 mysqli_close($conn);
+
+print("hi");
 
 //--------------------------------------------------------
 ?>
