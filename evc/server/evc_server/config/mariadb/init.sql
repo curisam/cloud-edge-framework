@@ -1,6 +1,17 @@
-CREATE TABLE example_table (id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100) NOT NULL );
+-- 데이터베이스 생성
+CREATE DATABASE IF NOT EXISTS beacon_ip;
 
-INSERT INTO example_table (name) VALUES ('example1'), ('example1-1');
-INSERT INTO example_table (name) VALUES ('example2'), ('example2-1');
-INSERT INTO example_table (name) VALUES ('example3'), ('example3-1');
+-- 데이터베이스 사용
+USE beacon_ip;
+
+-- 테이블 생성
+CREATE TABLE IF NOT EXISTS data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ip VARCHAR(45) NOT NULL,
+    hostname VARCHAR(255) NOT NULL,
+    temperature FLOAT NOT NULL,
+    cpuclock FLOAT NOT NULL,
+    mem INT NOT NULL,
+    json_str TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
