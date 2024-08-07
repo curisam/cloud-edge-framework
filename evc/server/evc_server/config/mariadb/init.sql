@@ -1,8 +1,17 @@
 -- 데이터베이스 생성
-CREATE DATABASE IF NOT EXISTS beacon_ip;
+CREATE DATABASE IF NOT EXISTS dev;
 
 -- 데이터베이스 사용
-USE beacon_ip;
+USE dev;
+
+-- 사용자 생성 및 비밀번호 설정
+CREATE USER IF NOT EXISTS 'dev'@'%' IDENTIFIED BY 'dev';
+
+-- 권한 부여
+GRANT ALL PRIVILEGES ON dev.* TO 'dev'@'%';
+
+-- 권한 적용
+FLUSH PRIVILEGES;
 
 -- 테이블 생성
 CREATE TABLE IF NOT EXISTS data (
