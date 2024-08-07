@@ -1,8 +1,8 @@
 <?php
 define("DB_SERVER", "mariadb");
-define("DB_USERNAME", "test");
-define("DB_PASSWORD", "test");
-define("DB_NAME", "beacon_ip");
+define("DB_USERNAME", "dev");
+define("DB_PASSWORD", "dev");
+define("DB_NAME", "dev");
 
 # Connection
 $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);

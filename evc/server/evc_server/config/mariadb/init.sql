@@ -1,6 +1,27 @@
-CREATE TABLE example_table (id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100) NOT NULL );
+-- 데이터베이스 생성
+CREATE DATABASE IF NOT EXISTS dev;
 
-INSERT INTO example_table (name) VALUES ('example1'), ('example1-1');
-INSERT INTO example_table (name) VALUES ('example2'), ('example2-1');
-INSERT INTO example_table (name) VALUES ('example3'), ('example3-1');
+-- 데이터베이스 사용
+USE dev;
+
+-- 데모 사용자 생성 및 비밀번호 설정 (서비스 환경에 맞춰 수정 필요)
+CREATE USER IF NOT EXISTS 'dev'@'%' IDENTIFIED BY 'dev';
+
+-- 권한 부여
+GRANT ALL PRIVILEGES ON dev.* TO 'dev'@'%';
+
+-- 권한 적용
+FLUSH PRIVILEGES;
+
+-- 테이블 생성
+CREATE TABLE IF NOT EXISTS data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ip VARCHAR(45) NOT NULL,
+    hostname VARCHAR(255) NOT NULL,
+    temperature FLOAT NOT NULL,
+    cpuclock FLOAT NOT NULL,
+    mem_total INT NOT NULL,
+    mem_available INT NOT NULL,
+    json_str TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
