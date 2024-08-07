@@ -16,6 +16,7 @@ doc/evc.html
 
 # model
 *.onnx
+.nohup
 
 **/data/
 **/dataset/
