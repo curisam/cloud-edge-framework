@@ -4,6 +4,7 @@ CREATE DATABASE IF NOT EXISTS dev;
 -- 데이터베이스 사용
 USE dev;
 
+
 -- 데모 사용자 생성 및 비밀번호 설정 (서비스 환경에 맞춰 수정 필요)
 CREATE USER IF NOT EXISTS 'dev'@'%' IDENTIFIED BY 'dev';
 
