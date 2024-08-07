@@ -106,7 +106,42 @@ services:
             - 3000
         networks:
             - dev_network
+           
+    # (참고) redis 기초 명령어 : https://tgyun615.com/192
+    redis:
+        image: redislabs/redisai
+        container_name: redisai
+        #environment:
+        #    - REDIS_PASSWORD=
+        #command: redis-server --requirepass $REDIS_PASSWORD
+        ports:
+            - 6379:6379
+        volumes:
+            - ~/.evc/redis/data:/data
+        restart: always
+        networks:
+            - dev_network
+        env_file:
+            - .env
 
+    redis-commander:
+        container_name: redis-commander
+        hostname: redis-commander
+        image: rediscommander/redis-commander:latest
+        restart: always
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            #- REDIS_PASSWORD=$REDIS_PASSWORD
+            - HTTP_USER=dev
+            - HTTP_PASSWORD=dev
+        ports:
+            - 8091:8081
+        networks:
+            - dev_network
+        env_file:
+            - .env
+            
 networks:
     dev_network:
         driver: bridge

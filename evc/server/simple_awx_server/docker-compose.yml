@@ -1,0 +1,31 @@
+
+services:
+  semaphore:
+    image: ansiblesemaphore/semaphore:latest
+    container_name: semaphore
+    ports:
+      - "3000:3000"
+    environment:
+      - SEMAPHORE_DB=semaphore
+      - SEMAPHORE_DB_HOST=db
+      - SEMAPHORE_DB_PORT=5432
+      - SEMAPHORE_DB_USER=semaphore
+      - SEMAPHORE_DB_PASS=semaphore
+      - SEMAPHORE_ADMIN=admin
+      - SEMAPHORE_ADMIN_EMAIL=admin@localhost
+      - SEMAPHORE_ADMIN_PASSWORD=admin
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12
+    container_name: semaphore-db
+    environment:
+      POSTGRES_USER: semaphore
+      POSTGRES_PASSWORD: semaphore
+      POSTGRES_DB: semaphore
+    volumes:
+      - semaphore-db-data:/var/lib/postgresql/data
+
+volumes:
+  semaphore-db-data:
