@@ -18,10 +18,10 @@ CREATE TABLE IF NOT EXISTS data (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ip VARCHAR(45) NOT NULL,
     hostname VARCHAR(255) NOT NULL,
-    temperature FLOAT NOT NULL,
-    cpuclock FLOAT NOT NULL,
-    mem_total INT NOT NULL,
-    mem_available INT NOT NULL,
-    json_str TEXT NOT NULL,
+    temperature FLOAT NOT NULL DEFAULT '-1',
+    cpuclock VARCHAR(32) NOT NULL DEFAULT '-1',
+    mem_total VARCHAR(32) NOT NULL DEFAULT '-1',
+    mem_available VARCHAR(32) NOT NULL DEFAULT '-1',
+    json_str TEXT NOT NULL DEFAULT '',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

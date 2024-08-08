@@ -53,7 +53,8 @@ function ValidatePublicIP($ip){
 $hostname = $_GET['hostname'];
 $temperature = $_GET['temperature'];
 $cpuclock = $_GET['cpuclock'];
-$mem = $_GET['mem'];
+$mem_total = $_GET['mem_total'];
+$mem_available = $_GET['mem_available'];
 $json_str = $_GET['json_str'];
 
 $accessed_ip = GetClientIP();
@@ -71,8 +72,6 @@ if($result === false){
 }
 
 mysqli_close($conn);
-
-print("hi");
 
 //--------------------------------------------------------
 ?>
