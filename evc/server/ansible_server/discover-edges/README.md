@@ -29,6 +29,14 @@ sudo systemctl start avahi-daemon
 sudo systemctl enable avahi-daemon
 ```
 
+[참고] Avahi 서비스 확인 및 종료
+
+```sh
+sudo systemctl status avahi-daemon
+sudo systemctl stop avahi-daemon
+sudo systemctl disable avahi-daemon
+```
+
 ### 2. 필터링 스크립트 작성
 
 라즈베리 파이 장치만 감지하여 Ansible 인벤토리에 추가하는 스크립트를 작성합니다.
