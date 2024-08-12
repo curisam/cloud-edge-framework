@@ -72,4 +72,4 @@ while True:
     print('scanning now ...')
     print('-'*50)
     discover_edges()
-    time.sleep(10)
+    time.sleep(60)
