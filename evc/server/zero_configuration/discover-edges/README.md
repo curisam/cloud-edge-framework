@@ -123,8 +123,8 @@ Ansible 인벤토리 파일 `hosts`를 생성합니다.
 위의 스크립트를 실행하여 새로운 라즈베리 파이 장치를 감지하고 처리합니다.
 
 ```sh
-chmod +x watch_for_new_edges.sh
-./watch_for_new_edges.sh
+chmod +x run_discovery.sh
+./run_discovery.sh
 ```
 
 ### 요약
