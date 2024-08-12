@@ -24,6 +24,8 @@ def discover_edges():
     
     lines = result.stdout.splitlines()
     edge_info = {}
+    edge_name = ''
+    info = {}
     
     current_edge = None
     for line in lines:
@@ -48,6 +50,8 @@ def discover_edges():
                 edge_info[current_edge]["ip"] = match.group(1)
     
     for edge_name, info in edge_info.items():
+        edge_ip = ''
+        print('info = ', info)
         if "ip" in info:
             edge_ip = info["ip"]
             #print('edge_ip = ', edge_ip)
@@ -59,9 +63,13 @@ def discover_edges():
             else:
                 print(f"Invalid IP address: {edge_ip}")
         else:
+            pass
             print(f"IP address for {edge_name} not found")
 
 # 주기적으로 네트워크를 스캔합니다.
 while True:
+    print('-'*50)
+    print('scanning now ...')
+    print('-'*50)
     discover_edges()
-    time.sleep(1)
+    time.sleep(10)

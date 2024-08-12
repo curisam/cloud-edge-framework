@@ -3,7 +3,7 @@ FROM alpine:latest
 
 # Avahi 및 필요한 패키지 설치
 RUN apk update && apk add --no-cache \
-    avahi avahi-tools dbus
+    avahi avahi-tools dbus bash
 
 # DBus 소켓 디렉토리 생성
 RUN mkdir -p /var/run/dbus
