@@ -21,49 +21,37 @@ def discover_edges():
         capture_output=True,
         text=True
     )
-    print('-'*50)
-    print(result)
-    print('-'*50)
     
     lines = result.stdout.splitlines()
     edge_info = {}
+    edge_name = ''
+    info = {}
+    
     current_edge = None
-
-    
-    #print('-'*50)
-    #for line in lines:
-    #    print("__", line, "\n")
-    #print('-'*50)
-    
-    return
-    
-    # Step 1
     for line in lines:
-        print('line = ', line)
-        
-        if "evc_edge" in line:
+        if "IPv4" in line:
             parts = line.split()
-            print('parts = ', parts)
+            #print(parts)
             if len(parts) > 3:
-                IPv4 = parts[2]  # IPv4 찾기
-                print('current_edge = ', parts[3])
-                edge_info[current_edge] = {}
-                print(edge_info)
+                current_edge = parts[3]  # 호스트 이름 추출
+                #print('current_edge = ', current_edge)
+                edge_info[current_edge] = {"name": current_edge}
         
         if "hostname" in line and current_edge:
             match = re.search(r"hostname = \[(.*?)\]", line)
             if match:
+                #print('edge_info = ', edge_info)
                 edge_info[current_edge]["hostname"] = match.group(1).split('.')[0]
-                edge_name = edge_info[current_edge]["hostname"]
-                print('edge_name = ', edge_name)
+        
         if "address" in line and current_edge:
             match = re.search(r"address = \[(.*?)\]", line)
             if match:
+                #print('line = ', line)
                 edge_info[current_edge]["ip"] = match.group(1)
-
-    # Step 2
-    for _, info in edge_info.items():
-        #print(f'edge_name = {edge_name}')
+    
+    for edge_name, info in edge_info.items():
+        edge_ip = ''
+        print('info = ', info)
         if "ip" in info:
             edge_ip = info["ip"]
             #print('edge_ip = ', edge_ip)
@@ -71,14 +59,17 @@ def discover_edges():
                 if not edge_exists(edge_ip):
                     add_edge_to_hosts(edge_ip, info["hostname"])
                 else:
-                    print(f"Already exist : {edge_ip}, {edge_name}")
+                    print(f'[-] exist : {edge_name}, {edge_ip}')
             else:
-                pass
-                #print(f"Invalid IP address: {edge_ip}")
+                print(f"Invalid IP address: {edge_ip}")
         else:
+            pass
             print(f"IP address for {edge_name} not found")
 
 # 주기적으로 네트워크를 스캔합니다.
 while True:
+    print('-'*50)
+    print('scanning now ...')
+    print('-'*50)
     discover_edges()
-    time.sleep(1)
+    time.sleep(10)
